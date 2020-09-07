@@ -1,6 +1,5 @@
 import React from 'react';
 import foto from '../modelx.jpg'
-import foto2 from '../hola.jpg'
 
 
 function Carro(props){
@@ -29,13 +28,13 @@ function Carro(props){
 
     let { ano, marca, modelo, estado, tipoTitulo } = props
     return(
-        <div class="max-w-sm rounded-lg overflow-hidden shadow-2xl m-5 bg-gray-900">
-            <img class="w-full h-56" src={foto} alt="Carro"/>
-            <div class="px-6 py-4">
-                <div class="font-extrabold text-xl text-gray-100 mb-2 md:truncate">{ano +" " +marca+" "+modelo}</div>
-                <div class="text-gray-500 text-lg font-semibold mb-2">${coma()}</div>
+        <div className="max-w-sm rounded-lg overflow-hidden shadow-2xl bg-gray-900">
+            <img className="object-fill h-48 md:h-56 w-full" src={foto} alt="Carro"/>
+            <div className="px-6 py-4">
+                <div className="font-extrabold text-xl text-gray-100 mb-2 md:truncate">{ano +" " +marca+" "+modelo}</div>
+                <div className="text-gray-500 text-lg font-semibold mb-2">${coma()}</div>
                 <div className="grid grid-cols-4">
-                    <div className="text-green-400 text-lg mb-2 font-semibold">{estado}</div>
+                    <div className="text-green-500 text-lg mb-2 font-semibold">{estado}</div>
                     <div></div>
                     <div></div>
                     <div className="flex justify-end text-gray-500 text-lg font-semibold">{tipoTitulo}</div>
