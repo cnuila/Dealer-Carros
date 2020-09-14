@@ -52,14 +52,17 @@ class Principal extends React.Component {
       );
     });
 
-    let translate
+    let translateCarros
     let textoFiltro
-    if (this.state.mostrarFiltros){
-      translate = "0"
+    let moverFiltros
+    if (this.state.mostrarFiltros) {
+      translateCarros = "0"
       textoFiltro = "Esconder"
+      moverFiltros = "-2"
     } else {
-      translate = "40"
+      translateCarros = "32 sm:-translate-y-40"
       textoFiltro = "Mostrar"
+      moverFiltros = "-5"
     }
 
     return (
@@ -94,21 +97,23 @@ class Principal extends React.Component {
         <div>
 
           {/*Botones Estado y filtro*/}
-          <div className="grid grid-cols-2 md:grid-cols-7 place-items-center m-4 sm:m-6">
-            {botonesEstados}
-            <button className="my-2 col-span-2 md:col-start-7 focus:outline-none hover:bg-gray-300 text-gray-900 text-sm py-2 px-4 rounded-lg inline-flex items-center w-40"
-              onClick={this.clicMostrarFiltro}>
-              <svg
-                className="h-5 w-5 fill-current text-gray-900" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" >
-                <path d="M5 1.6c0-.553-.448-.6-1-.6-.553 0-1 .047-1 .6V10h2V1.6zM3 18.4c0 .551.447.6 1 .6.552 0 1-.049 1-.6V15H3v3.4zM6.399 11h-4.8C1.046 11 1 11.448 1 12v1c0 .553.046 1 .599 1H6.4c.55 0 .6-.447.6-1v-1c0-.552-.05-1-.601-1zm12 1h-4.801c-.552 0-.598.448-.598 1v1c0 .553.046 1 .599 1H18.4c.55 0 .6-.447.6-1v-1c0-.552-.05-1-.601-1zM13 7c0-.552-.05-1-.601-1h-4.8C7.046 6 7 6.448 7 7v1c0 .553.046 1 .599 1H12.4c.55 0 .6-.447.6-1V7zm-2-5.4c0-.553-.448-.6-1-.6-.553 0-1 .047-1 .6V5h2V1.6zM9 18.4c0 .551.447.6 1 .6.552 0 1-.049 1-.6V10H9v8.4zm8-16.8c0-.553-.448-.6-1-.6-.553 0-1 .047-1 .6V11h2V1.6zm-2 16.8c0 .551.447.6 1 .6.552 0 1-.049 1-.6V16h-2v2.4z" />
-              </svg>
-              <span className="flex-1">{textoFiltro + " filtros"}</span>
-            </button>
-            {<Filtros mostrarFiltros={this.state.mostrarFiltros} />}
+          <div>
+            <div className="grid grid-cols-2 md:grid-cols-7 place-items-center m-4 sm:m-6">
+              {botonesEstados}
+              <button className="my-2 col-span-2 md:col-start-7 focus:outline-none hover:bg-gray-300 text-gray-900 text-sm py-2 px-4 rounded-lg inline-flex items-center w-40"
+                onClick={this.clicMostrarFiltro}>
+                <svg
+                  className="h-5 w-5 fill-current text-gray-900" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" >
+                  <path d="M5 1.6c0-.553-.448-.6-1-.6-.553 0-1 .047-1 .6V10h2V1.6zM3 18.4c0 .551.447.6 1 .6.552 0 1-.049 1-.6V15H3v3.4zM6.399 11h-4.8C1.046 11 1 11.448 1 12v1c0 .553.046 1 .599 1H6.4c.55 0 .6-.447.6-1v-1c0-.552-.05-1-.601-1zm12 1h-4.801c-.552 0-.598.448-.598 1v1c0 .553.046 1 .599 1H18.4c.55 0 .6-.447.6-1v-1c0-.552-.05-1-.601-1zM13 7c0-.552-.05-1-.601-1h-4.8C7.046 6 7 6.448 7 7v1c0 .553.046 1 .599 1H12.4c.55 0 .6-.447.6-1V7zm-2-5.4c0-.553-.448-.6-1-.6-.553 0-1 .047-1 .6V5h2V1.6zM9 18.4c0 .551.447.6 1 .6.552 0 1-.049 1-.6V10H9v8.4zm8-16.8c0-.553-.448-.6-1-.6-.553 0-1 .047-1 .6V11h2V1.6zm-2 16.8c0 .551.447.6 1 .6.552 0 1-.049 1-.6V16h-2v2.4z" />
+                </svg>
+                <span className="flex-1">{textoFiltro + " filtros"}</span>
+              </button>
+            </div>
+            <Filtros moverFiltros={moverFiltros} />
           </div>
 
           {/*Carros*/}
-          <div className={"grid grid-cols-1 md:grid-cols-4 gap-6 place-items-center mb-10 mt-4 md:mt-8 mx-6 md:mx-8 transform transition duration-500 ease-in-out -translate-y-"+translate}>
+          <div className={"grid grid-cols-1 md:grid-cols-4 gap-6 bg-gray-100 place-items-center mb-10 mt-4 md:mt-8 mx-6 md:mx-8 transform transition duration-500 ease-in-out -translate-y-" + translateCarros}>
             <Carro
               marca={"Tesla"}
               modelo={"Model X"}
