@@ -55,10 +55,10 @@ class Principal extends React.Component {
     let translateCarros
     let textoFiltro
     if (this.state.mostrarFiltros) {
-      translateCarros = "0"
+      translateCarros = "0 sm:-translate-y-0"
       textoFiltro = "Esconder"
     } else {
-      translateCarros = "100"
+      translateCarros = "72 sm:-translate-y-56"
       textoFiltro = "Mostrar"
     }
 

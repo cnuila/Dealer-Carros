@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { CirclePicker } from 'react-color';
+import "react-datepicker/dist/react-datepicker.css"
 
 
 class ColorPicker extends Component {
@@ -21,7 +22,8 @@ class ColorPicker extends Component {
             <CirclePicker color={this.state.background}
                 colors={colors}
                 onChangeComplete={this.handleChangeComplete} 
-                circleSize={24}/>
+                width={this.props.width}
+                circleSize={this.props.circleSize}/>
         )
     }
 }

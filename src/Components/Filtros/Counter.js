@@ -54,7 +54,11 @@ class Counter extends Component {
         let { numero } = this.state
         let nuevoValor = numero
         if (nuevoValor === "Cualquiera") {
-            nuevoValor = minimo - 1
+            if (minimo === 0){
+                nuevoValor = 0
+            } else {
+                nuevoValor = minimo - 1
+            }            
         }
         nuevoValor++
         this.setState({
