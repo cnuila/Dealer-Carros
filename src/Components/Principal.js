@@ -1,7 +1,7 @@
 import React from "react";
 import Carro from "./Carro";
 import Estado from "./Estado";
-import Filtros from "./Filtros";
+import Filtros from "./Filtros/Filtros";
 
 class Principal extends React.Component {
   constructor(props) {
