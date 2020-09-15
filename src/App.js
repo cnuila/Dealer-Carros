@@ -5,8 +5,8 @@ import Principal from './Components/Principal';
 function App() {
   return (
     <div className="App">
-    <Principal/>
-    {/*<Agregar/>*/}
+     {/*<Principal/>*/}
+   <Agregar/>
     </div>
   );
 }

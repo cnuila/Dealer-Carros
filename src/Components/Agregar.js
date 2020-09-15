@@ -1,4 +1,5 @@
 import React from "react";
+import ColorPicker from './Filtros/ColorPicker';
 
 class Agregar extends React.Component{
     render() {
@@ -29,16 +30,21 @@ class Agregar extends React.Component{
               </button>
             </div>
           </nav>
-          {/*fin del navbar*/}
+          {/*fin del navbar  .bg-gray-400*/ }
+          
            {/*Inicio Formulario*/}
-          <form class="w-full max-w-lg">
+           
+           
+          {/*este primer div hacer el trabajo de un container*/}
+           <div class=" w-full inline-block w-center">
+             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2  text-center text-2xl">Agregar Carro</label>
+            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2  text-center text-xl">Informacion General</label>
            {/*Marca*/}
-          <div class="flex flex-wrap -mx-3 mb-6">
+          <div class="flex content-start  -mx-3 mb-6">
     <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-      <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
-        Marca
-      </label>
-      <input class="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="">
+    
+      <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2  text-center "for="Marca" >Marca</label>
+      <input class="rounded-full block w-full bg-gray-300 text-gray-700 border text-center rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="Marca" type="text" >
       </input>
       
     </div>
@@ -47,10 +53,10 @@ class Agregar extends React.Component{
 
      {/*Modelo*/}
     <div class="w-full md:w-1/2 px-3">
-      <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
-        Modelo
+      <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 text-center" for="Modelo">
+             Modelo
       </label>
-      <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="">
+      <input class="rounded-full block w-full bg-gray-300 text-gray-700 border text-center border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="Modelo" type="text" >
           </input>
       </div>
   </div>
@@ -60,10 +66,10 @@ class Agregar extends React.Component{
    {/*millaje*/}
   <div class="flex flex-wrap -mx-3 mb-6">
     <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-      <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
+      <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 text-center" for="Millaje">
         Millaje
       </label>
-      <input class="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="">
+      <input class="rounded-full block w-full bg-gray-300 text-gray-700 border  text-center rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="Mijalle" type="text" >
       </input>
       
     </div>
@@ -72,10 +78,10 @@ class Agregar extends React.Component{
 
      {/*El vin*/}
     <div class="w-full md:w-1/2 px-3">
-      <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
+      <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 text-center" for="Vin">
         Vin
       </label>
-      <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="">
+      <input class="rounded-full block w-full bg-gray-300 text-gray-700 border text-center border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="Vin" type="text" >
           </input>
       </div>
   </div>
@@ -85,10 +91,10 @@ class Agregar extends React.Component{
    {/*codigo*/}
   <div class="flex flex-wrap -mx-3 mb-6">
     <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-      <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
+      <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 text-center" for="Codigo">
         Codigo
       </label>
-      <input class="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="">
+      <input class="rounded-full block w-full bg-gray-300 text-gray-700 border text-center rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="Codigo" type="text" >
       </input>
       
     </div>
@@ -96,10 +102,10 @@ class Agregar extends React.Component{
 
      {/*Proveedor*/}
     <div class="w-full md:w-1/2 px-3">
-      <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
+      <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 text-center" for="Proveedor">
         proveedor
       </label>
-      <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="">
+      <input class="rounded-full block w-full bg-gray-300 text-gray-700 border text-center border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="Proveedor" type="text" >
           </input>
       </div>
       
@@ -111,10 +117,10 @@ class Agregar extends React.Component{
  {/*Ano*/}
   <div class="flex flex-wrap -mx-3 mb-6">
     <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-      <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
+      <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 text-center" for="Anio">
         Año
       </label>
-      <input class="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="">
+      <input class="rounded-full block w-full bg-gray-300 text-gray-700 border text-center rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="Anio" type="text" >
       </input>
       
     </div>
@@ -124,54 +130,53 @@ class Agregar extends React.Component{
  
  {/*Color*/}
     <div class="w-full md:w-1/2 px-3">
-      <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
+      <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 text-center" for="Color">
         Color
       </label>
-      <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="">
-          </input>
+      <ColorPicker/>
       </div>
       </div>
  {/*fin Color*/}
  
            {/*Inicia seccion de radio botones*/}
-      <span>----------------------------Estado del vehiculo--------------------------</span>
-  
+           
+      <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2  text-center text-xl">Estado Del vehiculo</label>
    {/*Inicia todo lo de estado*/}
-  <h1 class="mb-6 pt-6 mx-auto text-center"> Estado Del Vehiculo:</h1>
+  
   <div class="mx-auto max-w-sm text-center flex flex-wrap justify-center">
   
     <div class="flex items-center mr-4 mb-4">
       <input id="radio1" type="radio" name="radio" class="hidden" checked />
       <label for="radio1" class="flex items-center cursor-pointer">
-       <span class="w-4 h-4 inline-block mr-1 rounded-full border border-grey"></span>
+       <span class="w-4 h-4 inline-block mr-1 rounded-full border border-black"></span>
        Disponible</label>
      </div>
   
      <div class="flex items-center mr-4 mb-4">
       <input id="radio2" type="radio" name="radio" class="hidden" />
       <label for="radio2" class="flex items-center cursor-pointer">
-       <span class="w-4 h-4 inline-block mr-1 rounded-full border border-grey"></span>
+       <span class="w-4 h-4 inline-block mr-1 rounded-full border border-black"></span>
        Apartado</label>
      </div>
     
       <div class="flex items-center mr-4 mb-4">
       <input id="radio3" type="radio" name="radio" class="hidden" />
       <label for="radio3" class="flex items-center cursor-pointer">
-       <span class="w-4 h-4 inline-block mr-1 rounded-full border border-grey"></span>
+       <span class="w-4 h-4 inline-block mr-1 rounded-full border border-black"></span>
        Trade</label>
      </div>
    
    <div class="flex items-center mr-4 mb-4">
       <input id="radio4" type="radio" name="radio" class="hidden" />
       <label for="radio4" class="flex items-center cursor-pointer">
-       <span class="w-4 h-4 inline-block mr-1 rounded-full border border-grey"></span>
+       <span class="w-4 h-4 inline-block mr-1 rounded-full border border-black"></span>
        Repo</label>
      </div>
    
    <div class="flex items-center mr-4 mb-4">
       <input id="radio5" type="radio" name="radio" class="hidden" />
       <label for="radio5" class="flex items-center cursor-pointer">
-       <span class="w-4 h-4 inline-block mr-1 rounded-full border border-grey"></span>
+       <span class="w-4 h-4 inline-block mr-1 rounded-full border border-black"></span>
       Devuelto</label>
      </div>
    </div>
@@ -184,14 +189,14 @@ class Agregar extends React.Component{
     <div class="flex items-center mr-4 mb-4">
       <input id="radio1" type="radio" name="radio" class="hidden" checked />
       <label for="radio1" class="flex items-center cursor-pointer">
-       <span class="w-4 h-4 inline-block mr-1 rounded-full border border-grey"></span>
+       <span class="w-4 h-4 inline-block mr-1 rounded-full border border-black"></span>
        Si</label>
      </div>
   
      <div class="flex items-center mr-4 mb-4">
       <input id="radio2" type="radio" name="radio" class="hidden" />
       <label for="radio2" class="flex items-center cursor-pointer">
-       <span class="w-4 h-4 inline-block mr-1 rounded-full border border-grey"></span>
+       <span class="w-4 h-4 inline-block mr-1 rounded-full border border-black"></span>
        No</label>
      </div>
      </div>
@@ -204,14 +209,14 @@ class Agregar extends React.Component{
     <div class="flex items-center mr-4 mb-4">
       <input id="radio1" type="radio" name="radio" class="hidden" checked />
       <label for="radio1" class="flex items-center cursor-pointer">
-       <span class="w-4 h-4 inline-block mr-1 rounded-full border border-grey"></span>
+       <span class="w-4 h-4 inline-block mr-1 rounded-full border border-black"></span>
        Si</label>
      </div>
   
      <div class="flex items-center mr-4 mb-4">
       <input id="radio2" type="radio" name="radio" class="hidden" />
       <label for="radio2" class="flex items-center cursor-pointer">
-       <span class="w-4 h-4 inline-block mr-1 rounded-full border border-grey"></span>
+       <span class="w-4 h-4 inline-block mr-1 rounded-full border border-black"></span>
        No</label>
      </div>
     </div>
@@ -224,14 +229,14 @@ class Agregar extends React.Component{
       <div class="flex items-center mr-4 mb-4">
         <input id="radio1" type="radio" name="radio" class="hidden" checked />
         <label for="radio1" class="flex items-center cursor-pointer">
-         <span class="w-4 h-4 inline-block mr-1 rounded-full border border-grey"></span>
+         <span class="w-4 h-4 inline-block mr-1 rounded-full border border-black"></span>
          Si</label>
        </div>
     
        <div class="flex items-center mr-4 mb-4">
         <input id="radio2" type="radio" name="radio" class="hidden" />
         <label for="radio2" class="flex items-center cursor-pointer">
-         <span class="w-4 h-4 inline-block mr-1 rounded-full border border-grey"></span>
+         <span class="w-4 h-4 inline-block mr-1 rounded-full border border-black"></span>
          No</label>
        </div>
        </div>
@@ -242,14 +247,14 @@ class Agregar extends React.Component{
     <div class="flex items-center mr-4 mb-4">
       <input id="radio1" type="radio" name="radio" class="hidden" checked />
       <label for="radio1" class="flex items-center cursor-pointer">
-       <span class="w-4 h-4 inline-block mr-1 rounded-full border border-grey"></span>
+       <span class="w-4 h-4 inline-block mr-1 rounded-full border border-black"></span>
        Salvage</label>
      </div>
   
      <div class="flex items-center mr-4 mb-4">
       <input id="radio2" type="radio" name="radio" class="hidden" />
       <label for="radio2" class="flex items-center cursor-pointer">
-       <span class="w-4 h-4 inline-block mr-1 rounded-full border border-grey"></span>
+       <span class="w-4 h-4 inline-block mr-1 rounded-full border border-black"></span>
        Clean</label>
      </div>
       {/*fin salvage o clean*/}
@@ -263,31 +268,31 @@ class Agregar extends React.Component{
 
          
           <div class="w-full md:4 px-3">
-      <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 text-center" for="grid-last-name">
+      <label class="block uppercase tracking-wide text-gray-700 text-xs text-center font-bold mb-2 text-center" for="PrecioCompra">
         Valor Compra
       </label>
-      <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="">
+      <input class="rounded-full block w-full bg-gray-300 text-gray-700 text-center border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="PrecioCompra" type="text">
           </input>
       </div>
       <div class="w-full md:4 px-3">
-      <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 text-center" for="grid-last-name">
+      <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 text-center" for="PrecioInvest">
         Valor invertido
       </label>
-      <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="">
+      <input class=" rounded-full block w-full bg-gray-300 text-gray-700 text-center border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="PrecioInvest" type="text" >
           </input>
       </div>
       <div class="w-full md:4  px-3">
-      <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 text-center" for="grid-last-name">
+      <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 text-center" for="PrecioFinal">
         Precio Final
       </label>
-      <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="">
+      <input class="rounded-full block w-full bg-gray-300 text-gray-700 text-center border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="PrecioFinal" type="text" >
           </input>
       </div>
-      <button class=" w-33 bg-black hover:bg-gray-100 text-white font-semibold py-2 px-4 border border-gray-400 ">
-      Agregar Vehiculo
+        <button class="bg-black w-full hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full ">
+        Agregar Vehiculo
         </button>
-   {/*fin costos*/}
-     </form>
+   {/*fin costos*/}     
+          </div>
           </div>
           );
       }
