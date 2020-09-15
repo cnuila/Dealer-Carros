@@ -40,7 +40,7 @@ class Counter extends Component {
                 valorGuardar = "Cualquiera"
             } else {
                 if (nuevoValor < minimo) {
-                    valorGuardar = minimo
+                    valorGuardar = "Cualquiera"
                 }
             }
             this.setState({
