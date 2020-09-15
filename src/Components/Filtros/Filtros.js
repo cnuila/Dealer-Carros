@@ -8,7 +8,7 @@ function Filtros(props) {
         <div className={"grid grid-cols-2 sm:grid-cols-4 bg-gray-900 rounded-lg text-sm font-semibold mx-6 sm:mx-12 p-5 text-gray-100"}>
 
             <div className="flex items-center space-x-1 m-2 sm:m-1 col-span-2 sm:col-span-1">
-                <div className="sm:ml-3">
+                <div>
                     Año
                 </div>
                 <div>
@@ -17,7 +17,7 @@ function Filtros(props) {
             </div>
 
             <div className="flex items-center space-x-4 transform scale-95 sm:scale-100 sm:m-1 col-span-2 sm:col-span-1">
-                <div className="ml-0 sm:ml-3">
+                <div>
                     Color
                 </div>
                 <div>
@@ -25,20 +25,20 @@ function Filtros(props) {
                 </div>
             </div>
 
-            <div className="flex items-center m-2 sm:m-1 col-span-2 sm:col-span-1">
-                <div className="flex-1">
+            <div className="flex space-x-7 sm:space-x-4 items-center m-2 sm:m-1 col-span-2 sm:col-span-1">
+                <div>
                     Precio Max.
                 </div>
-                <div className="flex-1">
+                <div>
                     <Counter inicial={"Cualquiera"} minimo={0} />
                 </div>
             </div>
 
-            <div className="flex items-center m-2 sm:m-1 col-span-2 sm:col-span-1">
-                <div className="flex-1 ml-0 sm:ml-4">
+            <div className="flex space-x-7 sm:space-x-4 items-center m-2 sm:m-1 col-span-2 sm:col-span-1">
+                <div>
                     Precio Min.
                 </div>
-                <div className="flex-1">
+                <div>
                     <Counter inicial={"Cualquiera"} minimo={0} />
                 </div>
             </div>
