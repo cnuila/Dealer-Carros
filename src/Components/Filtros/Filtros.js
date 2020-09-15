@@ -9,11 +9,11 @@ function Filtros(props) {
         <div className={"grid grid-cols-4 bg-gray-900 rounded-lg mx-12 p-5 transform scale-75 sm:scale-100 place-items-center text-gray-100"}>
 
             <div className="flex items-center">
-                <div className="flex-1 mx-4 my-1">
+                <div className="flex-1 mx-2 my-1">
                     Año
                 </div>
                 <div className="flex-1">
-                    <Counter inicial={2000} minimo={1950}/>
+                    <Counter inicial={"Cualquiera"} minimo={1950}/>
                 </div>
             </div>
             <div className="flex items-center my-1">

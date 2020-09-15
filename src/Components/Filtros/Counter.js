@@ -10,23 +10,29 @@ class Counter extends Component {
 
 
     handleChange = ({ target }) => {
-        let { name, value } = target                
-        if ((value - 0) >= 0) {
-            this.setState({
-                [name]: value - 0,
-            })
-        }
-        if ((value - 0) < 0) {
+        let { name, value } = target
+        let { numero } = this.state
+        if ((value - 0) === 0) {
             this.setState({
                 [name]: "Cualquiera",
             })
+        } else {
+            let valor = value
+            if (numero === "Cualquiera") {                
+                valor = valor.substring(valor.length-1)
+            }
+            if ((valor - 0) >= 0) {
+                this.setState({
+                    [name]: valor - 0,
+                })
+            }
         }
-        console.log(value)
     }
 
     decrement = () => {
         let { minimo } = this.props
-        let nuevoValor = this.state.numero
+        let { numero } = this.state
+        let nuevoValor = numero
         if (nuevoValor !== "Cualquiera") {
             nuevoValor--
             let valorGuardar = nuevoValor
@@ -34,7 +40,7 @@ class Counter extends Component {
                 valorGuardar = "Cualquiera"
             } else {
                 if (nuevoValor < minimo) {
-                    valorGuardar = nuevoValor++
+                    valorGuardar = minimo
                 }
             }
             this.setState({
@@ -44,9 +50,11 @@ class Counter extends Component {
     }
 
     increment = () => {
-        let nuevoValor = this.state.numero
-        if (nuevoValor !== "Cualquiera") {
-
+        let { minimo } = this.props
+        let { numero } = this.state
+        let nuevoValor = numero
+        if (nuevoValor === "Cualquiera") {
+            nuevoValor = minimo - 1
         }
         nuevoValor++
         this.setState({
@@ -56,7 +64,7 @@ class Counter extends Component {
 
     render() {
         return (
-            <div className="h-10 w-40 transform scale-75">
+            <div className="h-10 w-48 transform scale-75">
 
                 <div className="flex flex-row h-10 w-full rounded-lg relative bg-transparent mt-1">
                     <button className="bg-gray-800 text-gray-100 hover:text-gray-200 hover:bg-gray-700 h-full w-20 rounded-l cursor-pointer focus:outline-none"
@@ -78,7 +86,7 @@ class Counter extends Component {
 }
 
 Counter.defaultProps = {
-    inicial: 0,
+    inicial: "Cualquiera",
     minimo: 0,
 };
 
