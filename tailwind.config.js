@@ -5,8 +5,14 @@ module.exports = {
   },
   purge: [],
   theme: {
-    extend: {},
+    extend: {
+      spacing: {
+        '100': '9rem',
+      }
+    },
   },
   variants: {},
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/custom-forms'),
+  ],
 }

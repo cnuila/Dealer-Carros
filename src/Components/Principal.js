@@ -54,15 +54,12 @@ class Principal extends React.Component {
 
     let translateCarros
     let textoFiltro
-    let moverFiltros
     if (this.state.mostrarFiltros) {
       translateCarros = "0"
       textoFiltro = "Esconder"
-      moverFiltros = "-2"
     } else {
-      translateCarros = "32 sm:-translate-y-40"
+      translateCarros = "100"
       textoFiltro = "Mostrar"
-      moverFiltros = "-5"
     }
 
     return (
@@ -109,7 +106,7 @@ class Principal extends React.Component {
                 <span className="flex-1">{textoFiltro + " filtros"}</span>
               </button>
             </div>
-            <Filtros moverFiltros={moverFiltros} />
+            <Filtros />
           </div>
 
           {/*Carros*/}
@@ -163,7 +160,6 @@ class Principal extends React.Component {
               tipoTitulo={"S"}
             />
           </div>
-
         </div>
       </div>
     );
