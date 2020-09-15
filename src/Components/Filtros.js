@@ -11,7 +11,7 @@ function Filtros(props) {
 
             <div className="flex items-center">
                 <div className="flex-1 mx-4 my-1">
-                    Año:
+                    Año
                 </div>
                 <div className="flex-1">
                     <DatePicker
@@ -26,7 +26,7 @@ function Filtros(props) {
             </div>
             <div className="flex items-center my-1">
                 <div className="flex-1 mx-4">
-                    Color:
+                    Color
                 </div>
                 <div className="flex!">
                     <ColorPicker />
