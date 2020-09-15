@@ -160,6 +160,7 @@ class Principal extends React.Component {
               tipoTitulo={"S"}
             />
           </div>
+          
         </div>
       </div>
     );
