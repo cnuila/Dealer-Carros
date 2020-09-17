@@ -6,6 +6,8 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
+    "all": "0.0.0",
+    "postcss": "^8.0.5",
     "react": "^16.13.1",
     "react-color": "^2.18.1",
     "react-datepicker": "^3.1.3",
