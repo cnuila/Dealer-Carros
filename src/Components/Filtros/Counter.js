@@ -30,11 +30,11 @@ class Counter extends Component {
     }
 
     decrement = () => {
-        let { minimo } = this.props
+        let { minimo, step } = this.props
         let { numero } = this.state
         let nuevoValor = numero
         if (nuevoValor !== "Cualquiera") {
-            nuevoValor--
+            nuevoValor-=step
             let valorGuardar = nuevoValor
             if (nuevoValor === 0) {
                 valorGuardar = "Cualquiera"
@@ -50,7 +50,7 @@ class Counter extends Component {
     }
 
     increment = () => {
-        let { minimo } = this.props
+        let { minimo, step } = this.props
         let { numero } = this.state
         let nuevoValor = numero
         if (nuevoValor === "Cualquiera") {
@@ -60,7 +60,7 @@ class Counter extends Component {
                 nuevoValor = minimo - 1
             }            
         }
-        nuevoValor++
+        nuevoValor+=step
         this.setState({
             numero: nuevoValor,
         })
@@ -92,6 +92,7 @@ class Counter extends Component {
 Counter.defaultProps = {
     inicial: "Cualquiera",
     minimo: 0,
+    step: 1,
 };
 
 export default Counter;
