@@ -9,7 +9,9 @@ function App() {
   return (
     <Router>
       <Switch>
-        <Principal />
+        <Route path="/" exact component={Principal} />
+        <Route path="/login" component={LogIn} />
+        <Route path="/agregar-carro" component={Agregar} />
       </Switch>
     </Router>
   );
