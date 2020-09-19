@@ -2,7 +2,8 @@ import React from "react";
 import foto from "../modelx.jpg";
 
 function Carro(props) {
-  //funcion que agrega coma al precio
+
+  {/*funcion que agrega coma al precio*/}
   function coma() {
     let { precio } = props;
     let precioS = precio.toString();

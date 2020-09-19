@@ -2,6 +2,8 @@ import React from "react";
 import Carro from "./Carro";
 import Estado from "./Estado";
 import Filtros from "./Filtros/Filtros";
+import InfoCarro from "./InfoCarro";
+
 
 class Principal extends React.Component {
   constructor(props) {
@@ -14,6 +16,7 @@ class Principal extends React.Component {
         { estado: "Vendido", selected: false, color: "text-yellow-400" },
       ],
       mostrarFiltros: false,
+      mostrarInfo: false,
     };
     this.clicEstadoCarro = this.clicEstadoCarro.bind(this);
   }
@@ -41,12 +44,18 @@ class Principal extends React.Component {
     })
   }
 
+  clicMostraInfo = () => {
+    this.setState({
+      mostrarInfo: !this.state.mostrarInfo
+    })
+  }
+
   render() {
     let botonesEstados;
     let { estados } = this.state;
     botonesEstados = estados.map((boton) => {
       return (
-        <div>
+        <div key={boton.estado}>
           <Estado estado={boton.estado} selected={boton.selected} color={boton.color} clicEstadoCarro={this.clicEstadoCarro} />
         </div>
       );
@@ -90,7 +99,6 @@ class Principal extends React.Component {
           </div>
         </nav>
         {/*fin del navbar*/}
-
         <div>
 
           {/*Botones Estado y filtro*/}
@@ -108,6 +116,9 @@ class Principal extends React.Component {
             </div>
             <Filtros />
           </div>
+          {/*Fin de filtros*/}
+
+
 
           {/*Carros*/}
           <div className={"border-t-2 border-gray-400 pt-5 grid grid-cols-1 md:grid-cols-4 gap-6 bg-gray-100 place-items-center mb-10 mt-4 md:mt-8 mx-6 md:mx-8 transform transition duration-500 ease-in-out -translate-y-" + translateCarros}>
@@ -160,9 +171,20 @@ class Principal extends React.Component {
               tipoTitulo={"S"}
             />
           </div>
-          
+          {/*Ventana para info Vehiculo*/}
+          <div>
+            <button className="bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
+              type="button"
+              style={{ transition: "all .15s ease" }} onClick={this.clicMostraInfo}>
+              HOLA
+            </button>
+            <div>
+              <InfoCarro onClick={this.clicMostraInfo} />
+            </div>
+          </div>
+          {/*Fin de la Ventana*/}
         </div>
-      </div>
+      </div >
     );
   }
 }

@@ -1,38 +1,42 @@
 import React, { Component } from 'react'
 
 class Counter extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            numero: props.inicial,
+
+    mandarPadre = (valor) => {
+        let target = {
+            name:this.props.nombre,
+            type:"text",
+            value:valor,
         }
+        let evento = {
+            target
+        }
+        this.props.handleInputChange(evento)
     }
 
-
     handleChange = ({ target }) => {
-        let { name, value } = target
-        let { numero } = this.state
+        let { value } = target
+        let { valor } = this.props
+        let nuevoValor
         if ((value - 0) === 0) {
-            this.setState({
-                [name]: "Cualquiera",
-            })
+            nuevoValor = "Cualquiera"         
         } else {
-            let valor = value
-            if (numero === "Cualquiera") {                
-                valor = valor.substring(valor.length-1)
+            nuevoValor = value
+            if (valor === "Cualquiera") {                
+                nuevoValor = nuevoValor.substring(nuevoValor.length-1)
             }
-            if ((valor - 0) >= 0) {
-                this.setState({
-                    [name]: valor - 0,
-                })
+            if (!isNaN(nuevoValor - 0)){
+                nuevoValor = nuevoValor - 0
+            } else {
+                nuevoValor = valor
             }
         }
+        this.mandarPadre(nuevoValor)
     }
 
     decrement = () => {
-        let { minimo, step } = this.props
-        let { numero } = this.state
-        let nuevoValor = numero
+        let { minimo, step, valor } = this.props
+        let nuevoValor = valor
         if (nuevoValor !== "Cualquiera") {
             nuevoValor-=step
             let valorGuardar = nuevoValor
@@ -43,16 +47,13 @@ class Counter extends Component {
                     valorGuardar = "Cualquiera"
                 }
             }
-            this.setState({
-                numero: valorGuardar,
-            })
+            this.mandarPadre(valorGuardar)
         }
     }
 
     increment = () => {
-        let { minimo, step } = this.props
-        let { numero } = this.state
-        let nuevoValor = numero
+        let { minimo, step, valor } = this.props
+        let nuevoValor = valor
         if (nuevoValor === "Cualquiera") {
             if (minimo === 0){
                 nuevoValor = 0
@@ -61,9 +62,7 @@ class Counter extends Component {
             }            
         }
         nuevoValor+=step
-        this.setState({
-            numero: nuevoValor,
-        })
+        this.mandarPadre(nuevoValor)
     }
 
     render() {
@@ -73,15 +72,15 @@ class Counter extends Component {
                 <div className="flex flex-row h-10 w-full rounded-lg relative bg-transparent mt-1">
                     <button className="bg-gray-800 text-gray-100 hover:text-gray-200 hover:bg-gray-700 h-full w-20 rounded-l cursor-pointer focus:outline-none"
                         onClick={this.decrement}>
-                        <span class="m-auto text-2xl font-thin">−</span>
+                        <span className="m-auto text-2xl font-thin">−</span>
                     </button>
 
                     <input className="outline-none focus:outline-none text-center w-full bg-gray-800 font-semibold text-md hover:text-gray-500 focus:text-gray-500  md:text-basecursor-default flex items-center text-gray-100  outline-none"
-                        name="numero" type="text" value={this.state.numero} onChange={this.handleChange}></input>
+                        name="numero" type="text" value={this.props.valor} onChange={this.handleChange}></input>
 
                     <button className="bg-gray-800 text-gray-100 hover:text-gray-200 hover:bg-gray-700 h-full w-20 rounded-r cursor-pointer focus:outline-none"
                         onClick={this.increment}>
-                        <span class="m-auto text-2xl font-thin">+</span>
+                        <span className="m-auto text-2xl font-thin">+</span>
                     </button>
                 </div>
             </div>
@@ -90,7 +89,7 @@ class Counter extends Component {
 }
 
 Counter.defaultProps = {
-    inicial: "Cualquiera",
+    valor:0,
     minimo: 0,
     step: 1,
 };
