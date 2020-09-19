@@ -1,12 +1,13 @@
 import React from "react";
+import { storage } from "../firebase"
 import foto from "../modelx.jpg";
 
 function Carro(props) {
 
   /*funcion que agrega coma al precio*/
   const coma = () => {
-    let { precio } = props;
-    let precioS = precio.toString();
+    let { precioFinal } = props.info;
+    let precioS = precioFinal.toString();
     let cont = 0;
     let nuevoS = "";
     if (precioS.length > 3) {
@@ -23,10 +24,32 @@ function Carro(props) {
       }
       return nuevoS;
     }
-    return precio.toString();
+    return precioFinal.toString();
   }
 
-  const { ano, marca, modelo, estado, tipoTitulo } = props;
+  let tipoTitulo
+  if (typeof (props.info.salvage) !== "undefined") {
+    if (props.info.salvage !== false) {
+      tipoTitulo = "S"
+    }
+  }
+  if (typeof (props.info.clean) !== "undefined") {
+    if (props.info.clean !== false) {
+      tipoTitulo = "C"
+    }
+  }
+
+  const { ano, marca, modelo, fotos, estado } = props.info;
+
+  let url
+  let gsReference = storage.refFromURL(fotos[0])
+  gsReference.getDownloadURL().then(async direc => {
+    url = await direc
+  })
+  console.log(url)
+
+
+
   return (
     <div className="max-w-xs px-4 transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105">
       <div className="relative pb-48">
@@ -51,7 +74,7 @@ function Carro(props) {
               {estado}
             </div>
             <div className="col-start-4 flex justify-end text-gray-500 text-sm font-semibold">
-              {tipoTitulo}
+              {url}
             </div>
           </div>
         </div>

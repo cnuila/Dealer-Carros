@@ -21,7 +21,7 @@ class Agregar extends React.Component {
                   d="M462.6 214.404l-39.2-17.9-34.6-55.2c-10-16-27.6-25.7-46.5-25.6H194.9c-17.1 0-33.3 7.9-43.7 21.5l-44.7 58.5-74.5 20.4c-18.9 5.2-32 22.5-32 42.1v28.5c0 24.1 19.2 44 43.3 44h6.4c7.7 29.7 38 47.5 67.7 39.8 19.5-5.1 34.8-20.3 39.8-39.8h168c7.7 29.7 38 47.5 67.7 39.8 19.5-5.1 34.8-20.3 39.8-39.8h12c24.1 0 43.3-19.9 43.3-44v-32.5c.1-17.1-9.9-32.7-25.4-39.8zm-359.2 137.7c-19.6 0-35.5-15.9-35.5-35.5s15.9-35.5 35.5-35.5 35.5 15.9 35.5 35.5c.1 19.5-15.8 35.4-35.5 35.5zm275.5 0c-19.6 0-35.5-15.9-35.5-35.5s15.9-35.5 35.5-35.5 35.5 15.9 35.5 35.5c.1 19.5-15.8 35.4-35.5 35.5zm65.8-41.4h-10.6c-3.3-30.5-30.8-52.5-61.3-49.1-25.9 2.8-46.3 23.3-49.1 49.1H158.6c-3.3-30.5-30.8-52.5-61.3-49.1-25.9 2.8-46.3 23.3-49.1 49.1h-5c-13.1 0-23.3-10.9-23.3-24v-28.5c-.1-10.7 7-20 17.3-22.9l77.9-21.3c2.1-.6 4-1.8 5.3-3.6l46.6-61.1c6.7-8.6 17-13.6 27.9-13.6h147.4c12-.1 23.3 6 29.6 16.2l36.2 57.8c1 1.7 2.6 3 4.3 3.8l41.8 19.1c8.4 3.9 13.8 12.3 13.7 21.6v32.5h.1c0 13.1-10.2 24-23.3 24z"
                   data-original="#000000" data-old_color="#000000" />
               </svg>
-              <span>Agregar</span>
+              <span>Home</span>
             </button>
             <button className="focus:outline-none bg-gray-900 hover:bg-gray-800 text-gray-100 font-bold py-2 px-4 rounded inline-flex items-center">
               <svg className="w-6 h-6 mr-2 fill-current text-gay-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -37,15 +37,15 @@ class Agregar extends React.Component {
 
 
         {/*este primer div hacer el trabajo de un container*/}
-        <div class=" w-full inline-block w-center">
-          <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2  text-center text-2xl">Agregar Carro</label>
-          <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2  text-center text-xl">Informacion General</label>
+        <div className=" w-full inline-block w-center">
+          <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2  text-center text-2xl">Agregar Carro</label>
+          <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2  text-center text-xl">Informacion General</label>
           {/*Marca*/}
-          <div class="flex content-start  -mx-3 mb-6">
-            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+          <div className="flex content-start  -mx-3 mb-6">
+            <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
 
-              <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2  text-center " for="Marca" >Marca</label>
-              <input class="rounded-full block w-full bg-gray-300 text-gray-700 border text-center rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="Marca" type="text" >
+              <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2  text-center " for="Marca" >Marca</label>
+              <input className="rounded-full block w-full bg-gray-300 text-gray-700 border text-center rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="Marca" type="text" >
               </input>
 
             </div>
@@ -53,24 +53,24 @@ class Agregar extends React.Component {
             {/*fin Marca*/}
 
             {/*Modelo*/}
-            <div class="w-full md:w-1/2 px-3">
-              <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 text-center" for="Modelo">
+            <div className="w-full md:w-1/2 px-3">
+              <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 text-center" for="Modelo">
                 Modelo
       </label>
-              <input class="rounded-full block w-full bg-gray-300 text-gray-700 border text-center border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="Modelo" type="text" >
-              </input>
+              <input className="rounded-full block w-full bg-gray-300 text-gray-700 border text-center border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="Modelo" type="text" >
+              </input> 
             </div>
           </div>
 
           {/*fin Modelo*/}
 
           {/*millaje*/}
-          <div class="flex flex-wrap -mx-3 mb-6">
-            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-              <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 text-center" for="Millaje">
+          <div className="flex flex-wrap -mx-3 mb-6">
+            <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+              <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 text-center" for="Millaje">
                 Millaje
       </label>
-              <input class="rounded-full block w-full bg-gray-300 text-gray-700 border  text-center rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="Mijalle" type="text" >
+              <input className="rounded-full block w-full bg-gray-300 text-gray-700 border  text-center rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="Mijalle" type="text" >
               </input>
 
             </div>
@@ -78,11 +78,11 @@ class Agregar extends React.Component {
             {/*fin millaje*/}
 
             {/*El vin*/}
-            <div class="w-full md:w-1/2 px-3">
-              <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 text-center" for="Vin">
+            <div className="w-full md:w-1/2 px-3">
+              <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 text-center" for="Vin">
                 Vin
       </label>
-              <input class="rounded-full block w-full bg-gray-300 text-gray-700 border text-center border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="Vin" type="text" >
+              <input className="rounded-full block w-full bg-gray-300 text-gray-700 border text-center border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="Vin" type="text" >
               </input>
             </div>
           </div>
@@ -90,23 +90,23 @@ class Agregar extends React.Component {
           {/*fin vin*/}
 
           {/*codigo*/}
-          <div class="flex flex-wrap -mx-3 mb-6">
-            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-              <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 text-center" for="Codigo">
+          <div className="flex flex-wrap -mx-3 mb-6">
+            <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+              <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 text-center" for="Codigo">
                 Codigo
       </label>
-              <input class="rounded-full block w-full bg-gray-300 text-gray-700 border text-center rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="Codigo" type="text" >
+              <input className="rounded-full block w-full bg-gray-300 text-gray-700 border text-center rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="Codigo" type="text" >
               </input>
 
             </div>
             {/*fin Codigo*/}
 
             {/*Proveedor*/}
-            <div class="w-full md:w-1/2 px-3">
-              <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 text-center" for="Proveedor">
+            <div className="w-full md:w-1/2 px-3">
+              <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 text-center" for="Proveedor">
                 proveedor
       </label>
-              <input class="rounded-full block w-full bg-gray-300 text-gray-700 border text-center border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="Proveedor" type="text" >
+              <input className="rounded-full block w-full bg-gray-300 text-gray-700 border text-center border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="Proveedor" type="text" >
               </input>
             </div>
 
@@ -116,12 +116,12 @@ class Agregar extends React.Component {
 
 
           {/*Ano*/}
-          <div class="flex flex-wrap -mx-3 mb-6">
-            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-              <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 text-center" for="Anio">
+          <div className="flex flex-wrap -mx-3 mb-6">
+            <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+              <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 text-center" for="Anio">
                 Año
       </label>
-              <input class="rounded-full block w-full bg-gray-300 text-gray-700 border text-center rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="Anio" type="text" >
+              <input className="rounded-full block w-full bg-gray-300 text-gray-700 border text-center rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="Anio" type="text" >
               </input>
 
             </div>
@@ -130,8 +130,8 @@ class Agregar extends React.Component {
 
 
             {/*Color*/}
-            <div class="w-full md:w-1/2 px-3">
-              <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 text-center" for="Color">
+            <div className="w-full md:w-1/2 px-3">
+              <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 text-center" for="Color">
                 Color
       </label>
               <ColorPicker />
@@ -141,7 +141,7 @@ class Agregar extends React.Component {
 
           {/*Inicia seccion de radio botones*/}
 
-          <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2  text-center text-xl">Estado Del vehiculo</label>
+          <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2  text-center text-xl">Estado Del vehiculo</label>
           {/*Inicia todo lo de estado*/}
 
           <div class="mx-auto max-w-sm text-center flex flex-wrap justify-center">

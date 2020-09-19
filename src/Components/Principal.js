@@ -35,6 +35,7 @@ class Principal extends React.Component {
         carros: rCarros,
       })
     })
+    console.log(rCarros)
   }
 
   componentDidMount() {
@@ -72,12 +73,12 @@ class Principal extends React.Component {
 
   render() {
     let botonesEstados;
-    let { estados } = this.state;
+    let { estados, carros } = this.state;
     botonesEstados = estados.map((boton) => {
       return (
-        <div key={boton.estado}>
-          <Estado estado={boton.estado} selected={boton.selected} color={boton.color} clicEstadoCarro={this.clicEstadoCarro} />
-        </div>
+        <>
+          <Estado key={boton.estado} estado={boton.estado} selected={boton.selected} color={boton.color} clicEstadoCarro={this.clicEstadoCarro} />
+        </>
       );
     });
 
@@ -90,6 +91,14 @@ class Principal extends React.Component {
       translateCarros = "72 sm:-translate-y-56"
       textoFiltro = "Mostrar"
     }
+
+    let carrosMostrar = carros.map((carro) => {
+      return(
+        <>
+          <Carro info={carro}/>
+        </>
+      )      
+    })
 
     return (
       <div className="bg-gray-100">
@@ -144,54 +153,7 @@ class Principal extends React.Component {
 
           {/*Carros*/}
           <div className={"border-t-2 border-gray-400 pt-5 grid grid-cols-1 md:grid-cols-4 gap-6 bg-gray-100 place-items-center mb-10 mt-4 md:mt-8 mx-6 md:mx-8 transform transition duration-500 ease-in-out -translate-y-" + translateCarros}>
-            <Carro
-              marca={"Tesla"}
-              modelo={"Model X"}
-              ano={2020}
-              precio={30000}
-              estado={"Disponible"}
-              tipoTitulo={"S"}
-            />
-            <Carro
-              marca={"Aston Martin"}
-              modelo={"DBS Superleggera"}
-              ano={2020}
-              precio={400000}
-              estado={"Disponible"}
-              tipoTitulo={"C"}
-            />
-            <Carro
-              marca={"Tesla"}
-              modelo={"Model X"}
-              ano={2020}
-              precio={1230000}
-              estado={"Disponible"}
-              tipoTitulo={"S"}
-            />
-            <Carro
-              marca={"Tesla"}
-              modelo={"Model X"}
-              ano={2020}
-              precio={130000}
-              estado={"Disponible"}
-              tipoTitulo={"S"}
-            />
-            <Carro
-              marca={"Tesla"}
-              modelo={"Model X"}
-              ano={2020}
-              precio={30000}
-              estado={"Disponible"}
-              tipoTitulo={"S"}
-            />
-            <Carro
-              marca={"Tesla"}
-              modelo={"Model X"}
-              ano={2020}
-              precio={30000}
-              estado={"Disponible"}
-              tipoTitulo={"S"}
-            />
+            {carrosMostrar}
           </div>
           {/*Ventana para info Vehiculo*/}
           <div>
