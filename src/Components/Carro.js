@@ -3,8 +3,8 @@ import foto from "../modelx.jpg";
 
 function Carro(props) {
 
-  {/*funcion que agrega coma al precio*/}
-  function coma() {
+  /*funcion que agrega coma al precio*/
+  const coma = () => {
     let { precio } = props;
     let precioS = precio.toString();
     let cont = 0;
@@ -26,7 +26,7 @@ function Carro(props) {
     return precio.toString();
   }
 
-  let { ano, marca, modelo, estado, tipoTitulo } = props;
+  const { ano, marca, modelo, estado, tipoTitulo } = props;
   return (
     <div className="max-w-xs px-4 transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105">
       <div className="relative pb-48">
@@ -50,9 +50,7 @@ function Carro(props) {
             <div className="text-green-500 text-sm mb-2 font-semibold">
               {estado}
             </div>
-            <div></div>
-            <div></div>
-            <div className="flex justify-end text-gray-500 text-sm font-semibold">
+            <div className="col-start-4 flex justify-end text-gray-500 text-sm font-semibold">
               {tipoTitulo}
             </div>
           </div>

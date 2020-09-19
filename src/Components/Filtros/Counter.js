@@ -1,44 +1,44 @@
-import React, { Component } from 'react'
+import React from 'react'
 
-class Counter extends Component {
+function Counter(props) {
 
-    mandarPadre = (valor) => {
+    const mandarPadre = (valor) => {
         let target = {
-            name:this.props.nombre,
-            type:"text",
-            value:valor,
+            name: props.nombre,
+            type: "text",
+            value: valor,
         }
         let evento = {
             target
         }
-        this.props.handleInputChange(evento)
+        props.handleInputChange(evento)
     }
 
-    handleChange = ({ target }) => {
+    const handleChange = ({ target }) => {
         let { value } = target
-        let { valor } = this.props
+        let { valor } = props
         let nuevoValor
         if ((value - 0) === 0) {
-            nuevoValor = "Cualquiera"         
+            nuevoValor = "Cualquiera"
         } else {
             nuevoValor = value
-            if (valor === "Cualquiera") {                
-                nuevoValor = nuevoValor.substring(nuevoValor.length-1)
+            if (valor === "Cualquiera") {
+                nuevoValor = nuevoValor.substring(nuevoValor.length - 1)
             }
-            if (!isNaN(nuevoValor - 0)){
+            if (!isNaN(nuevoValor - 0)) {
                 nuevoValor = nuevoValor - 0
             } else {
                 nuevoValor = valor
             }
         }
-        this.mandarPadre(nuevoValor)
+        mandarPadre(nuevoValor)
     }
 
-    decrement = () => {
-        let { minimo, step, valor } = this.props
+    const decrement = () => {
+        let { minimo, step, valor } = props
         let nuevoValor = valor
         if (nuevoValor !== "Cualquiera") {
-            nuevoValor-=step
+            nuevoValor -= step
             let valorGuardar = nuevoValor
             if (nuevoValor === 0) {
                 valorGuardar = "Cualquiera"
@@ -47,49 +47,46 @@ class Counter extends Component {
                     valorGuardar = "Cualquiera"
                 }
             }
-            this.mandarPadre(valorGuardar)
+            mandarPadre(valorGuardar)
         }
     }
 
-    increment = () => {
-        let { minimo, step, valor } = this.props
+    const increment = () => {
+        let { minimo, step, valor } = props
         let nuevoValor = valor
         if (nuevoValor === "Cualquiera") {
-            if (minimo === 0){
+            if (minimo === 0) {
                 nuevoValor = 0
             } else {
                 nuevoValor = minimo - 1
-            }            
+            }
         }
-        nuevoValor+=step
-        this.mandarPadre(nuevoValor)
+        nuevoValor += step
+        mandarPadre(nuevoValor)
     }
 
-    render() {
-        return (
-            <div className="h-10 w-48 transform scale-75">
+    return (
+        <div className="h-10 w-48 transform scale-75">
+            <div className="flex flex-row h-10 w-full rounded-lg relative bg-transparent mt-1">
+                <button className="bg-gray-800 text-gray-100 hover:text-gray-200 hover:bg-gray-700 h-full w-20 rounded-l cursor-pointer focus:outline-none"
+                    onClick={decrement}>
+                    <span className="m-auto text-2xl font-thin">−</span>
+                </button>
 
-                <div className="flex flex-row h-10 w-full rounded-lg relative bg-transparent mt-1">
-                    <button className="bg-gray-800 text-gray-100 hover:text-gray-200 hover:bg-gray-700 h-full w-20 rounded-l cursor-pointer focus:outline-none"
-                        onClick={this.decrement}>
-                        <span className="m-auto text-2xl font-thin">−</span>
-                    </button>
+                <input className="outline-none focus:outline-none text-center w-full bg-gray-800 font-semibold text-md hover:text-gray-500 focus:text-gray-500  md:text-basecursor-default flex items-center text-gray-100  outline-none"
+                       type="text" value={props.valor} onChange={handleChange}></input>
 
-                    <input className="outline-none focus:outline-none text-center w-full bg-gray-800 font-semibold text-md hover:text-gray-500 focus:text-gray-500  md:text-basecursor-default flex items-center text-gray-100  outline-none"
-                        name="numero" type="text" value={this.props.valor} onChange={this.handleChange}></input>
-
-                    <button className="bg-gray-800 text-gray-100 hover:text-gray-200 hover:bg-gray-700 h-full w-20 rounded-r cursor-pointer focus:outline-none"
-                        onClick={this.increment}>
-                        <span className="m-auto text-2xl font-thin">+</span>
-                    </button>
-                </div>
+                <button className="bg-gray-800 text-gray-100 hover:text-gray-200 hover:bg-gray-700 h-full w-20 rounded-r cursor-pointer focus:outline-none"
+                    onClick={increment}>
+                    <span className="m-auto text-2xl font-thin">+</span>
+                </button>
             </div>
-        )
-    }
+        </div>
+    );
 }
 
 Counter.defaultProps = {
-    valor:0,
+    valor: 0,
     minimo: 0,
     step: 1,
 };

@@ -3,9 +3,11 @@ import Carro from "./Carro";
 import Estado from "./Estado";
 import Filtros from "./Filtros/Filtros";
 import InfoCarro from "./InfoCarro";
+import { db } from "../firebase"
 
 
 class Principal extends React.Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -15,10 +17,27 @@ class Principal extends React.Component {
         { estado: "Apartado", selected: false, color: "text-blue-600" },
         { estado: "Vendido", selected: false, color: "text-yellow-400" },
       ],
+      carros: [],
       mostrarFiltros: false,
       mostrarInfo: false,
     };
     this.clicEstadoCarro = this.clicEstadoCarro.bind(this);
+  }
+
+  getCarros = async () => {
+    const rCarros = []
+    db.collection("carros").orderBy("ano").limit(30).onSnapshot((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        rCarros.push({ ...doc.data(), id: doc.id })
+      })
+      this.setState({
+        carros: rCarros,
+      })
+    })
+  }
+
+  componentDidMount() {
+    this.getCarros()
   }
 
   //elegir el estado segun el boton
@@ -117,8 +136,6 @@ class Principal extends React.Component {
             <Filtros />
           </div>
           {/*Fin de filtros*/}
-
-
 
           {/*Carros*/}
           <div className={"border-t-2 border-gray-400 pt-5 grid grid-cols-1 md:grid-cols-4 gap-6 bg-gray-100 place-items-center mb-10 mt-4 md:mt-8 mx-6 md:mx-8 transform transition duration-500 ease-in-out -translate-y-" + translateCarros}>
