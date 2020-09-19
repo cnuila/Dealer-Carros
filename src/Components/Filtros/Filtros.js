@@ -21,6 +21,7 @@ class Filtros extends Component {
         }
     }
 
+
     render() {
         return (
             <div className={"grid grid-cols-2 sm:grid-cols-4 bg-gray-900 rounded-lg text-sm font-semibold mx-6 sm:mx-12 p-5 text-gray-100"}>
