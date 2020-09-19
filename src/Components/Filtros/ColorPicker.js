@@ -4,22 +4,27 @@ import "react-datepicker/dist/react-datepicker.css"
 
 
 class ColorPicker extends Component {
-    state = {
-        background:"#1C8D00",
-    };
 
     handleChangeComplete = (color) => {
-        let colorActual = "#1C8D00"
-        if (this.state.background !== color.hex){
+        let colorActual = "transparent"
+        if (this.props.color !== color.hex){
             colorActual = color.hex
         }
-        this.setState({ background: colorActual });
+        let target = {
+            name:"color",
+            type:"color",
+            value:colorActual
+        }
+        let event = {
+            target
+        }
+        this.props.handleInputChange(event)
     };
 
     render() {
         let colors= ["#FF0000", "#0047CB", "#FBFF00", "#FFFFFF", "#000000", "#777777"]
         return (
-            <CirclePicker color={this.state.background}
+            <CirclePicker color={this.props.color}
                 colors={colors}
                 onChangeComplete={this.handleChangeComplete} 
                 width={this.props.width}
