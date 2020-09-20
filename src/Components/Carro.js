@@ -1,5 +1,6 @@
 import React from "react";
 import { storage } from "../firebase"
+import InfoCarro from "./InfoCarro";
 
 function Carro(props) {
   /*funcion que agrega coma al precio*/
@@ -40,11 +41,11 @@ function Carro(props) {
   const { id, ano, marca, modelo, fotos, estado } = props.info;
 
   let colorEstado = "text-green-500"
-  if (estado === "Repo"){
+  if (estado === "Repo") {
     colorEstado = "text-red-600"
-  } else if (estado === "Apartado"){
+  } else if (estado === "Apartado") {
     colorEstado = "text-blue-600"
-  } else if (estado === "Vendido"){
+  } else if (estado === "Vendido") {
     colorEstado = "text-yellow-400"
   }
 
@@ -54,7 +55,7 @@ function Carro(props) {
   }).catch((err) => {
     console.log(err)
   })
-
+  
   return (
     <div className="max-w-xs px-4 transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105">
       <div className="relative pb-48">
@@ -74,7 +75,7 @@ function Carro(props) {
           </div>
 
           <div className="grid grid-cols-4">
-            <div className={colorEstado+ " text-sm mb-2 font-semibold"}>
+            <div className={colorEstado + " text-sm mb-2 font-semibold"}>
               {estado}
             </div>
             <div className="col-start-4 flex justify-end text-gray-500 text-sm font-semibold">
