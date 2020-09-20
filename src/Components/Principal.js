@@ -1,7 +1,7 @@
 import React from "react";
 import Carro from "./Carro";
 import Estado from "./Estado";
-import Filtros from "./Filtros/Filtros";
+import Filtros from "./Filtros";
 import InfoCarro from "./InfoCarro";
 import { db } from "../firebase"
 import { Link } from 'react-router-dom';
