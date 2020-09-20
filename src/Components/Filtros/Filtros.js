@@ -35,6 +35,10 @@ class Filtros extends Component {
         })
     }
 
+    aplicarFiltros = () => {
+        console.log("hola")
+    }
+
     reiniciar = () => {
         this.setState({
             ano:"Cualquiera",
@@ -117,7 +121,8 @@ class Filtros extends Component {
                 </div>
 
                 <div className="sm:col-start-4 m-2 sm:mb-1 place-self-center sm:place-self-end col-span-2 sm:col-span-1">
-                    <button className="focus:outline-none mx-4 sm:mx-5 bg-gray-800 hover:bg-gray-700 text-gray-100 font-semibold py-2 px-4 rounded inline-flex items-center">
+                    <button className="focus:outline-none mx-4 sm:mx-5 bg-gray-800 hover:bg-gray-700 text-gray-100 font-semibold py-2 px-4 rounded inline-flex items-center"
+                            onClick={this.aplicarFiltros}>
                         <span className="flex-1">Aplicar</span>
                     </button>
                     <button className="focus:outline-none mx-4 sm:mx-5 bg-gray-800 hover:bg-gray-700 text-gray-100 font-semibold py-2 px-4 rounded inline-flex items-center"
