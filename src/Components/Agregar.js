@@ -243,21 +243,21 @@ class Agregar extends React.Component {
           
            
           
-            <div class="mx-5 md:flex mb-2">
+            <div class="mx-8 md:flex mb-2">
           <div class="md:w-1/2 px-3 mb-6 md:mb-0">
           <label className="block uppercase tracking-wide text-gray-700 text-m font-bold mb-2 text-center" for="PrecioCompra">Valor Compra</label>
-          <input className="  rounded-full  mx-32  bg-gray-300 text-gray-700  text-center  py-3 px-4 mb-3  focus:bg-white" id="PrecioCompra" type="text" />
+          <input className="  rounded-full  mx-24  bg-gray-300 text-gray-700  text-center  py-3 px-4 mb-3  focus:bg-white" id="PrecioCompra" type="text" />
           </div>
           <div class="md:w-1/2 px-3">
             
             <label className="block uppercase tracking-wide text-gray-700 text-m font-bold mb-2 text-center" for="ValorInvertido">Valor invertido</label>
-            <input className="     rounded-full mx-32  bg-gray-300 text-gray-700  text-center  py-3 px-4 mb-3  focus:bg-white" id="ValorInvertido" type="text" />
+            <input className="     rounded-full mx-20  bg-gray-300 text-gray-700  text-center  py-3 px-4 mb-3  focus:bg-white" id="ValorInvertido" type="text" />
             
             
           </div>
           <div class="md:w-1/2 px-3">
           <label className="block uppercase tracking-wide text-gray-700 text- font-bold mb-2 text-center" for="Precio Final">Precio Final</label>
-          <input className="   rounded-full mx-32 bg-gray-300 text-gray-700  text-center py-3 px-4   focus:bg-white" id="ValorInvertido" type="text" />
+          <input className="   rounded-full mx-24 bg-gray-300 text-gray-700  text-center py-3 px-4   focus:bg-white" id="ValorInvertido" type="text" />
           
           </div>
         </div>
@@ -268,8 +268,8 @@ class Agregar extends React.Component {
 
 
             <Link to="/">
-            <div className='sm:mx-16 md:mx-72 p-8 my-3'>
-            <button class=" mx-56  bg-gray-900 hover:bg-gray-800 text-white font-bold py-2 px-4 rounded-full ">
+            <div className='sm:mx-16 md:mx-72 lg:72p-8 my-3'>
+            <button class="mx-40 bg-gray-900 hover:bg-gray-800 text-white font-bold py-2 px-4 rounded-full ">
             Agregar Vehiculo
           </button>
           </div>
