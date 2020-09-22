@@ -82,10 +82,6 @@ class Principal extends React.Component {
   }
 
   render() {
-    const modal = this.state.mostrarInfo ? (
-      <InfoCarro />
-    ) : null;
-
     let botonesEstados;
     let { estados, carros } = this.state;
     botonesEstados = estados.map((boton) => {
@@ -150,11 +146,7 @@ class Principal extends React.Component {
         </nav>
         {/*fin del navbar*/}
         <div>
-          {/*aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa*/}
-          {this.state.mostrarInfo ? (
-            <InfoCarro/>
-          ) : null}
-          {/*aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa*/}
+
           {/*Botones Estado y filtro*/}
           <div>
             <div className="grid grid-cols-2 md:grid-cols-7 place-items-center m-4 sm:m-6">
@@ -174,16 +166,12 @@ class Principal extends React.Component {
 
           {/*Carros*/}
           <div className={"border-t-2 border-gray-400 pt-5 grid grid-cols-1 md:grid-cols-4 gap-6 bg-gray-100 place-items-center mb-10 mt-4 md:mt-8 mx-6 md:mx-8 transform transition duration-500 ease-in-out -translate-y-" + translateCarros}>
-            {carrosMostrar}
+            {carrosMostrar}{/*Ventana para info Vehiculo*/}
+
           </div>
-          {/*Ventana para info Vehiculo*/}
-          
-          <div>
-            <button class="animated shake bg-red-500 flex-1 border-b-2 md:flex-none border-grey ml-2 hover:bg-grey-lightest text-grey-darkest font-bold py-4 px-6 rounded"
-              onClick={this.clickMostraInfo}>
-              Question
-            </button>
-          </div>
+          {/*aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa*/}
+          <InfoCarro />
+          {/*aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa*/}
           {/*Fin de la Ventana*/}
         </div>
         <div className="py-20"></div>
