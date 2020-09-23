@@ -11,7 +11,9 @@ module.exports = {
       }
     },
   },
-  variants: {},
+  variants: {
+    borderColor: ['responsive', 'hover', 'focus', 'focus-within'],
+  },
   plugins: [
     require('@tailwindcss/custom-forms'),
     require('autoprefixer'),

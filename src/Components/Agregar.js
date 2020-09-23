@@ -1,11 +1,11 @@
 import React from "react";
 import ColorPicker from './Filtros/ColorPicker';
 import { Link } from 'react-router-dom';
-import foto from "./Subirfoto";
 
 class Agregar extends React.Component {
   render() {
     return (
+      
       <div className="bg-gray-100">
         {/*Inicio del navbar*/}
         <nav className="justify-between flex items-center flex-wrap bg-gray-900 p-3">
@@ -34,10 +34,38 @@ class Agregar extends React.Component {
         {/*fin del navbar  .bg-gray-400*/}
 
         {/*Inicio Formulario*/}
-
+        
 
         {/*este primer div hacer el trabajo de un container*/}
-       
+        
+        <link rel="stylesheet" href="build/tailwind.css" />
+        <div class="antialiased p-10">
+        <form>
+          <div>
+            <input type="text" name="username" placeholder=" " />
+            <label for="username">Username</label>
+          </div>
+          <div class="border-b-33">
+            <input type="text" name="username" placeholder=" " />
+            <label for="username">Username</label>
+          </div>
+          <div class="my-4 border-b-2 focus-within:border-blue-500">
+            <input type="text" name="username" placeholder=" " />
+            <label for="username">Username</label>
+          </div>
+        </form>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
         <form className=" place-items-center  w-11/12   shadow-2xl  rounded  inline-block   ml-16 mr-16 mt-8  text-blue-900 bg-gray-100">     
         
           <label className="block uppercase tracking-wide text-gray-700  font-bold mb-2  text-center text-2xl">Agregar Carro</label>
@@ -99,7 +127,7 @@ class Agregar extends React.Component {
 
           {/*Color*/}
 
-          <div className="my-3 md:w-1/2  inline-block p-8">
+          <div className="my-3 md:w-2/4  inline-block p-8">
             <label className="block uppercase tracking-wide text-gray-700 text-m font-bold mb-2 text-center" for="Color">Color</label>
             <div>
               <ColorPicker />
@@ -278,7 +306,10 @@ class Agregar extends React.Component {
 
 
         </form>
-        /* */      </div>
+        /* 
+        
+        
+        */      </div>
 
     );
   }
