@@ -6,6 +6,12 @@ module.exports = {
   purge: [],
   theme: {
     extend: {
+      transformOrigin: {
+        "0": "0%",
+      },
+      zIndex: {
+        "-1": "-1",
+      },
       spacing: {
         '72': '28rem',
       }

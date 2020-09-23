@@ -34,282 +34,191 @@ class Agregar extends React.Component {
         {/*fin del navbar  .bg-gray-400*/}
 
         {/*Inicio Formulario*/}
-        
-
         {/*este primer div hacer el trabajo de un container*/}
-        
-        <link rel="stylesheet" href="build/tailwind.css" />
-        <div class="antialiased p-10">
-        <form>
-          <div>
-            <input type="text" name="username" placeholder=" " />
-            <label for="username">Username</label>
+        <body class="antialiased p-10">
+        <form class="max-w-2xl mx-auto rounded-lg  overflow-hidden p-6 space-y-10 shadow-2xl">
+          <h2 class="text-2xl font-bold text-center">Agregar Carro</h2>
+          <h2 class="text-xl font-bold text-center ">Imagenes</h2>
+          <div class ="mx-auto">
+          <input type="file" name="imgAdd" id="imagen" size="80" />
           </div>
-          <div class="border-b-33">
-            <input type="text" name="username" placeholder=" " />
-            <label for="username">Username</label>
+          <h2 class="text-2xl font-bold text-center underline">Información General</h2>
+           {/*Marcas*/}
+          <div class="  relative   max-w-sm mx-auto border-b-2 w-3/5  focus-within:border-blue-800 p-3">
+          <h2 class="text-md font-bold p-0 ">Marca</h2>
+            <input type="text" name="Marca" placeholder="" class="block w-full  appearance-none focus:outline-none bg-transparent" />
           </div>
-          <div class="my-4 border-b-2 focus-within:border-blue-500">
-            <input type="text" name="username" placeholder=" " />
-            <label for="username">Username</label>
+           {/*Modelo*/}
+          <div class="  relative max-w-sm mx-auto border-b-2 w-3/5 focus-within:border-blue-800 p-3">
+          <h2 class="text-md font-bold p-0 ">Modelo</h2>
+            <input type="text" name="Modelo" placeholder="" class="block w-full  text-center appearance-none focus:outline-none bg-transparent" />
           </div>
-        </form>
-        </div>
-
-
-
-
-
-
-
-
-
-
-
-        <form className=" place-items-center  w-11/12   shadow-2xl  rounded  inline-block   ml-16 mr-16 mt-8  text-blue-900 bg-gray-100">     
-        
-          <label className="block uppercase tracking-wide text-gray-700  font-bold mb-2  text-center text-2xl">Agregar Carro</label>
-          <label className="block uppercase tracking-wide text-gray-700  font-bold mb-2 my-8  text-center text-xl underline">Información General</label>
-        
-           {/*Foto*/}
-        <label className="block uppercase tracking-wide text-gray-700  font-bold mb-2  text-center text-xl">Imagenes</label>
-        <div className=" place-content-between my-3 w-full inline-block px-16">
-        <input type="file" name="imgAdd" id="imagen" size="60"/>
-        </div>
-          {/*Marca*/}
-
-          <div className="place-content-between  w-1/2 inline-block p-8 ">
-            <label className="block uppercase tracking-wide text-gray-700 text-m font-bold mb-2  text-center " for="Marca" >Marca</label>
-            <input className="rounded-full w-1/2  bg-gray-300 text-gray-700 border text-center border-gray-200 py-3 px-4 mb-3 lg:mx-40 focus:outline-none focus:bg-white" id="Marca" type="text" />
+           {/*vin*/}
+          <div class="  relative max-w-sm mx-auto border-b-2 w-3/5 focus-within:border-blue-800 p-3">
+          <h2 class="text-md font-bold p-0 ">VIN</h2>
+            <input type="text" name="VIN" placeholder=" " class="block w-full  text-center appearance-none focus:outline-none bg-transparent" />
           </div>
-
-          {/*Modelo*/}
-
-          <div className="my-3 md:w-1/2 inline-block p-8">
-            <label className="  block uppercase tracking-wide text-gray-700 text-m font-bold mb-2 text-center" for="Modelo"> Modelo </label>
-            <input className="rounded-full w-1/2   bg-gray-300 text-gray-700 border text-center border-gray-200 py-3 px-4 mb-3 lg:mx-40  focus:outline-none focus:bg-white focus:border-gray-500" id="Modelo" type="text" />
+           {/*Millaje*/}
+          <div class="  relative max-w-sm mx-auto border-b-2 w-3/5 focus-within:border-blue-800 p-3">
+          <h2 class="text-md font-bold p-0 ">Millaje</h2>
+            <input type="text" name="Millaje" placeholder="" class="block w-full  text-center appearance-none focus:outline-none bg-transparent" />
           </div>
-
-          {/*VIN*/}
-
-          <div className="my-3 md:w-1/2 inline-block p-8">
-            <label className="block uppercase tracking-wide text-gray-700 text-m font-bold mb-2 text-center" for="Vin">VIN</label>
-            <input className="rounded-full block w-1/2 bg-gray-300 text-gray-700 border text-center border-gray-200  py-3 px-4 lg:mx-40  leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="Vin" type="text" />
+           {/*Codigo*/}
+          <div class="  relative max-w-sm mx-auto border-b-2 w-3/5 focus-within:border-blue-800 p-3">
+          <h2 class="text-md font-bold p-0 ">Codigo</h2>
+            <input type="text" name="Codigo" placeholder="" class="block w-full  text-center appearance-none focus:outline-none bg-transparent" />
           </div>
-
-          {/*Millaje*/}
-
-          <div className="my-3 md:w-1/2 inline-block p-8">
-            <label className="block uppercase tracking-wide text-gray-700 text-m font-bold mb-2 text-center" for="Millaje"> Millaje </label>
-            <input className="rounded-full block w-1/2 bg-gray-300 text-gray-700 border  text-center  py-3 px-4 mb-3 leading-tight lg:mx-40  focus:outline-none focus:bg-white" id="Mijalle" type="text" />
+           {/*Proveedor*/}
+          <div class="  relative max-w-sm mx-auto border-b-2 w-3/5 focus-within:border-blue-800 p-3">
+          <h2 class="text-md font-bold p-0 ">Proveedor</h2>
+            <input type="text" name="Proveedor" placeholder="" class="block w-full  text-center appearance-none focus:outline-none bg-transparent" />
           </div>
-
-          {/*Codigo*/}
-
-          <div className="my-3 md:w-1/2 inline-block p-8">
-            <label className="block uppercase tracking-wide text-gray-700 text-m font-bold mb-2 text-center" for="Codigo">Codigo</label>
-            <input className="rounded-full block w-1/2 bg-gray-300 text-gray-700 border text-center py-3 px-4 mb-3 leading-tight lg:mx-40 focus:outline-none focus:bg-white" id="Codigo" type="text" />
+           {/*ano*/}
+          <div class="  relative max-w-sm mx-auto border-b-2 w-3/5 focus-within:border-blue-800 p-3">
+          <h2 class="text-md font-bold p-0 ">Año</h2>
+            <input type="number" min="1990" max="2021" name="Año" placeholder="" class="block w-full  text-center appearance-none focus:outline-none bg-transparent" />
           </div>
-
-          {/*Proveedor*/}
-
-          <div className="my-3 md:w-1/2 inline-block p-8">
-            <label className="block uppercase tracking-wide text-gray-700 text-m font-bold mb-2 text-center" for="Proveedor">Proveedor</label>
-            <input className="rounded-full block w-1/2 bg-gray-300 text-gray-700 border text-center  py-3 px-4 mb-3 leading-tight lg:mx-40 focus:outline-none focus:bg-white" id="Proveedor" type="text" />
+          <div class= " md:m-40">
+          <h2 class="text-lg font-bold text-center ">Color</h2>
+            <ColorPicker />
           </div>
-
-          {/*Año */}
-
-          <div className="my-3 md:w-1/2 inline-block p-8">
-            <label className="block uppercase tracking-wide text-gray-700 text-m font-bold mb-2 text-center" for="Ano">Año</label>
-            <input className="rounded-full block w-1/2 bg-gray-300 text-gray-700 border text-center py-3 px-4 mb-3 leading-tight lg:mx-40 focus:outline-none focus:bg-white" id="Ano" type="text" />
-          </div>
-
-          {/*Color*/}
-
-          <div className="my-3 md:w-2/4  inline-block p-8">
-            <label className="block uppercase tracking-wide text-gray-700 text-m font-bold mb-2 text-center" for="Color">Color</label>
-            <div>
-              <ColorPicker />
-            </div>
-          </div>
-
-          {/*Estado del vehiculo*/}
-
-          <div>
-            <label className="block uppercase tracking-wide text-gray-700  font-bold mb-2  text-center text-xl underline my-8"> Estado Del vehiculo</label>
-          </div>
-
+          <h2 class="text-xl font-bold text-center -p-2">Estado del vehiculo</h2>
+          <div className="my-2 w-full inline-block ">
           {/*Estado actual*/}
-
-          <div className="my-3 md:w-1/2 inline-block p-8">
-            <label className="block uppercase tracking-wide text-gray-700 text-m font-bold mb-4 text-center" for="Estado">Estado actual: </label>
-
-            <div class="mx-auto max-w-sm text-center flex flex-wrap justify-center">
-
-              <div class="flex items-center mr-4 mb-4">
-                <input id="radio1" type="radio" name="radio" class="hidden" checked />
-                <label for="radio1" class="flex items-center cursor-pointer">
-                  <span class="w-4 h-4 inline-block mr-1 rounded-full border border-black"></span>
-                  Disponible
+          <h2 class="text-lg font-bold text-center underline p-3">Estado actual:</h2>
+          <div class="mx-auto max-w-sm text-center flex flex-wrap justify-center">
+            <div class="flex items-center mr-4 mb-4">
+              <input id="radio1" type="radio" name="radio" class="hidden" checked />
+              <label for="radio1" class="flex items-center cursor-pointer">
+                <span class="w-4 h-4 inline-block mr-1 rounded-full border border-black"></span>
+                Disponible
+              </label>
+            </div>
+            <div class="flex items-center mr-4 mb-4">
+              <input id="radio2" type="radio" name="radio" class="hidden" />
+              <label for="radio2" class="flex items-center cursor-pointer">
+                <span class="w-4 h-4 inline-block mr-1 rounded-full border border-black"></span>
+                  Apartado
+              </label>
+            </div>
+            <div class="flex items-center mr-4 mb-4">
+              <input id="radio3" type="radio" name="radio" class="hidden" />
+              <label for="radio3" class="flex items-center cursor-pointer">
+                <span class="w-4 h-4 inline-block mr-1 rounded-full border border-black"></span>
+                  Trade
                 </label>
-              </div>
-
-              <div class="flex items-center mr-4 mb-4">
-                <input id="radio2" type="radio" name="radio" class="hidden" />
-                <label for="radio2" class="flex items-center cursor-pointer">
-                  <span class="w-4 h-4 inline-block mr-1 rounded-full border border-black"></span>
-                    Apartado
+            </div>
+            <div class="flex items-center mr-4 mb-4">
+              <input id="radio4" type="radio" name="radio" class="hidden" />
+              <label for="radio4" class="flex items-center cursor-pointer">
+                <span class="w-4 h-4 inline-block mr-1 rounded-full border border-black"></span>
+                  Repo
+              </label>
+            </div>
+            <div class="flex items-center mr-4 mb-4">
+              <input id="radio5" type="radio" name="radio" class="hidden" />
+              <label for="radio5" class="flex items-center cursor-pointer">
+                <span class="w-4 h-4 inline-block mr-1 rounded-full border border-black"></span>
+                  Devuelto
                 </label>
-              </div>
-
-              <div class="flex items-center mr-4 mb-4">
-                <input id="radio3" type="radio" name="radio" class="hidden" />
-                <label for="radio3" class="flex items-center cursor-pointer">
-                  <span class="w-4 h-4 inline-block mr-1 rounded-full border border-black"></span>
-                    Trade
-                  </label>
-              </div>
-
-              <div class="flex items-center mr-4 mb-4">
-                <input id="radio4" type="radio" name="radio" class="hidden" />
-                <label for="radio4" class="flex items-center cursor-pointer">
-                  <span class="w-4 h-4 inline-block mr-1 rounded-full border border-black"></span>
-                    Repo
-                </label>
-              </div>
-              <div class="flex items-center mr-4 mb-4">
-                <input id="radio5" type="radio" name="radio" class="hidden" />
-                <label for="radio5" class="flex items-center cursor-pointer">
-                  <span class="w-4 h-4 inline-block mr-1 rounded-full border border-black"></span>
-                    Devuelto
-                  </label>
-              </div>
             </div>
-          </div>
-
-          {/*Inspeccionado*/}
-
-            
-          <div className="my-3 md:w-1/2 inline-block p-8">
-            <label className="block uppercase tracking-wide text-gray-700 text-m font-bold mb-4 text-center" for="Inspeccionado">Inspeccionado</label>
-            
-            <div class="mx-auto max-w-sm text-center flex flex-wrap justify-center">
-              <div class="flex items-center mr-4 mb-4">
-                  <input id="radio1" type="radio" name="radio" class="hidden" checked />
-                  <label for="radio1" class="flex items-center cursor-pointer">
-                    <span class="w-4 h-4 inline-block mr-1 rounded-full border border-black"></span>
-                    Si</label>
-                </div>
-                <div class="flex items-center mr-4 mb-4">
-                  <input id="radio2" type="radio" name="radio" class="hidden" />
-                  <label for="radio2" class="flex items-center cursor-pointer">
-                    <span class="w-4 h-4 inline-block mr-1 rounded-full border border-black"></span>
-                    No</label>
-                </div>
-              </div>
-            </div>
-
-
-
-            <div className="my-3 md:w-1/2 inline-block p-8">
-              <label className="block uppercase tracking-wide text-gray-700 text-m font-bold mb-2 text-center" for="Titulo">Titulo</label>
-              <div class="mx-auto max-w-sm text-center flex flex-wrap justify-center">
-                <div class="flex items-center mr-4 mb-4">
-                  <input id="radio1" type="radio" name="radio" class="hidden" checked />
-                  <label for="radio1" class="flex items-center cursor-pointer">
-                    <span class="w-4 h-4 inline-block mr-1 rounded-full border border-black"></span>
-                    Si</label>
-                </div>
-                <div class="flex items-center mr-4 mb-4">
-                  <input id="radio2" type="radio" name="radio" class="hidden" />
-                  <label for="radio2" class="flex items-center cursor-pointer">
-                    <span class="w-4 h-4 inline-block mr-1 rounded-full border border-black"></span>
-                    No</label>
-                </div>
-               </div>
-            </div>
-
-
-            <div className="my-3 md:w-1/2 inline-block p-8">
-              <label className="block uppercase tracking-wide text-gray-700 text-m font-bold mb-2 text-center" for="LienHolder">Lien Holder</label>
-              <div class="mx-auto max-w-sm text-center flex flex-wrap justify-center">
-              <div class="flex items-center mr-4 mb-4">
-                <input id="radio1" type="radio" name="radio" class="hidden" checked />
-                <label for="radio1" class="flex items-center cursor-pointer">
-                  <span class="w-4 h-4 inline-block mr-1 rounded-full border border-black"></span>
-                  Si</label>
-              </div>
-              <div class="flex items-center mr-4 mb-4">
-                <input id="radio2" type="radio" name="radio" class="hidden" />
-                <label for="radio2" class="flex items-center cursor-pointer">
-                  <span class="w-4 h-4 inline-block mr-1 rounded-full border border-black"></span>
-                  No</label>
-              </div>
-              </div>
-            </div>
-
-            <div className="my-3 md:w-1/2 inline-block p-8">
-            <label className="block uppercase tracking-wide text-gray-700 text-m font-bold mb-2 text-center" for="Codigo"> Limpieza</label>
-            <div class="mx-auto max-w-sm text-center flex flex-wrap justify-center">
-              <div class="items-center mr-4 mb-4">
-                <input id="radio1" type="radio" name="radio" class="hidden" checked />
-                <label for="radio1" class="flex items-center cursor-pointer">
-                  <span class="w-4 h-4 inline-block mr-1 rounded-full border border-black"></span>
-                  Salvage</label>
-              </div>
-              <div class="items-center mr-4 mb-4">
-                <input id="radio2" type="radio" name="radio" class="hidden" />
-                <label for="radio2" class="flex items-center cursor-pointer">
-                  <span class="w-4 h-4 inline-block mr-1 rounded-full border border-black"></span>
-                  Clean</label>
-              </div>
-            </div> 
-            </div>
-
-
-          
-           
-          
-            <div class="mx-8 md:flex mb-2">
-          <div class="md:w-1/2 px-3 mb-6 md:mb-0">
-          <label className="block uppercase tracking-wide text-gray-700 text-m font-bold mb-2 text-center" for="PrecioCompra">Valor Compra</label>
-          <input className="  rounded-full  mx-24  bg-gray-300 text-gray-700  text-center  py-3 px-4 mb-3  focus:bg-white" id="PrecioCompra" type="text" />
-          </div>
-          <div class="md:w-1/2 px-3">
-            
-            <label className="block uppercase tracking-wide text-gray-700 text-m font-bold mb-2 text-center" for="ValorInvertido">Valor invertido</label>
-            <input className="     rounded-full mx-20  bg-gray-300 text-gray-700  text-center  py-3 px-4 mb-3  focus:bg-white" id="ValorInvertido" type="text" />
-            
-            
-          </div>
-          <div class="md:w-1/2 px-3">
-          <label className="block uppercase tracking-wide text-gray-700 text- font-bold mb-2 text-center" for="Precio Final">Precio Final</label>
-          <input className="   rounded-full mx-24 bg-gray-300 text-gray-700  text-center py-3 px-4   focus:bg-white" id="ValorInvertido" type="text" />
-          
           </div>
         </div>
-           
-           
+                 {/*Inspeccionado*/}
+        <div className=" w-full inline-block ">
+         <h2 class="text-lg font-bold text-center underline p-3">Inspeccionado:</h2>
+        <div class="mx-auto max-w-sm  -p-8 text-center flex flex-wrap justify-center">
+          <div class="flex items-center mr-4 mb-4">
+              <input id="radio6" type="radio" name="radio" class="hidden" checked />
+              <label for="radio6" class="flex items-center cursor-pointer">
+                <span class="w-4 h-4 inline-block mr-1 rounded-full border border-black"></span>
+                Si</label>
+            </div>
+            <div class="flex items-center mr-4 mb-4">
+              <input id="radio7" type="radio" name="radio" class="hidden" />
+              <label for="radio7" class="flex items-center cursor-pointer">
+                <span class="w-4 h-4 inline-block mr-1 rounded-full border border-black"></span>
+                No</label>
+            </div>
+        </div>
+        </div>
+        <div className=" w-full inline-block ">
+        <h2 class="text-lg font-bold text-center underline p-3">Titulo en propiedad:</h2>
+       <div class="mx-auto max-w-sm  -p-8 text-center flex flex-wrap justify-center">
+         <div class="flex items-center mr-4 mb-4">
+             <input id="radio8" type="radio" name="radio" class="hidden" checked />
+             <label for="radio8" class="flex items-center cursor-pointer">
+               <span class="w-4 h-4 inline-block mr-1 rounded-full border border-black"></span>
+               Si</label>
+           </div>
+           <div class="flex items-center mr-4 mb-4">
+             <input id="radio9" type="radio" name="radio" class="hidden" />
+             <label for="radio9" class="flex items-center cursor-pointer">
+               <span class="w-4 h-4 inline-block mr-1 rounded-full border border-black"></span>
+               No</label>
+           </div>
+       </div>
+       </div>
+       <div className=" w-full inline-block">
+       <h2 class="text-lg font-bold text-center underline p-3">Lien Holder:</h2>
+       <div class="mx-auto max-w-sm text-center flex flex-wrap justify-center">
+       <div class="flex items-center mr-4 mb-4">
+         <input id="radio10" type="radio" name="radio" class="hidden" checked />
+         <label for="radio10" class="flex items-center cursor-pointer">
+           <span class="w-4 h-4 inline-block mr-1 rounded-full border border-black"></span>
+           Si</label>
+       </div>
+       <div class="flex items-center mr-4 mb-4">
+         <input id="radio11" type="radio" name="radio" class="hidden" />
+         <label for="radio11" class="flex items-center cursor-pointer">
+           <span class="w-4 h-4 inline-block mr-1 rounded-full border border-black"></span>
+           No</label>
+       </div>
+       </div>
+     </div>
 
-            
-
-
-            <Link to="/">
-            <div className='sm:mx-16 md:mx-72 lg:72p-8 my-3'>
-            <button class="mx-40 bg-gray-900 hover:bg-gray-800 text-white font-bold py-2 px-4 rounded-full ">
+     <div className=" w-full inline-block">
+       <h2 class="text-lg font-bold text-center underline p-3">Limpieza:</h2>
+       <div class="mx-auto max-w-sm text-center flex flex-wrap justify-center">
+       <div class="flex items-center mr-4 mb-4">
+         <input id="radio12" type="radio" name="radio" class="hidden" checked />
+         <label for="radio12" class="flex items-center cursor-pointer">
+           <span class="w-4 h-4 inline-block mr-1 rounded-full border border-black"></span>
+           Salvage</label>
+       </div>
+       <div class="flex items-center mr-4 mb-4">
+         <input id="radio13" type="radio" name="radio" class="hidden" />
+         <label for="radio13" class="flex items-center cursor-pointer">
+           <span class="w-4 h-4 inline-block mr-1 rounded-full border border-black"></span>
+           Clean</label>
+       </div>
+       </div>
+     </div>
+     <div class="  relative max-w-sm mx-auto border-b-2 w-3/5 focus-within:border-blue-800 p-3">
+     <h2 class="text-md font-bold p-0 ">Valor Compra:</h2>
+       <input type="number" min="0" name="Vcompra" placeholder="" class="block w-full  text-center appearance-none focus:outline-none bg-transparent" />
+       
+     </div>
+     <div class="  relative max-w-sm mx-auto border-b-2 w-3/5 focus-within:border-blue-800 p-3">
+     <h2 class="text-md font-bold p-0 ">Valor Invertido:</h2>
+       <input type="number" min="0" name="Vinvertido" placeholder="" class="block w-full  text-center appearance-none focus:outline-none bg-transparent" />
+       
+     </div>
+     <div class="  relative max-w-sm mx-auto border-b-2 w-3/5 focus-within:border-blue-800 p-3">
+     <h2 class="text-md font-bold p-0 ">Valor Final</h2>
+       <input type="number" min="0" name="Vfinal" placeholder="" class="block w-full  text-center appearance-none focus:outline-none bg-transparent" />
+     </div>
+        <Link to="/">
+            <div className='sm:mx-auto md:mx-48 p-8 my-3'>
+            <button class=" bg-gray-900 hover:bg-gray-800 text-white font-bold py-2 px-4 rounded-full ">
             Agregar Vehiculo
           </button>
-          </div>
-            
+          </div>      
             </Link>
-
-
-        </form>
-        /* 
-        
-        
-        */      </div>
+            
+          </form>
+        </body>
+      </div>
 
     );
   }
