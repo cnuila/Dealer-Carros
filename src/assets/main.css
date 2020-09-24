@@ -13670,22 +13670,6 @@ video {
   color: rgba(56, 161, 105, var(--placeholder-opacity));
 }
 
-#texto:before{
-  content: "LogIn";
-}
-
-@media (max-width:900px) and (min-width:450px) {
-    #texto:before {
-        content: "LogIn";
-    }
-}
-
-@media (max-width:400px){
-    #texto:before {
-        content: "Santos";
-    }
-}
-
 .placeholder-green-700::placeholder {
   --placeholder-opacity: 1;
   color: #2f855a;
@@ -19786,14 +19770,21 @@ video {
   animation: bounce 1s infinite;
 }
 
-@media (min-width: 640px) {
+@media (min-width: 300px) {
   .sm\:container {
     width: 100%;
   }
+  #texto:before{
+    content:"LogIn 1"
+  }
+}
 
   @media (min-width: 640px) {
     .sm\:container {
       max-width: 640px;
+    }
+    #texto:before{
+      content:"LogIn 2"
     }
   }
 
@@ -19801,17 +19792,26 @@ video {
     .sm\:container {
       max-width: 768px;
     }
+    #texto:before{
+      content:"LogIn 3"
+    }
   }
 
   @media (min-width: 1024px) {
     .sm\:container {
       max-width: 1024px;
     }
+    #texto:before{
+      content:"LogIn 4"
+    }
   }
 
   @media (min-width: 1280px) {
     .sm\:container {
       max-width: 1280px;
+    }
+    #texto:before{
+      content:"LogIn 5"
     }
   }
 
@@ -21166,6 +21166,10 @@ video {
     background-color: #742a2a;
     background-color: rgba(116, 42, 42, var(--bg-opacity));
   }
+
+  
+
+
 
   .sm\:bg-orange-100 {
     --bg-opacity: 1;
@@ -38741,7 +38745,6 @@ video {
   .sm\:animate-bounce {
     animation: bounce 1s infinite;
   }
-}
 
 @media (min-width: 768px) {
   .md\:container {
@@ -95611,9 +95614,6 @@ video {
 
   .xl\:animate-bounce {
     animation: bounce 1s infinite;
-  }
- 
+  } 
 
-
- 
 }
