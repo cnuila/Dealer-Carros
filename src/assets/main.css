@@ -13670,6 +13670,22 @@ video {
   color: rgba(56, 161, 105, var(--placeholder-opacity));
 }
 
+#texto:before{
+  content: "LogIn";
+}
+
+@media (max-width:900px) and (min-width:450px) {
+    #texto:before {
+        content: "LogIn";
+    }
+}
+
+@media (max-width:400px){
+    #texto:before {
+        content: "Santos";
+    }
+}
+
 .placeholder-green-700::placeholder {
   --placeholder-opacity: 1;
   color: #2f855a;
@@ -95596,4 +95612,8 @@ video {
   .xl\:animate-bounce {
     animation: bounce 1s infinite;
   }
+ 
+
+
+ 
 }

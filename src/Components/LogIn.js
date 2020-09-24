@@ -1,6 +1,29 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import logoImg from "../img1.jpeg";
+import Mobile from "../MobileLog.png";
 import { Link } from 'react-router-dom';
+//import { fb } from "./firebase" 
+
+/*const App = () =>{
+    const [user, setUSer] = useState("");
+    const [email, setEMail] = useState("") ;
+    const [password, setPassword] = useState("");
+    const [emailError, setEmailError] = useState("");
+    const [passwordError, setPasswordError] = useState("");
+    const [hasAccount, setHasAccount] = useState(false);
+    
+    const clearInputs=()=>{
+        setEmail("");
+        setPassword("");
+    }
+    
+    constclearErrors=()=>{
+        setEmailError("");
+        setPasswordError("");
+    }
+     
+
+}*/ 
 
 
 function LogIn() {
@@ -11,10 +34,13 @@ function LogIn() {
             <div className="flex items-center justify-center h-full ">
                 <div className="flex max-w-sm md:max-w-3xl shadow-2xl border-0">
                     <div className="hidden md:block w-1/2 relative">
-                        <img src={logoImg} alt="" className="w-full h-full  object-cover" />
+                    
+                     
+                    <img src={logoImg}  className="w-full h-full  object-cover" />
                     </div>
                     <div className="bg-white md:w-1/2 p-8">
-                        <h1 className="text-gray-900 text-3xl text-left font-bold">LogIn</h1>
+                   
+                        <p id="texto" className="texto_responsive text-gray-900 text-3xl text-left font-bold"></p>
                         <p className="text-gray-600 text-sm  my-4 font-sans">Bienvenido, inicie sesión por favor</p>
                         <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 text-gray-600">
                             <div className="my-3">
@@ -31,6 +57,24 @@ function LogIn() {
                                 </Link>
                             </div>
                         </form>
+                       
+                        <div class= "sm:block w-full justify-right mx-8">
+                        <picture>
+                            <source 
+                                media="(min-width: 650px)"
+                                srcset="">
+                                </source>
+                                <source 
+                                    media="(min-width: 465px)"
+                                    srcset="images/img2.png">
+                                </source>
+                                <img src={Mobile} 
+                                    alt="">
+                                </img>
+                        </picture>
+
+                            
+                        </div>
                     </div>
                 </div>
             </div>

@@ -21,3 +21,4 @@ firebase.analytics();
 
 export const db = fb.firestore();
 export const storage = fb.storage();
+//export const fb;#texto:before{

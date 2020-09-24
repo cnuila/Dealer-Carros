@@ -2,6 +2,8 @@ import React from "react";
 import { storage } from "../firebase"
 import InfoCarro from "./InfoCarro";
 
+
+
 function Carro(props) {
   /*funcion que agrega coma al precio*/
   const coma = () => {
