@@ -35,7 +35,9 @@ function LogIn() {
                     <img src={logoImg}  className="w-full h-full  object-cover" />
                     </div>
                     <div className="bg-white md:w-1/2 p-8"> 
-                        <p id="texto" className="text-gray-900 text-3xl text-left font-bold"></p>
+                   
+                    <p className=" sm: invisible md:visible lg:visible xl:visible  text-gray-900 text-3xl text-left font-bold">LogIn</p>
+                         <p className=" sm:invisible  md:invisible lg:invisible xl:invisible text-gray-900 text-3xl text-left font-bold">Santos Motors</p>
                         <p className="text-gray-600 text-sm  my-4 font-sans">Bienvenido, inicie sesión por favor</p>
                         <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 text-gray-600">
                             <div className="my-3">

@@ -80,7 +80,7 @@ class Agregar extends React.Component {
           </div>
           <div class= " md:m-40">
           <h2 class="text-lg font-bold text-center ">Color</h2>
-            <ColorPicker />
+            <ColorPicker  />
           </div>
           <h2 class="text-xl font-bold text-center -p-2">Estado del vehiculo</h2>
           <div className="my-2 w-full inline-block ">

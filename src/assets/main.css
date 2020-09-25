@@ -19770,21 +19770,14 @@ video {
   animation: bounce 1s infinite;
 }
 
-@media (min-width: 300px) {
+@media (min-width: 640px) {
   .sm\:container {
     width: 100%;
   }
-  #texto:before{
-    content:"Santos Motors"
-  }
-}
 
   @media (min-width: 640px) {
     .sm\:container {
       max-width: 640px;
-    }
-    #texto:before{
-      content:"LogIn"
     }
   }
 
@@ -19792,26 +19785,17 @@ video {
     .sm\:container {
       max-width: 768px;
     }
-    #texto:before{
-      content:"LogIn"
-    }
   }
 
   @media (min-width: 1024px) {
     .sm\:container {
       max-width: 1024px;
     }
-    #texto:before{
-      content:"LogIn"
-    }
   }
 
   @media (min-width: 1280px) {
     .sm\:container {
       max-width: 1280px;
-    }
-    #texto:before{
-      content:"LogIn"
     }
   }
 
@@ -21166,10 +21150,6 @@ video {
     background-color: #742a2a;
     background-color: rgba(116, 42, 42, var(--bg-opacity));
   }
-
-  
-
-
 
   .sm\:bg-orange-100 {
     --bg-opacity: 1;
@@ -38745,6 +38725,7 @@ video {
   .sm\:animate-bounce {
     animation: bounce 1s infinite;
   }
+}
 
 @media (min-width: 768px) {
   .md\:container {
@@ -95614,6 +95595,5 @@ video {
 
   .xl\:animate-bounce {
     animation: bounce 1s infinite;
-  } 
-
+  }
 }
