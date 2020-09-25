@@ -74,7 +74,7 @@ class InfoCarro extends Component {
                 < div >
                     <button class="animated shake bg-red-500 flex-1 border-b-2 md:flex-none border-grey ml-2 hover:bg-grey-lightest text-grey-darkest font-bold py-4 px-6 rounded"
                         onClick={this.clickMostraInfo}>
-                        Question
+                        Informacion del Carro
                     </button>
                 </div >
             );
