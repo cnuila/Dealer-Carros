@@ -7,6 +7,7 @@ class InfoCarro extends Component {
             mostrarInfo: false,
         };
     }
+
     clickMostraInfo = () => {
         this.setState({
             mostrarInfo: !this.state.mostrarInfo

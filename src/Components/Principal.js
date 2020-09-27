@@ -20,9 +20,11 @@ class Principal extends React.Component {
       carros: [],
       mostrarFiltros: false,
       mostrarInfo: false,
+      carroMostrar:{},
     };
     this.clicEstadoCarro = this.clicEstadoCarro.bind(this)
     this.mostrarConsulta = this.mostrarConsulta.bind(this)
+    this.clickMostraInfo = this.clickMostraInfo.bind(this)
   }
 
   componentDidMount() {
@@ -75,21 +77,18 @@ class Principal extends React.Component {
     })
   }
 
-  clickMostraInfo = () => {
+  clickMostraInfo = (vin) => {
+    let carro = this.state.carros.filter(carro => carro.id === vin);    
     this.setState({
-      mostrarInfo: !this.state.mostrarInfo
-    })
-  }
-
-  closeModal = () => {
-    this.setState({
-      mostrarInfo: false
-    });
+      mostrarInfo: !this.state.mostrarInfo,
+      carroMostrar: carro[0],
+    })    
   }
 
   render() {
-    let botonesEstados;
-    let { estados, carros } = this.state;
+    console.log(this.state.mostrarInfo,this.state.carroAmostrar)
+    let botonesEstados; 
+    let { estados, carros, carroMostrar } = this.state;
     botonesEstados = estados.map((boton) => {
       return (
         <>
@@ -114,7 +113,7 @@ class Principal extends React.Component {
       carrosMostrar = (<div>No hay carros</div>)
     } else {
       carrosMostrar = carrosMostrar.map(carro => {
-        return (<Carro info={carro} />)
+        return (<Carro info={carro} mostrarInfo={this.clickMostraInfo}/>)
       })
     }
 
@@ -166,7 +165,7 @@ class Principal extends React.Component {
                 <span className="flex-1">{textoFiltro + " filtros"}</span>
               </button>
             </div>
-            <Filtros mostrarConsulta={this.mostrarConsulta}/>
+            <Filtros mostrarConsulta={this.mostrarConsulta} />
           </div>
           {/*Fin de filtros*/}
 
@@ -174,9 +173,25 @@ class Principal extends React.Component {
           <div className={`border-t-2 border-gray-400 pt-5 grid grid-cols-1 md:grid-cols-4 gap-6 bg-gray-100 place-items-center mb-10 mt-4 md:mt-8 mx-6 md:mx-8 transform transition duration-500 ease-in-out -translate-y-${translateCarros}`}>
             {carrosMostrar}{/*Ventana para info Vehiculo*/}
 
+            <div class="px-4 w-full">
+              <div class="animate-pulse">
+                <div class="relative pb-48 bg-gray-400 h-full w-full rounded-lg shadow-md"></div>
+                <div className="relative px-4 -mt-10">
+                  <div className="px-6 py-4 bg-gray-500 rounded-lg shadow-xl">
+                    <div class="flex-1 space-y-4 py-1">
+                      <div class="h-4 bg-gray-400 rounded w-3/4"></div>
+                      <div class="space-y-2">
+                        <div class="h-4 bg-gray-400 rounded"></div>
+                        <div class="h-4 bg-gray-400 rounded w-5/6"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           {/*aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa*/}
-          <InfoCarro />
+          <InfoCarro carro={carroMostrar}/>
           {/*aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa*/}
           {/*Fin de la Ventana*/}
         </div>

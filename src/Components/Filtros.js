@@ -41,11 +41,12 @@ class Filtros extends Component {
     }
 
     aplicarFiltros = () => {
-        let query = db.collection("carros")
         let { ano, color, precioMax, precioMin, salvage, clean, proveedor, titulo, inspeccionado, lienHolder } = this.state
         if (ano !== "Cualquiera" || color !== "transparent" || precioMax !== "Cualquiera" || precioMin !== "Cualquiera" ||
             salvage !== false || clean !== false || proveedor !== false || titulo !== false || inspeccionado !== false || lienHolder !== false) {
 
+            let query = db.collection("carros")
+            
             if (ano !== "Cualquiera") {
                 query = query.where("ano", "==", ano)
             }
@@ -81,7 +82,6 @@ class Filtros extends Component {
             if (precioMin !== "Cualquiera") {
                 query = query.where("precioFinal", ">=", precioMin)
             }
-
 
             if (precioMax !== "Cualquiera" || precioMin !== "Cualquiera") {
                 query = query.orderBy("precioFinal")

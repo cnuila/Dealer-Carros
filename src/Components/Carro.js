@@ -1,10 +1,11 @@
-import React from "react";
+import  React from "react";
 import { storage } from "../firebase"
-import InfoCarro from "./InfoCarro";
-
-
 
 function Carro(props) {
+
+  //let [foto, setFoto] = useState(null)
+  //let [loading, setLoading] = useState(false)
+
   /*funcion que agrega coma al precio*/
   const coma = () => {
     let { precioFinal } = props.info;
@@ -26,6 +27,10 @@ function Carro(props) {
       return nuevoS;
     }
     return precioFinal.toString();
+  }
+
+  const handleClick = (vin) => {
+    props.mostrarInfo(vin)
   }
 
   let tipoTitulo
@@ -54,12 +59,13 @@ function Carro(props) {
   let gsReference = storage.refFromURL(fotos[0])
   gsReference.getDownloadURL().then(direc => {
     document.getElementById("foto" + id).src = direc
+    //setLoading(true)
   }).catch((err) => {
     console.log(err)
   })
-  
+
   return (
-    <div className="w-full px-4 transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105">
+    <div className=" w-full px-4 transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105" onClick={() => handleClick(id)}>
       <div className="relative pb-48">
         <img id={"foto" + id}
           className="absolute h-full w-full object-cover rounded-lg shadow-md"

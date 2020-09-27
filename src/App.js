@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 //import App from '../../App';
 import { a } from "./firebase";
 import Test from "./Components/Test";
+import UploadImages from "./Components/UploadImages";
 
 
 
@@ -89,9 +90,8 @@ const App = () => {
     {user ? (
       <Test handleLogout={handleLogout} />
     ) : (
-
         <LogIn 
-        email={email}
+          email={email}
           setEmail={setEmail}
           password={password}
           setPassword={setPassword}
@@ -106,13 +106,11 @@ const App = () => {
       )}
   </div>
   */
-
   <Router>
-      
     <Switch>
       <Route path="/" exact component={Principal} />
       <Route path="/login" component={LogIn}/>
-      <Route path="/agregar-carro" component={Agregar} />
+      <Route path="/agregar-carro" component={UploadImages} />
     </Switch>
   </Router>
   );
