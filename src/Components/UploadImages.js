@@ -30,15 +30,16 @@ export default class MultipleImageUploadComponent extends Component {
     render() {
         return (
             <form>
-                <div className="form-group multi-preview ">
+                <div className="form-group multi-preview w-2/5 ">
                     {(this.fileArray || []).map(url => (
                         <img src={url} alt="..." />
                     ))}
+                    {/*este div es donde se ponen las fotos */}
                 </div>
-                      
                 <div className="form-group">
                     <input type="file" className="form-control" onChange={this.uploadMultipleFiles} multiple />
                 </div>
+                {/*este boton te podria servir para lo de guardar */}
                 <button type="button " className="btn btn-danger btn-block" onClick={this.uploadFiles}>Upload</button>
             </form>
         )
