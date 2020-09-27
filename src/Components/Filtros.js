@@ -21,8 +21,8 @@ class Filtros extends Component {
         precioMin: "Cualquiera",
         salvage: false,
         clean: false,
-        proveedor: false,
         titulo: false,
+        proveedor: false,
         inspeccionado: false,
         lienHolder: false,
     }
@@ -45,7 +45,7 @@ class Filtros extends Component {
         let { ano, color, precioMax, precioMin, salvage, clean, proveedor, titulo, inspeccionado, lienHolder } = this.state
         if (ano !== "Cualquiera" || color !== "transparent" || precioMax !== "Cualquiera" || precioMin !== "Cualquiera" ||
             salvage !== false || clean !== false || proveedor !== false || titulo !== false || inspeccionado !== false || lienHolder !== false) {
-            
+
             if (ano !== "Cualquiera") {
                 query = query.where("ano", "==", ano)
             }
@@ -56,56 +56,58 @@ class Filtros extends Component {
 
             if (clean !== false) {
                 query = query.where("clean", "==", true)
-            }            
-
-            if (titulo !== false){
-                query = query.where("titulo","==",true)
             }
 
-            if (inspeccionado !== false){
-                query = query.where("inspeccionado","==",true)
+            if (titulo !== false) {
+                query = query.where("titulo", "==", true)
             }
 
-            if (lienHolder !== false){
-                query = query.where("lienHolder","==",true)
+            if (inspeccionado !== false) {
+                query = query.where("inspeccionado", "==", true)
             }
 
-            if (color !== "transparent"){
-                query = query.where("color","==",color)
+            if (lienHolder !== false) {
+                query = query.where("lienHolder", "==", true)
             }
 
-            if (precioMax !== "Cualquiera"){
-                query = query.where("precioFinal","<=",precioMax).orderBy("precioFinal")
+            if (color !== "transparent") {
+                query = query.where("color", "==", color)
             }
 
-            if (precioMin !== "Cualquiera"){
-                query = query.where("precioFinal",">=",precioMin).orderBy("precioFinal")
+            if (precioMax !== "Cualquiera") {
+                query = query.where("precioFinal", "<=", precioMax)
             }
 
-            if (proveedor !== false){
+            if (precioMin !== "Cualquiera") {
+                query = query.where("precioFinal", ">=", precioMin)
+            }
+
+
+            if (precioMax !== "Cualquiera" || precioMin !== "Cualquiera") {
+                query = query.orderBy("precioFinal")
+            }
+
+            if (proveedor !== false) {
                 query = query.orderBy("proveedor")
-            }           
+            }
 
-            query.onSnapshot((querySnapchot) => {
-                if (querySnapchot.size === 0) {
-                    console.log("No hay resultados")
-                } else {
-                    querySnapchot.forEach((doc) => {
-                        console.log(doc.data())
-                    })
-                }
-            })
+            this.props.mostrarConsulta(query)
         } else {
-            console.log("cambiame")
+            alert("No puede filtrar sin seleccionar un campo")
         }
     }
 
     reiniciar = () => {
-        this.setState({
-            ...this.estadoInicial,
-        })
+        let { ano, color, precioMax, precioMin, salvage, clean, proveedor, titulo, inspeccionado, lienHolder } = this.state
+        if (ano !== "Cualquiera" || color !== "transparent" || precioMax !== "Cualquiera" || precioMin !== "Cualquiera" ||
+            salvage !== false || clean !== false || proveedor !== false || titulo !== false || inspeccionado !== false || lienHolder !== false) {
+                let query = db.collection("carros").orderBy("marca")
+                this.props.mostrarConsulta(query)
+                this.setState({
+                    ...this.estadoInicial,
+                })
+            }
     }
-
 
     render() {
         let { ano, color, precioMax, precioMin, salvage, clean, proveedor, titulo, inspeccionado, lienHolder } = this.state
@@ -132,19 +134,19 @@ class Filtros extends Component {
 
                 <div className="flex space-x-7 sm:space-x-4 items-center m-2 sm:m-1 col-span-2 sm:col-span-1">
                     <div>
-                        Precio Max.
+                        Precio Min.
                     </div>
                     <div>
-                        <Counter nombre={"precioMax"} valor={precioMax} minimo={0} step={100} handleInputChange={this.handleInputChange} />
+                        <Counter nombre={"precioMin"} valor={precioMin} minimo={0} step={100} handleInputChange={this.handleInputChange} />
                     </div>
                 </div>
 
                 <div className="flex space-x-7 sm:space-x-4 items-center m-2 sm:m-1 col-span-2 sm:col-span-1">
                     <div>
-                        Precio Min.
+                        Precio Max.
                     </div>
                     <div>
-                        <Counter nombre={"precioMin"} valor={precioMin} minimo={0} step={100} handleInputChange={this.handleInputChange} />
+                        <Counter nombre={"precioMax"} valor={precioMax} minimo={0} step={100} handleInputChange={this.handleInputChange} />
                     </div>
                 </div>
 
@@ -157,10 +159,6 @@ class Filtros extends Component {
                 </div>
 
                 <div className="m-2 sm:mb-1">
-                    <Checkbox texto="Proveedor" nombre="proveedor" handleInputChange={this.handleInputChange} checked={proveedor} />
-                </div>
-
-                <div className="m-2 sm:mb-1">
                     <Checkbox texto="Titulo" nombre="titulo" handleInputChange={this.handleInputChange} checked={titulo} />
                 </div>
 
@@ -170,6 +168,10 @@ class Filtros extends Component {
 
                 <div className="m-2 sm:mb-1">
                     <Checkbox texto="Lien Holder" nombre="lienHolder" handleInputChange={this.handleInputChange} checked={lienHolder} />
+                </div>
+
+                <div className="m-2 sm:mb-1">
+                    <Checkbox texto="Proveedor" nombre="proveedor" handleInputChange={this.handleInputChange} checked={proveedor} />
                 </div>
 
                 <div className="sm:col-start-4 m-2 sm:mb-1 place-self-center sm:place-self-end col-span-2 sm:col-span-1">

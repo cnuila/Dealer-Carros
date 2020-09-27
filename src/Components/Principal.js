@@ -21,15 +21,15 @@ class Principal extends React.Component {
       mostrarFiltros: false,
       mostrarInfo: false,
     };
-    this.clicEstadoCarro = this.clicEstadoCarro.bind(this);
+    this.clicEstadoCarro = this.clicEstadoCarro.bind(this)
+    this.mostrarConsulta = this.mostrarConsulta.bind(this)
   }
 
   componentDidMount() {
     this.getCarros()
   }
 
-  getCarros = async () => {
-    let query = db.collection("carros").orderBy("marca")
+  mostrarConsulta = async (query) => {
     query.onSnapshot((querySnapshot) => {
       const rCarros = []
       querySnapshot.forEach((doc) => {
@@ -39,6 +39,12 @@ class Principal extends React.Component {
         carros: rCarros,
       })
     })
+  }
+
+  getCarros = async () => {
+    let query = db.collection("carros").orderBy("marca")
+    this.mostrarConsulta(query)
+    console.log("me ejecuto")
   }
 
   estadoSeleccionado = () => {
@@ -160,12 +166,12 @@ class Principal extends React.Component {
                 <span className="flex-1">{textoFiltro + " filtros"}</span>
               </button>
             </div>
-            <Filtros />
+            <Filtros mostrarConsulta={this.mostrarConsulta}/>
           </div>
           {/*Fin de filtros*/}
 
           {/*Carros*/}
-          <div className={"border-t-2 border-gray-400 pt-5 grid grid-cols-1 md:grid-cols-4 gap-6 bg-gray-100 place-items-center mb-10 mt-4 md:mt-8 mx-6 md:mx-8 transform transition duration-500 ease-in-out -translate-y-" + translateCarros}>
+          <div className={`border-t-2 border-gray-400 pt-5 grid grid-cols-1 md:grid-cols-4 gap-6 bg-gray-100 place-items-center mb-10 mt-4 md:mt-8 mx-6 md:mx-8 transform transition duration-500 ease-in-out -translate-y-${translateCarros}`}>
             {carrosMostrar}{/*Ventana para info Vehiculo*/}
 
           </div>

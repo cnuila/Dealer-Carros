@@ -59,7 +59,7 @@ function Carro(props) {
   })
   
   return (
-    <div className="max-w-xs px-4 transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105">
+    <div className="w-full px-4 transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105">
       <div className="relative pb-48">
         <img id={"foto" + id}
           className="absolute h-full w-full object-cover rounded-lg shadow-md"
@@ -76,11 +76,11 @@ function Carro(props) {
             ${coma()}
           </div>
 
-          <div className="grid grid-cols-4">
-            <div className={colorEstado + " text-sm mb-2 font-semibold"}>
+          <div className="grid grid-cols-3">
+            <div className={`${colorEstado} text-sm mb-2 font-semibold`}>
               {estado}
             </div>
-            <div className="col-start-4 flex justify-end text-gray-500 text-sm font-semibold">
+            <div className="col-start-3 flex justify-end text-gray-500 text-sm font-semibold">
               {tipoTitulo}
             </div>
           </div>
