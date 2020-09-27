@@ -30,7 +30,7 @@ export default class MultipleImageUploadComponent extends Component {
     render() {
         return (
             <form>
-                <div className="form-group multi-preview w-2/5 ">
+                <div className="form-group content-center md:mx-12 md:w-3/5">
                     {(this.fileArray || []).map(url => (
                         <img src={url} alt="..." />
                     ))}
