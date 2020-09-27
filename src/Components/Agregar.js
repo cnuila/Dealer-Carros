@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 class Agregar extends React.Component {
 
-  handleInputChange = e= {
+  handleInputChange = e=> {
     
   }
 

@@ -21,9 +21,11 @@ class Principal extends React.Component {
       mostrarInfo: false,
       carroMostrar: {},
     };
+
     this.clicEstadoCarro = this.clicEstadoCarro.bind(this)
     this.mostrarConsulta = this.mostrarConsulta.bind(this)
     this.clickMostrarInfo = this.clickMostrarInfo.bind(this)
+
   }
 
   componentDidMount() {
