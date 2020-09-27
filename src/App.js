@@ -110,7 +110,7 @@ const App = () => {
     <Switch>
       <Route path="/" exact component={Principal} />
       <Route path="/login" component={LogIn}/>
-      <Route path="/agregar-carro" component={UploadImages} />
+      <Route path="/agregar-carro" component={Agregar} />
     </Switch>
   </Router>
   );

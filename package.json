@@ -9,6 +9,7 @@
     "all": "0.0.0",
     "animate.css": "^4.1.1",
     "firebase": "^7.21.0",
+    "jquery": "^3.5.1",
     "postcss": "^8.0.5",
     "react": "^16.13.1",
     "react-color": "^2.18.1",

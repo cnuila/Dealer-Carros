@@ -2,15 +2,45 @@ import React from "react";
 import ColorPicker from './Filtros/ColorPicker';
 import { Link } from 'react-router-dom';
 
-
 class Agregar extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+        ...this.estadoInicial,
+    }
+    this.handleInputChange = this.handleInputChange.bind(this)
+}
 
-  handleInputChange = e=> {
-    
-  }
+estadoInicial = {
+    ano: "Cualquiera",
+    color: "transparent",
+    precioMax: "Cualquiera",
+    precioMin: "Cualquiera",
+    salvage: false,
+    clean: false,
+    titulo: false,
+    proveedor: false,
+    inspeccionado: false,
+    lienHolder: false,
+}
+
+handleInputChange({ target }) {
+    let { name, type } = target
+    let valor
+    if (type === "checkbox") {
+        valor = target.checked
+    } else {
+        valor = target.value
+    }
+    this.setState({
+        [name]: valor,
+    })
+}
+
 
 
   render(){
+    let { ano, color, precioMax, precioMin, salvage, clean, proveedor, titulo, inspeccionado, lienHolder } = this.state
     return (
       <div className="bg-gray-100">
         {/*Inicio del navbar*/}
@@ -42,12 +72,9 @@ class Agregar extends React.Component {
         {/*Inicio Formulario*/}
         {/*este primer div hacer el trabajo de un container*/}
         <body class="antialiased p-10">
-        <form class="max-w-2xl mx-auto rounded-lg  overflow-hidden p-6 space-y-10 shadow-2xl">
+        <form class=" bg-gray-200 max-w-2xl mx-auto rounded-lg  overflow-hidden p-6 space-y-10 shadow-2xl">
           <h2 class="text-2xl font-bold text-center">Agregar Carro</h2>
           <h2 class="text-xl font-bold text-center ">Imagenes</h2>
-          <div class ="mx-auto">
-          <input type="file" name="imgAdd" id="imagen" size="80" />
-          </div>
           <h2 class="text-2xl font-bold text-center underline">Información General</h2>
            {/*Marcas*/}
           <div class="  relative   max-w-sm mx-auto border-b-2 w-3/5  focus-within:border-blue-800 p-3">
@@ -85,8 +112,8 @@ class Agregar extends React.Component {
             <input type="number" min="1990" max="2021" name="Año" placeholder="" class="block w-full  text-center appearance-none focus:outline-none bg-transparent" />
           </div>
           <div class= " md:m-40">
-          <h2 class="text-lg font-bold text-center ">Color</h2>
-            <ColorPicker  />
+          <h2 class="text-lg font-bold text-center content-center">Color</h2>
+          <ColorPicker width={230} circleSize={24} color={color} handleInputChange={this.handleInputChange} />
           </div>
           <h2 class="text-xl font-bold text-center -p-2">Estado del vehiculo</h2>
           <div className="my-2 w-full inline-block ">
