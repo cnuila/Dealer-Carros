@@ -5,7 +5,6 @@ import Filtros from "./Filtros";
 import InfoCarro from "./InfoCarro";
 import { db } from "../firebase"
 import { Link } from 'react-router-dom';
-import Modal from 'react-modal'
 
 class Principal extends React.Component {
   constructor(props) {
@@ -20,11 +19,11 @@ class Principal extends React.Component {
       carros: [],
       mostrarFiltros: false,
       mostrarInfo: false,
-      carroMostrar:{},
+      carroMostrar: {},
     };
     this.clicEstadoCarro = this.clicEstadoCarro.bind(this)
     this.mostrarConsulta = this.mostrarConsulta.bind(this)
-    this.clickMostraInfo = this.clickMostraInfo.bind(this)
+    this.clickMostrarInfo = this.clickMostrarInfo.bind(this)
   }
 
   componentDidMount() {
@@ -73,21 +72,21 @@ class Principal extends React.Component {
 
   clicMostrarFiltro = () => {
     this.setState({
-      mostrarFiltros: !this.state.mostrarFiltros
+      mostrarFiltros: !this.state.mostrarFiltros,
     })
   }
 
-  clickMostraInfo = (vin) => {
-    let carro = this.state.carros.filter(carro => carro.id === vin);    
+  clickMostrarInfo = (vin,estado) => {
+    let carro = this.state.carros.filter(carro => carro.id === vin);
     this.setState({
-      mostrarInfo: !this.state.mostrarInfo,
+      mostrarInfo: estado,
       carroMostrar: carro[0],
-    })    
+    })
   }
 
   render() {
-    console.log(this.state.mostrarInfo,this.state.carroAmostrar)
-    let botonesEstados; 
+    console.log(this.state.mostrarInfo, this.state.carroMostrar)
+    let botonesEstados;
     let { estados, carros, carroMostrar } = this.state;
     botonesEstados = estados.map((boton) => {
       return (
@@ -113,12 +112,10 @@ class Principal extends React.Component {
       carrosMostrar = (<div>No hay carros</div>)
     } else {
       carrosMostrar = carrosMostrar.map(carro => {
-        return (<Carro info={carro} mostrarInfo={this.clickMostraInfo}/>)
+        return (<Carro info={carro} mostrarInfo={this.clickMostrarInfo} />)
       })
     }
-
     return (
-
       <div className="bg-gray-100">
         {/*Inicio del navbar*/}
         <nav className="justify-center flex items-center justify-between flex-wrap bg-gray-900 p-3">
@@ -191,7 +188,9 @@ class Principal extends React.Component {
             </div>
           </div>
           {/*aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa*/}
-          <InfoCarro carro={carroMostrar}/>
+          <div>
+            {this.state.mostrarInfo && (<InfoCarro carro={carroMostrar} mostrarInfo={this.clickMostrarInfo} />)}
+          </div>
           {/*aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa*/}
           {/*Fin de la Ventana*/}
         </div>

@@ -29,8 +29,8 @@ function Carro(props) {
     return precioFinal.toString();
   }
 
-  const handleClick = (vin) => {
-    props.mostrarInfo(vin)
+  const handleClick = (vin,estado) => {
+    props.mostrarInfo(vin,estado)
   }
 
   let tipoTitulo
@@ -65,7 +65,7 @@ function Carro(props) {
   })
 
   return (
-    <div className=" w-full px-4 transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105" onClick={() => handleClick(id)}>
+    <div className=" w-full px-4 transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105" onClick={() => handleClick(id,true)}>
       <div className="relative pb-48">
         <img id={"foto" + id}
           className="absolute h-full w-full object-cover rounded-lg shadow-md"

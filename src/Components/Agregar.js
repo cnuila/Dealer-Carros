@@ -2,10 +2,16 @@ import React from "react";
 import ColorPicker from './Filtros/ColorPicker';
 import { Link } from 'react-router-dom';
 
+
 class Agregar extends React.Component {
-  render() {
+
+  handleInputChange = e= {
+    
+  }
+
+
+  render(){
     return (
-      
       <div className="bg-gray-100">
         {/*Inicio del navbar*/}
         <nav className="justify-between flex items-center flex-wrap bg-gray-900 p-3">
