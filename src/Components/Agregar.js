@@ -1,6 +1,7 @@
 import React from "react";
 import ColorPicker from './Filtros/ColorPicker';
 import { Link } from 'react-router-dom';
+import MultipleImageUploadComponent  from './UploadImages';
 
 class Agregar extends React.Component {
   constructor(props) {
@@ -75,6 +76,7 @@ handleInputChange({ target }) {
         <form class=" bg-gray-200 max-w-2xl mx-auto rounded-lg  overflow-hidden p-6 space-y-10 shadow-2xl">
           <h2 class="text-2xl font-bold text-center">Agregar Carro</h2>
           <h2 class="text-xl font-bold text-center ">Imagenes</h2>
+          <MultipleImageUploadComponent />
           <h2 class="text-2xl font-bold text-center underline">Información General</h2>
            {/*Marcas*/}
           <div class="  relative   max-w-sm mx-auto border-b-2 w-3/5  focus-within:border-blue-800 p-3">

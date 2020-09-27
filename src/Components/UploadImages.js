@@ -1,65 +1,46 @@
-import React, {Component} from 'react';
-//import $ from jQuery;
+import React, { Component } from 'react';
 
-class UploadImages extends Component{
-    constructor(props){
+export default class MultipleImageUploadComponent extends Component {
+
+    fileObj = [];
+    fileArray = [];
+
+    constructor(props) {
         super(props)
         this.state = {
-            file:null
+            file: [null]
         }
-
-        this.handleChange = this.handleChange.bind(this)
+        this.uploadMultipleFiles = this.uploadMultipleFiles.bind(this)
+        this.uploadFiles = this.uploadFiles.bind(this)
     }
 
-    handleChange(event){
-        this.setState({
-            file:URL.createObjectURL(event.target.files[0])
-        })
-    }
-/*   
-    JS
-$(document).ready(function() {
-  if (window.File && window.FileList && window.FileReader) {
-    $("#files").on("change", function(e) {
-      var files = e.target.files,
-        filesLength = files.length;
-      for (var i = 0; i < filesLength; i++) {
-        var f = files[i]
-        var fileReader = new FileReader();
-        fileReader.onload = (function(e) {
-          var file = e.target;
-          $("<span class=\"pip\">" +
-            "<img class=\"imageThumb\" src=\"" + e.target.result + "\" title=\"" + file.name + "\"/>" +
-            "<br/><span class=\"remove\">Remove image</span>" +
-            "</span>").insertAfter("#files");
-          $(".remove").click(function(){
-            $(this).parent(".pip").remove();
-          });
-
-
-          });
-        fileReader.readAsDataURL(f);
-      }
-    });
-  } else {
-    alert("Your browser doesn't support to File API")
-  }
-});   */
-    
-
-
-    
-render(){
-        return(
-            <div class="field" align="left">
-                <h3>Seleccione las imagenes del vehiculo</h3>
-                <input type="file" id="files" name="files[]" multiple />
-        ]   </div>
-        );
+    uploadMultipleFiles(e) {
+        this.fileObj.push(e.target.files)
+        for (let i = 0; i < this.fileObj[0].length; i++) {
+            this.fileArray.push(URL.createObjectURL(this.fileObj[0][i]))
+        }
+        this.setState({ file: this.fileArray })
     }
 
+    uploadFiles(e) {
+        e.preventDefault()
+        console.log(this.state.file)
+    }
+
+    render() {
+        return (
+            <form>
+                <div className="form-group multi-preview ">
+                    {(this.fileArray || []).map(url => (
+                        <img src={url} alt="..." />
+                    ))}
+                </div>
+                      
+                <div className="form-group">
+                    <input type="file" className="form-control" onChange={this.uploadMultipleFiles} multiple />
+                </div>
+                <button type="button " className="btn btn-danger btn-block" onClick={this.uploadFiles}>Upload</button>
+            </form>
+        )
+    }
 }
-
-
-
-export default UploadImages;
