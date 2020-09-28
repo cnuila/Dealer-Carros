@@ -59,7 +59,7 @@ function InfoCarro(props) {
 
 
                         {/*Informacion*/}
-                        <div className="h-3/5 rounded-l-none rounded-md bg-transparent relative p-6 flex-auto overflow-auto">
+                        <div className="h-64 rounded-l-none rounded-md bg-transparent relative p-6 flex-auto overflow-auto">
                             <button className="top-0 right-0 p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
                                 onClick={() => handleClick(false)}>
                                 <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">

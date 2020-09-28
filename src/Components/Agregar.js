@@ -54,7 +54,7 @@ class Agregar extends React.Component {
         console.log("agrego foto exitosamente");
       }).catch(d => console.log("nada dog"));
     })
-    await db.collection('Prueba').doc(this.state.VIN).set({
+    await db.collection('carros').doc(this.state.VIN).set({
       marca:marca, 
       modelo:modelo,
       millaje:millaje,
