@@ -10,6 +10,24 @@ function ColorPicker(props) {
         if (props.color !== color.hex) {
             colorActual = color.hex
         }
+        if (colorActual === "#FF0000"){
+            colorActual = "Rojo"
+        }
+        if (colorActual === "#0047CB"){
+            colorActual = "Azul"
+        }
+        if (colorActual === "#FBFF00"){
+            colorActual = "Amarillo"
+        }
+        if (colorActual === "#FFFFFF"){
+            colorActual = "Blanco"
+        }
+        if (colorActual === "#000000"){
+            colorActual = "Negro"
+        }
+        if (colorActual === "#777777"){
+            colorActual = "Gris"
+        }
         let target = {
             name: "color",
             type: "color",
