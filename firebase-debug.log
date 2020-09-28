@@ -1,0 +1,30 @@
+[debug] [2020-09-28T17:26:20.728Z] ----------------------------------------------------------------------
+[debug] [2020-09-28T17:26:20.730Z] Command:       /home/cnuila/.nvm/versions/node/v14.7.0/bin/node /home/cnuila/.nvm/versions/node/v14.7.0/bin/firebase deploy
+[debug] [2020-09-28T17:26:20.731Z] CLI Version:   8.10.0
+[debug] [2020-09-28T17:26:20.731Z] Platform:      linux
+[debug] [2020-09-28T17:26:20.731Z] Node Version:  v14.7.0
+[debug] [2020-09-28T17:26:20.732Z] Time:          Mon Sep 28 2020 11:26:20 GMT-0600 (Central Standard Time)
+[debug] [2020-09-28T17:26:20.732Z] ----------------------------------------------------------------------
+[debug] [2020-09-28T17:26:20.732Z] 
+[debug] [2020-09-28T17:26:20.740Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-09-28T17:26:20.741Z] > authorizing via signed-in user
+[debug] [2020-09-28T17:26:20.741Z] [iam] checking project santos-motors for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2020-09-28T17:26:20.744Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/santos-motors:testIamPermissions  
+ {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2020-09-28T17:26:21.287Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Mon, 28 Sep 2020 17:26:21 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","server-timing":"gfet4t7; dur=107","alt-svc":"h3-Q050=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-27=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-09-28T17:26:21.295Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/santos-motors  
+ 
+[debug] [2020-09-28T17:26:21.999Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Mon, 28 Sep 2020 17:26:21 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-Q050=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-27=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[info] 
+[info] === Deploying to 'santos-motors'...
+[info] 
+[info] i  deploying hosting 
+[debug] [2020-09-28T17:26:22.012Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/santos-motors/versions  
+ {"config":{"rewrites":[{"glob":"**","path":"/index.html"}]},"labels":{"deployment-tool":"cli-firebase"}}
+[debug] [2020-09-28T17:26:23.119Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Mon, 28 Sep 2020 17:26:23 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-Q050=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-27=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[info] i  hosting[santos-motors]: beginning deploy... 
+[info] i  hosting[santos-motors]: found 24 files in build 
+[debug] [2020-09-28T17:26:23.788Z] [hosting] hash cache [YnVpbGQ] stored for 24 files
+[debug] [2020-09-28T17:26:23.789Z] [hosting][hash queue][FINAL] {"max":615,"min":29,"avg":77.875,"active":0,"complete":24,"success":24,"errored":0,"retried":0,"total":24,"elapsed":631}
+[debug] [2020-09-28T17:26:23.789Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/santos-motors/versions/6fa5b6b9f32032c1:populateFiles  
+ <request body omitted>

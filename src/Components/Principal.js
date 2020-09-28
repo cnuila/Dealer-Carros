@@ -202,11 +202,11 @@ class Principal extends React.Component {
           <div className={`border-t-2 border-gray-400 pt-5 grid grid-cols-1 md:grid-cols-4 gap-6 bg-gray-100 place-items-center mb-10 mt-4 sm:mt-8 mx-6 sm:mx-8 transform transition duration-500 ease-in-out -translate-y-${translateCarros}`}>
             {carrosMostrar}
           </div>
-          {/*aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa*/}
+          
           <div>
             {this.state.mostrarInfo && (<InfoCarro carro={carroMostrar} mostrarInfo={this.clickMostrarInfo} />)}
           </div>
-          {/*aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa*/}
+          
           {/*Fin de la Ventana*/}
         </div>
         <div className="py-4 sm:py-20"></div>
