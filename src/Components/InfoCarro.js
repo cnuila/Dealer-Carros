@@ -35,10 +35,6 @@ function InfoCarro(props) {
                     src={foto}
                 />
             </div>
-            <div className="rounded-bl-md p-6 bg-gray-900 text-white">foto</div>
-            <div className="p-6 bg-gray-900 text-white">foto</div>
-            <div className="p-6 bg-gray-900 text-white">foto</div>
-            <div className="rounded-br-md p-6 bg-gray-900 text-white">foto</div>
         </>
     )
 
@@ -60,57 +56,62 @@ function InfoCarro(props) {
 
                         {/*Informacion*/}
                         <div className="h-64 rounded-l-none rounded-md bg-transparent relative p-6 flex-auto overflow-auto">
-                            <button className="top-0 right-0 p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
-                                onClick={() => handleClick(false)}>
-                                <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
-                                    ×
+                                <button className="top-0 right-0 p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
+                                    onClick={() => handleClick(false)}>
+                                    <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
+                                        ×
                                 </span>
-                            </button>
-                            <h3 className="text-3xl font-semibold text-gray-100">
-                                {props.carro.marca} - {props.carro.modelo}
-                            </h3>
-                            <p className="my-4 text-gray-600 text-lg leading-relaxed">
-                                VIN : {props.carro.id}
-                            </p>
-                            <p className="my-4 text-gray-600 text-lg leading-relaxed">
-                                Codigo : {props.carro.codigo}
-                            </p>
-                            <p className="my-4 text-gray-600 text-lg leading-relaxed">
-                                Millaje : {props.carro.millaje}
-                            </p>
-                            <p className="my-4 text-gray-600 text-lg leading-relaxed">
-                                Año : {props.carro.ano}
-                            </p>
-                            <p className="my-4 text-gray-600 text-lg leading-relaxed">
-                                Tipo del titulo : {props.carro.clean}
-                            </p>
-                            <p className="my-4 text-gray-600 text-lg leading-relaxed">
-                                Proveedor : {props.carro.proveedor}
-                            </p>
-                            <p className="my-4 text-gray-600 text-lg leading-relaxed">
-                                Millaje : {props.carro.millaje}
-                            </p>
-                            <p className="my-4 text-gray-600 text-lg leading-relaxed">
-                                Estado : {props.carro.estado}
-                            </p>
-                            <p className="my-4 text-gray-600 text-lg leading-relaxed">
-                                Inspeccionado : {props.carro.inspeccionado}
-                            </p>
-                            <p className="my-4 text-gray-600 text-lg leading-relaxed">
-                                Titulo a Mano : {props.carro.titulo}
-                            </p>
-                            <p className="my-4 text-gray-600 text-lg leading-relaxed">
-                                Lien Holder : {props.carro.lienHolder}
-                            </p>
-                            <p className="my-4 text-gray-600 text-lg leading-relaxed">
-                                Valor de la Compra : {props.carro.valorCompra}
-                            </p>
-                            <p className="my-4 text-gray-600 text-lg leading-relaxed">
-                                Valor Invertido : {props.carro.valorInvertido}
-                            </p>
-                            <p className="my-4 text-gray-600 text-lg leading-relaxed">
-                                Valor para Venta : {props.carro.precioFinal}
-                            </p>
+                                </button>
+                                <h3 className="text-3xl font-semibold text-gray-100">
+                                    {props.carro.marca} - {props.carro.modelo}
+                                </h3>
+                            <div>
+                                <p className="my-4 text-gray-600 text-lg leading-relaxed">
+                                    VIN : {props.carro.id}
+                                </p>
+                                <p className="my-4 text-gray-600 text-lg leading-relaxed">
+                                    Codigo : {props.carro.codigo}
+                                </p>
+                                <p className="my-4 text-gray-600 text-lg leading-relaxed">
+                                    Color : {props.carro.color}
+                                </p>
+                                <p className="my-4 text-gray-600 text-lg leading-relaxed">
+                                    Millaje : {props.carro.millaje}
+                                </p>
+                                <p className="my-4 text-gray-600 text-lg leading-relaxed">
+                                    Año : {props.carro.ano}
+                                </p>
+                                <p className="my-4 text-gray-600 text-lg leading-relaxed">
+                                    Tipo del titulo : {props.carro.clean}
+                                </p>
+                                <p className="my-4 text-gray-600 text-lg leading-relaxed">
+                                    Proveedor : {props.carro.proveedor}
+                                </p>
+                                <p className="my-4 text-gray-600 text-lg leading-relaxed">
+                                    Millaje : {props.carro.millaje}
+                                </p>
+                                <p className="my-4 text-gray-600 text-lg leading-relaxed">
+                                    Estado : {props.carro.estado}
+                                </p>
+                                <p className="my-4 text-gray-600 text-lg leading-relaxed">
+                                    Inspeccionado : {props.carro.inspeccionado}
+                                </p>
+                                <p className="my-4 text-gray-600 text-lg leading-relaxed">
+                                    Titulo a Mano : {props.carro.titulo}
+                                </p>
+                                <p className="my-4 text-gray-600 text-lg leading-relaxed">
+                                    Lien Holder : {props.carro.lienHolder}
+                                </p>
+                                <p className="my-4 text-gray-600 text-lg leading-relaxed">
+                                    Valor de la Compra : {props.carro.valorCompra}
+                                </p>
+                                <p className="my-4 text-gray-600 text-lg leading-relaxed">
+                                    Valor Invertido : {props.carro.valorInvertido}
+                                </p>
+                                <p className="my-4 text-gray-600 text-lg leading-relaxed">
+                                    Valor para Venta : {props.carro.precioFinal}
+                                </p>
+                            </div>
                         </div>
                         {/*FIN*/}
                     </div>
