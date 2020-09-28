@@ -9,7 +9,7 @@ function ColorPicker(props) {
         let colorActual = "transparent"
         if (props.color !== color.hex) {
             colorActual = color.hex
-        }
+        }       
         let target = {
             name: "color",
             type: "color",

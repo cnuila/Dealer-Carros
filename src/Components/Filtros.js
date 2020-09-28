@@ -32,8 +32,8 @@ class Filtros extends Component {
         let valor
         if (type === "checkbox") {
             valor = target.checked
-        } else {
-            valor = target.value
+        } else {            
+            valor = target.value            
         }
         this.setState({
             [name]: valor,
@@ -46,7 +46,7 @@ class Filtros extends Component {
             salvage !== false || clean !== false || proveedor !== false || titulo !== false || inspeccionado !== false || lienHolder !== false) {
 
             let query = db.collection("carros")
-            
+
             if (ano !== "Cualquiera") {
                 query = query.where("ano", "==", ano)
             }
@@ -72,6 +72,24 @@ class Filtros extends Component {
             }
 
             if (color !== "transparent") {
+                if (color === "#ff0000") {
+                    color = "Rojo"
+                }
+                if (color === "#0047cb") {
+                    color = "Azul"
+                }
+                if (color === "#fbff00") {
+                    color = "Amarillo"
+                }
+                if (color === "#ffffff") {
+                    color = "Blanco"
+                }
+                if (color === "#000000") {
+                    color = "Negro"
+                }
+                if (color === "#777777") {
+                    color = "Gris"
+                }
                 query = query.where("color", "==", color)
             }
 
@@ -101,12 +119,12 @@ class Filtros extends Component {
         let { ano, color, precioMax, precioMin, salvage, clean, proveedor, titulo, inspeccionado, lienHolder } = this.state
         if (ano !== "Cualquiera" || color !== "transparent" || precioMax !== "Cualquiera" || precioMin !== "Cualquiera" ||
             salvage !== false || clean !== false || proveedor !== false || titulo !== false || inspeccionado !== false || lienHolder !== false) {
-                let query = db.collection("carros").orderBy("marca")
-                this.props.mostrarConsulta(query)
-                this.setState({
-                    ...this.estadoInicial,
-                })
-            }
+            let query = db.collection("carros").orderBy("marca")
+            this.props.mostrarConsulta(query)
+            this.setState({
+                ...this.estadoInicial,
+            })
+        }
     }
 
     render() {
