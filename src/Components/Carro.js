@@ -1,12 +1,34 @@
-import  React from "react";
+import React, { useState, useEffect } from "react";
 import { storage } from "../firebase"
 
 function Carro(props) {
 
-  //let [foto, setFoto] = useState(null)
-  //let [loading, setLoading] = useState(false)
+  //definicion de hooks
+  let [foto, setFoto] = useState(null)
+  let [loading, setLoading] = useState(true)
 
-  /*funcion que agrega coma al precio*/
+  //traer props
+  const { id, ano, marca, modelo, fotos, estado } = props.info;
+
+  //obtener foto del storage
+  let gsReference = storage.refFromURL(fotos[0])
+  const descargarFoto = async () => {
+    gsReference.getDownloadURL().then(direc => {
+      setFoto(direc)
+      setLoading(false)
+    }).catch((err) => {
+      console.log(err)
+    })
+  }
+
+  useEffect(descargarFoto, [])
+
+  //mandar a principal el estado 
+  const handleClick = (vin, estado) => {
+    props.mostrarInfo(vin, estado)
+  }
+
+  //funcion que agrega coma al precio
   const coma = () => {
     let { precioFinal } = props.info;
     let precioS = precioFinal.toString();
@@ -29,10 +51,7 @@ function Carro(props) {
     return precioFinal.toString();
   }
 
-  const handleClick = (vin,estado) => {
-    props.mostrarInfo(vin,estado)
-  }
-
+  //definir el caracter de tipoTitulo
   let tipoTitulo
   if (typeof (props.info.salvage) !== "undefined") {
     if (props.info.salvage !== false) {
@@ -45,8 +64,6 @@ function Carro(props) {
     }
   }
 
-  const { id, ano, marca, modelo, fotos, estado } = props.info;
-
   let colorEstado = "text-green-500"
   if (estado === "Repo") {
     colorEstado = "text-red-600"
@@ -56,22 +73,19 @@ function Carro(props) {
     colorEstado = "text-yellow-400"
   }
 
-  let gsReference = storage.refFromURL(fotos[0])
-  gsReference.getDownloadURL().then(direc => {
-    document.getElementById("foto" + id).src = direc
-    //setLoading(true)
-  }).catch((err) => {
-    console.log(err)
-  })
+  let fotoCargando = (<div class="relative pb-48 bg-gray-400 h-full w-full rounded-lg shadow-md"></div>)
+  let fotoCargada = (
+    <div className="relative pb-48">
+      <img id={"foto" + id}
+        className="absolute h-full w-full object-cover rounded-lg shadow-md"
+        alt="Carro"
+        src={foto}
+      />
+    </div>)
 
   return (
-    <div className=" w-full px-4 transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105" onClick={() => handleClick(id,true)}>
-      <div className="relative pb-48">
-        <img id={"foto" + id}
-          className="absolute h-full w-full object-cover rounded-lg shadow-md"
-          alt="Carro"
-        />
-      </div>
+    <div className=" w-full px-4 transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105" onClick={() => handleClick(id, true)}>
+      {loading ? fotoCargando : fotoCargada}
       <div className="relative px-4 -mt-10">
         <div className="px-6 py-4 bg-gray-900 rounded-lg shadow-xl">
           <div className="font-semibold text-md text-gray-100 mb-2 md:truncate">

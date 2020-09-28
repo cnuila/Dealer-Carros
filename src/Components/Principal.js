@@ -3,6 +3,7 @@ import Carro from "./Carro";
 import Estado from "./Estado";
 import Filtros from "./Filtros";
 import InfoCarro from "./InfoCarro";
+import CarroCargando from "./CarroCargando";
 import { db } from "../firebase"
 import { Link } from 'react-router-dom';
 
@@ -16,22 +17,30 @@ class Principal extends React.Component {
         { estado: "Apartado", selected: false, color: "text-blue-600" },
         { estado: "Vendido", selected: false, color: "text-yellow-400" },
       ],
+      loading: true,
       carros: [],
       mostrarFiltros: false,
       mostrarInfo: false,
       carroMostrar: {},
     };
-
     this.clicEstadoCarro = this.clicEstadoCarro.bind(this)
     this.mostrarConsulta = this.mostrarConsulta.bind(this)
     this.clickMostrarInfo = this.clickMostrarInfo.bind(this)
-
   }
 
   componentDidMount() {
     this.getCarros()
   }
 
+  componentDidUpdate(prevProps, prevState){
+    if (prevState.carros !== this.state.carros){
+      this.setState({
+        loading:false,
+      })
+    }
+  }
+
+  //funcion que renderiza la query que se envía
   mostrarConsulta = async (query) => {
     query.onSnapshot((querySnapshot) => {
       const rCarros = []
@@ -44,12 +53,13 @@ class Principal extends React.Component {
     })
   }
 
+  //funcion asíncrona que trae todos los carros
   getCarros = async () => {
     let query = db.collection("carros").orderBy("marca")
     this.mostrarConsulta(query)
-    console.log("me ejecuto")
   }
 
+  //funcion que retorna el estado seleccionado
   estadoSeleccionado = () => {
     let { estados } = this.state
     let seleccionado = estados.filter(estado => estado.selected === true)
@@ -72,13 +82,14 @@ class Principal extends React.Component {
     })
   }
 
+  //funcion que muestra los filtros
   clicMostrarFiltro = () => {
     this.setState({
       mostrarFiltros: !this.state.mostrarFiltros,
     })
   }
 
-  clickMostrarInfo = (vin,estado) => {
+  clickMostrarInfo = (vin, estado) => {
     let carro = this.state.carros.filter(carro => carro.id === vin);
     this.setState({
       mostrarInfo: estado,
@@ -87,7 +98,7 @@ class Principal extends React.Component {
   }
 
   render() {
-    console.log(this.state.mostrarInfo, this.state.carroMostrar)
+    //renderizar los botones de estado
     let botonesEstados;
     let { estados, carros, carroMostrar } = this.state;
     botonesEstados = estados.map((boton) => {
@@ -98,6 +109,7 @@ class Principal extends React.Component {
       );
     });
 
+    //cuanto se moverán los filtros en diferentes pantallas segun se desee
     let translateCarros
     let textoFiltro
     if (this.state.mostrarFiltros) {
@@ -109,14 +121,23 @@ class Principal extends React.Component {
     }
 
     let estadoActual = this.estadoSeleccionado()
-    let carrosMostrar = carros.filter(carro => carro.estado === estadoActual)
-    if (carrosMostrar.length === 0) {
-      carrosMostrar = (<div>No hay carros</div>)
+
+    let carrosMostrar
+    let cargandoCarros = carros.filter(carro => carro.estado === estadoActual)
+    if (cargandoCarros.length === 0) {
+      cargandoCarros = (<div>No hay carros</div>)
     } else {
-      carrosMostrar = carrosMostrar.map(carro => {
-        return (<Carro info={carro} mostrarInfo={this.clickMostrarInfo} />)
+      cargandoCarros = cargandoCarros.map(carro => {
+        return (<Carro info={carro} mostrarInfo={this.clickMostrarInfo} mostrarCarros={this.mostrarCarros} />)
       })
     }
+
+    if (this.state.loading) {
+      carrosMostrar = (<><CarroCargando /><CarroCargando /><CarroCargando /><CarroCargando /></>)
+    } else {
+      carrosMostrar = cargandoCarros
+    }
+
     return (
       <div className="bg-gray-100">
         {/*Inicio del navbar*/}
@@ -170,24 +191,7 @@ class Principal extends React.Component {
 
           {/*Carros*/}
           <div className={`border-t-2 border-gray-400 pt-5 grid grid-cols-1 md:grid-cols-4 gap-6 bg-gray-100 place-items-center mb-10 mt-4 md:mt-8 mx-6 md:mx-8 transform transition duration-500 ease-in-out -translate-y-${translateCarros}`}>
-            {carrosMostrar}{/*Ventana para info Vehiculo*/}
-
-            <div class="px-4 w-full">
-              <div class="animate-pulse">
-                <div class="relative pb-48 bg-gray-400 h-full w-full rounded-lg shadow-md"></div>
-                <div className="relative px-4 -mt-10">
-                  <div className="px-6 py-4 bg-gray-500 rounded-lg shadow-xl">
-                    <div class="flex-1 space-y-4 py-1">
-                      <div class="h-4 bg-gray-400 rounded w-3/4"></div>
-                      <div class="space-y-2">
-                        <div class="h-4 bg-gray-400 rounded"></div>
-                        <div class="h-4 bg-gray-400 rounded w-5/6"></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            {carrosMostrar}
           </div>
           {/*aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa*/}
           <div>
