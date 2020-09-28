@@ -80,6 +80,7 @@ const App = () => {
   };
 
 
+
   useEffect(() => {
     authListener();
   }, []);
@@ -106,14 +107,13 @@ const App = () => {
       )}
   </div>
   */
-  <Router>
-    <Switch>
-      <Route path="/" exact component={Principal} />
-      <Route path="/login" component={LogIn}/>
-      <Route path="/agregar-carro" component={Agregar} />
-      
-    </Switch>
-  </Router>
+      <Router>
+        <Switch>
+          <Route path="/" exact component={Principal} />
+          <Route path="/login" component={LogIn} />
+          <Route path="/agregar-carro" component={Agregar} />
+        </Switch>
+      </Router>
   );
 }
 
