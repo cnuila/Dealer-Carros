@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Component } from "react";
 import { storage } from "../firebase"
 
 function Carro(props) {
@@ -10,18 +10,19 @@ function Carro(props) {
   //traer props
   const { id, ano, marca, modelo, fotos, estado } = props.info;
 
-  //obtener foto del storage
-  let gsReference = storage.refFromURL(fotos[0])
-  const descargarFoto = async () => {
-    gsReference.getDownloadURL().then(direc => {
-      setFoto(direc)
-      setLoading(false)
-    }).catch((err) => {
-      console.log(err)
-    })
-  }
-
-  useEffect(descargarFoto, [])
+  useEffect(() => {
+    //obtener foto del storage
+    let gsReference = storage.refFromURL(fotos[0])
+    async function descargarFoto() {
+      gsReference.getDownloadURL().then(direc => {
+        setFoto(direc)
+        setLoading(false)
+      }).catch((err) => {
+        console.log(err)
+      })
+    }
+    descargarFoto()
+  })
 
   //mandar a principal el estado 
   const handleClick = (vin, estado) => {

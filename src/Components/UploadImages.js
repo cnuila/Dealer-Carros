@@ -36,7 +36,7 @@ export default class MultipleImageUploadComponent extends Component {
                     ))}
                     {/*este div es donde se ponen las fotos */}
                 </div>
-                <div className="form-group">
+                <div className="form-group my-3">
                     <input type="file" className="form-control" onChange={this.uploadMultipleFiles} multiple />
                 </div>
                 {/*este boton te podria servir para lo de guardar */}
