@@ -74,10 +74,10 @@ function Carro(props) {
     colorEstado = "text-yellow-400"
   }
 
-  let fotoCargando = (<div class="relative pb-48 bg-gray-400 h-full w-full rounded-lg shadow-md"></div>)
+  let fotoCargando = (<div className="relative pb-48 bg-gray-400 h-full w-full rounded-lg shadow-md"></div>)
   let fotoCargada = (
     <div className="relative pb-48">
-      <img id={"foto" + id}
+      <img
         className="absolute h-full w-full object-cover rounded-lg shadow-md"
         alt="Carro"
         src={foto}

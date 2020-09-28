@@ -4,6 +4,7 @@ import Estado from "./Estado";
 import Filtros from "./Filtros";
 import InfoCarro from "./InfoCarro";
 import CarroCargando from "./CarroCargando";
+import CarroAveriado from "../CarroAveriado.png";
 import { db } from "../firebase"
 import { Link } from 'react-router-dom';
 
@@ -32,10 +33,10 @@ class Principal extends React.Component {
     this.getCarros()
   }
 
-  componentDidUpdate(prevProps, prevState){
-    if (prevState.carros !== this.state.carros){
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.carros !== this.state.carros) {
       this.setState({
-        loading:false,
+        loading: false,
       })
     }
   }
@@ -79,7 +80,6 @@ class Principal extends React.Component {
     })
     this.setState({
       estados: temp,
-      loading: true,
     })
   }
 
@@ -126,15 +126,24 @@ class Principal extends React.Component {
     let carrosMostrar
     let cargandoCarros = carros.filter(carro => carro.estado === estadoActual)
     if (cargandoCarros.length === 0) {
-      cargandoCarros = (<div>No hay carros</div>)
+      cargandoCarros = (
+        <div className="col-span-4 h-screen">
+          <div>
+            <img alt="averiado" className="transform scale-75 sm:scale-50 opacity-75" src={CarroAveriado}></img>
+            <div className="transform -translate-y-4 sm:-translate-y-16 text-center tracking-tight font-medium text-gray-700 opacity-75">Lo sentimos, no encontramos lo que buscabas</div>
+          </div>
+        </div>)
     } else {
       cargandoCarros = cargandoCarros.map(carro => {
-        return (<Carro info={carro} mostrarInfo={this.clickMostrarInfo}/>)
+        return (<Carro info={carro} mostrarInfo={this.clickMostrarInfo} />)
       })
     }
 
     if (this.state.loading) {
-      carrosMostrar = (<><CarroCargando /><CarroCargando /><CarroCargando /><CarroCargando /></>)
+      let array = [1,2,3,4,5,6,7,8]
+      carrosMostrar = array.map(() => {
+        return (<CarroCargando />)
+      })      
     } else {
       carrosMostrar = cargandoCarros
     }
@@ -174,7 +183,7 @@ class Principal extends React.Component {
         <div>
 
           {/*Botones Estado y filtro*/}
-          <div>
+          <>
             <div className="grid grid-cols-2 md:grid-cols-7 place-items-center m-4 sm:m-6">
               {botonesEstados}
               <button className="my-2 col-span-2 md:col-start-7 focus:outline-none hover:bg-gray-300 text-gray-900 text-sm py-2 px-4 rounded-lg inline-flex items-center w-40"
@@ -187,10 +196,10 @@ class Principal extends React.Component {
               </button>
             </div>
             <Filtros mostrarConsulta={this.mostrarConsulta} />
-          </div>
+          </>
           {/*Fin de filtros*/}
           {/*Carros*/}
-          <div className={`border-t-2 border-gray-400 pt-5 grid grid-cols-1 md:grid-cols-4 gap-6 bg-gray-100 place-items-center mb-10 mt-4 md:mt-8 mx-6 md:mx-8 transform transition duration-500 ease-in-out -translate-y-${translateCarros}`}>
+          <div className={`border-t-2 border-gray-400 pt-5 grid grid-cols-1 md:grid-cols-4 gap-6 bg-gray-100 place-items-center mb-10 mt-4 sm:mt-8 mx-6 sm:mx-8 transform transition duration-500 ease-in-out -translate-y-${translateCarros}`}>
             {carrosMostrar}
           </div>
           {/*aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa*/}
@@ -200,7 +209,7 @@ class Principal extends React.Component {
           {/*aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa*/}
           {/*Fin de la Ventana*/}
         </div>
-        <div className="py-20"></div>
+        <div className="py-4 sm:py-20"></div>
       </div >
     );
   }
