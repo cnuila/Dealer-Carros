@@ -1,11 +1,34 @@
-import React, { useState, useEffect } from 'react'
+import React, { useCallback, useContext} from 'react'
 import logoImg from "../img1.jpeg";
 import Mobile from "../MobileLog.png";
-import { Link } from 'react-router-dom';
-//import { fb } from "./firebase" 
+import {Redirect } from "react-router";
+import fb from "../firebase"
+import {AuthContext} from "./Auth.js"
 
-const LogIn = (props) => {
-    const { email, setEmail, password, setPassword, handleLogin, handleSignUp, hasAccount, setHasAccount, emailError, passwordError } = props;
+const LogIn = ({ history }) => {
+
+    const handleLogin = useCallback(
+
+        async event => {
+            event.preventDefault();
+            const {email,password} = event.target.elements;
+            try{
+                await fb.auth().signInWithEmailAndPassword(email.value, password.value);
+                history.push("/");
+            } catch (error){
+                alert(error);
+            }
+        },
+        [history]
+
+    );
+
+    const {currentUser} = useContext(AuthContext);
+
+    if(currentUser){
+        return <Redirect to="/"/>;
+    }
+
     return (
         <div className="h-screen bg-gray-300">
             <div className="flex items-center justify-center h-full ">
@@ -20,25 +43,23 @@ const LogIn = (props) => {
                         <p className=" sm:invisible  md:invisible lg:invisible xl:invisible text-gray-900 text-xl text-center font-bold -p-8">Group</p>
  
                         <p className="text-gray-600 text-sm  my-4 font-sans text-center">Bienvenido, inicie sesión por favor</p>
-                        <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 text-gray-600">
+                        <form onSubmit={handleLogin} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 text-gray-600">
                             <div className="my-3">
-                                <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" autoFocus required value={email} placeholder="Nombre de usuario" />
+                                <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="email" type="email" autoFocus  placeholder="Nombre de usuario" />
                                  {/*<input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" autoFocus required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Nombre de usuario" />*/}
-                                <p className="errorMsg text-red-600 font-bold">{emailError}</p>
+                                <p className="errorMsg text-red-600 font-bold"></p>
                             </div>
                             <div className="my-3">
-                                <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" type="password" required value={password} placeholder="Contraseña" />
+                                <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" name="password" type="password"  placeholder="Contraseña" />
                                 {/*<input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" type="password" required value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Contraseña" />*/}
-                                <p className="errorMsg text-red-600 font-bold">{passwordError}</p>
+                                <p className="errorMsg text-red-600 font-bold"></p>
                             </div>
                             <div className="flex items-center justify-between my-3">
-                                <Link to="/">
-                                    <button className="bg-gray-900 hover:bg-gray-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+                                    <button type="submit" className="bg-gray-900 hover:bg-gray-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
                                         Iniciar sesión
                                     </button>
-                                </Link>
                             </div>
-                        </div>
+                        </form>
                         <div className="sm:block w-full justify-right mx-8">
                             <picture>
                                 <source

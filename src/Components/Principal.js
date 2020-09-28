@@ -7,6 +7,7 @@ import CarroCargando from "./CarroCargando";
 import CarroAveriado from "../CarroAveriado.png";
 import { db } from "../firebase"
 import { Link } from 'react-router-dom';
+import fb from "../firebase"
 
 class Principal extends React.Component {
   constructor(props) {
@@ -169,14 +170,12 @@ class Principal extends React.Component {
                 <span>Agregar</span>
               </button>
             </Link>
-            <Link to="/login">
-              <button className="focus:outline-none bg-gray-900 hover:bg-gray-800 text-gray-100 font-bold py-2 px-4 rounded inline-flex items-center">
+              <button onClick={() => fb.auth().signOut()} className="focus:outline-none bg-gray-900 hover:bg-gray-800 text-gray-100 font-bold py-2 px-4 rounded inline-flex items-center">
                 <svg className="w-6 h-6 mr-2 fill-current text-gay-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                   <path d="M19 10l-6-5v3H6v4h7v3l6-5zM3 3h8V1H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H3V3z" />
                 </svg>
                 <span>Log out</span>
               </button>
-            </Link>
           </div>
         </nav>
         {/*fin del navbar*/}
