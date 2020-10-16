@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { storage } from '../firebase';
+//import { storage } from '/src/firebase';
 
 
 export default class MultipleImageUploadComponent extends Component {
