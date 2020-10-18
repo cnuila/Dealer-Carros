@@ -10,13 +10,31 @@ export default function ImagenPrincipal(props) {
         //storage.ref(this.VIN/this.file);
     }
 
-    return (
-        <div className="bg-gray-400 h-56 m-3">
-            <svg
-                className="h-5 w-5 fill-current text-gray-900" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" >
-                <path d="M5 1.6c0-.553-.448-.6-1-.6-.553 0-1 .047-1 .6V10h2V1.6zM3 18.4c0 .551.447.6 1 .6.552 0 1-.049 1-.6V15H3v3.4zM6.399 11h-4.8C1.046 11 1 11.448 1 12v1c0 .553.046 1 .599 1H6.4c.55 0 .6-.447.6-1v-1c0-.552-.05-1-.601-1zm12 1h-4.801c-.552 0-.598.448-.598 1v1c0 .553.046 1 .599 1H18.4c.55 0 .6-.447.6-1v-1c0-.552-.05-1-.601-1zM13 7c0-.552-.05-1-.601-1h-4.8C7.046 6 7 6.448 7 7v1c0 .553.046 1 .599 1H12.4c.55 0 .6-.447.6-1V7zm-2-5.4c0-.553-.448-.6-1-.6-.553 0-1 .047-1 .6V5h2V1.6zM9 18.4c0 .551.447.6 1 .6.552 0 1-.049 1-.6V10H9v8.4zm8-16.8c0-.553-.448-.6-1-.6-.553 0-1 .047-1 .6V11h2V1.6zm-2 16.8c0 .551.447.6 1 .6.552 0 1-.049 1-.6V16h-2v2.4z" />
-            </svg>
-            <input type="file" className="relative bg-red-200 cursor-pointer w-full h-full" onChange={subirFoto} />
+    const fotoLista = (
+        <div className="h-48 m-3">
+            <img
+                className="transition duration-700 h-full w-full rounded-lg object-cover shadow-md"
+                alt="Foto Carro"
+                src={foto}
+            />
+        </div>);
+
+    const sinFoto = (
+        <div className="grid grid-cols-1 rounded-lg place-items-center bg-gray-400 hover:bg-gray-500 h-48 m-3">
+            <input type="file" className="z-40 opacity-0 cursor-pointer bg-red-200 w-full h-48" accept="image/jpeg,image/jpg" onChange={subirFoto} />
+            <div className="z-0 transform -translate-y-32 grid grid-cols-1 place-items-center">
+                <svg className="fill-current text-gray-800 inline-block h-10 w-10" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 124 124">
+                    <path d="M18.1 54.5H0v51.4c0 3.1 2.5 5.6 5.6 5.6h112c3.5 0 6.4-2.9 6.4-6.4V35.6c0-3.4-2.7-6.1-6.1-6.1H89.1c-3 0-5.5-2.2-5.899-5.1l-1-6.6c-.5-2.9-3-5.3-5.9-5.3H47.5c-3 0-5.5 2.3-5.9 5.3l-1 6.6c-.4 2.9-3 5.1-5.9 5.1H6c-3.3 0-6 2.7-6 6v5h18.1c3.8 0 6.9 3.1 6.9 6.9v.1c0 3.9-3.1 7-6.9 7zM108 40.7c3.9 0 7 3.1 7 7s-3.1 7-7 7-7-3.1-7-7c0-3.8 3.1-7 7-7zm-45.7 2.5c16.601 0 30 13.4 30 30s-13.399 30-30 30c-16.6 0-30-13.4-30-30s13.5-30 30-30z" />
+                    <circle cx="62" cy="73.2" r="15" />
+                </svg>
+                <h1 className="font-semibold text-gray-800">Agregar Foto</h1>
+            </div>
         </div>
+    );
+
+    return (
+        <>
+            {foto ? fotoLista : sinFoto}
+        </>
     );
 }
