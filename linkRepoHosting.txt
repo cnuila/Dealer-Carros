@@ -1,2 +1,4 @@
 Hosting: https://santos-motors.web.app
 Repositorio de GitHub: https://github.com/cnuila/Dealer-Carros.git
+
+credenciales: correo: sm@gmail.com contraseña: papaya

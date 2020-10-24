@@ -1,8 +1,8 @@
-import React, { } from "react";
+import React from "react";
 import ColorPicker from './Filtros/ColorPicker';
 import { Link } from 'react-router-dom';
-import MultipleImageUploadComponent from './UploadImages';
-import SingleImageUploadComponent from './UploadSingleImage';
+import MultipleImageUploadComponent from './Agregar/UploadImages';
+import ImagenPrincipal from './Agregar/ImagenPrincipal';
 import { db, storage } from '../firebase'
 
 class Agregar extends React.Component {
@@ -55,30 +55,27 @@ class Agregar extends React.Component {
       }).catch(d => console.log("nada dog"));
     })
     await db.collection('Prueba').doc(this.state.VIN).set({
-      VIN:VIN,
-      marca:marca, 
-      modelo:modelo,
-      millaje:millaje,
-      codigo:codigo,
-      proveedor:proveedor,
-      ano:ano,
-      color:color,
-      estado:estado,
-      inspeccionado:inspeccionado,
-      titulo:titulo,
-      lienHolder:lienHolder,
-      titulo:titulo,
-      valorCompra:valorCompra,
-      valorInvertido:valorInvertido,
-      precioFinal:precioFinal,
-      fotos:direcciones,
+      VIN: VIN,
+      marca: marca,
+      modelo: modelo,
+      millaje: millaje,
+      codigo: codigo,
+      proveedor: proveedor,
+      ano: ano,
+      color: color,
+      estado: estado,
+      inspeccionado: inspeccionado,
+      titulo: titulo,
+      lienHolder: lienHolder,
+      titulo: titulo,
+      valorCompra: valorCompra,
+      valorInvertido: valorInvertido,
+      precioFinal: precioFinal,
+      fotos: direcciones,
     }).then(() => {
       console.log("agrego exitosamente");
     });
   }
-
-
-
 
   handleInputChange({ target }) {
     let { name, type } = target
@@ -93,7 +90,6 @@ class Agregar extends React.Component {
       [name]: valor,
     })
   }
-
 
   render() {
     let { ano, color, precioMax, precioMin, salvage, clean, proveedor, titulo, inspeccionado, lienHolder } = this.state
@@ -126,13 +122,32 @@ class Agregar extends React.Component {
         {/*fin del navbar  .bg-gray-400*/}
 
         {/*Inicio Formulario*/}
-        {/*este primer div hacer el trabajo de un container*/}
+        <>
+          <h1 class="text-2xl font-bold text-center">Agregar Carro</h1>
+          <div className="grid grid-cols-3 bg-gray-800 rounded-lg">
+            <div>step 1</div>
+            <div>step 2</div>
+            <div>step 3</div>
+          </div>
+          <div className="grid grid-cols-3 bg-red-800 max-w-4xl mx-auto rounded-lg shadow-2xl">
+            <div className="m-4 bg-blue-800">
+              <ImagenPrincipal/>
+              <div>Hoal</div>
+              <div>Hoal</div>
+              <div>Hoal</div>
+              <div>Hoal</div>
+              <div>Hoal</div>
+              <div>Hoal</div>
+            </div>
+            <div className="m-4 col-span-2 col-span-2 bg-green-800">HOla</div>
+          </div>
+        </>
         <body class="antialiased p-10">
           <form class=" bg-gray-200 max-w-2xl mx-auto rounded-lg  overflow-hidden py-6 space-y-10 shadow-2xl" >
             <h2 class="text-2xl font-bold text-center">Agregar Carro</h2>
             <h2 class="text-xl font-bold text-center ">Imágenes</h2>
             <h2 class="text-lg font-bold text-center ">Imagen principal</h2>
-            <SingleImageUploadComponent VIN={this.state.VIN} />
+            <ImagenPrincipal VIN={this.state.VIN} />
             <h2 class="text-lg font-bold text-center ">Otras imagenes</h2>
             <MultipleImageUploadComponent VIN={this.state.VIN} llenarArreglo={this.llenarArreglo} />
             <h2 class="text-2xl font-bold text-center underline">Información General</h2>
