@@ -16,6 +16,7 @@ var firebaseConfig = {
     appId: "1:244268806752:web:a393ffa155f8f26d7f4905",
     measurementId: "G-Z22VLM1R1K"
 };
+
 // Initialize Firebase
 const fb = firebase.initializeApp(firebaseConfig);
 firebase.analytics();
@@ -24,4 +25,3 @@ export default fb;
 export const db = fb.firestore();
 export const storage = fb.storage();
 export const a = fb.auth();
-//export const fb;#texto:before{

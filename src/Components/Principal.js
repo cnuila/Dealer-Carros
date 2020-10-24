@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom';
 import fb from "../firebase"
 
 class Principal extends React.Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -202,11 +203,11 @@ class Principal extends React.Component {
             {carrosMostrar}
           </div>
           
+          {/*Modal para mostrar Informacion del Carro*/}
           <div>
             {this.state.mostrarInfo && (<InfoCarro carro={carroMostrar} mostrarInfo={this.clickMostrarInfo} />)}
           </div>
-          
-          {/*Fin de la Ventana*/}
+          {/*Fin del modal*/}
         </div>
         <div className="py-4 sm:py-20"></div>
       </div >
