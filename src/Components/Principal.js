@@ -142,10 +142,10 @@ class Principal extends React.Component {
     }
 
     if (this.state.loading) {
-      let array = [1,2,3,4,5,6,7,8]
+      let array = [1, 2, 3, 4, 5, 6, 7, 8]
       carrosMostrar = array.map(() => {
         return (<CarroCargando />)
-      })      
+      })
     } else {
       carrosMostrar = cargandoCarros
     }
@@ -171,17 +171,16 @@ class Principal extends React.Component {
                 <span>Agregar</span>
               </button>
             </Link>
-              <button onClick={() => fb.auth().signOut()} className="focus:outline-none bg-gray-900 hover:bg-gray-800 text-gray-100 font-bold py-2 px-4 rounded inline-flex items-center">
-                <svg className="w-6 h-6 mr-2 fill-current text-gay-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                  <path d="M19 10l-6-5v3H6v4h7v3l6-5zM3 3h8V1H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H3V3z" />
-                </svg>
-                <span>Log out</span>
-              </button>
+            <button onClick={() => fb.auth().signOut()} className="focus:outline-none bg-gray-900 hover:bg-gray-800 text-gray-100 font-bold py-2 px-4 rounded inline-flex items-center">
+              <svg className="w-6 h-6 mr-2 fill-current text-gay-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                <path d="M19 10l-6-5v3H6v4h7v3l6-5zM3 3h8V1H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H3V3z" />
+              </svg>
+              <span>Log out</span>
+            </button>
           </div>
         </nav>
         {/*fin del navbar*/}
         <div>
-
           {/*Botones Estado y filtro*/}
           <>
             <div className="grid grid-cols-2 md:grid-cols-7 place-items-center m-4 sm:m-6">
@@ -202,14 +201,12 @@ class Principal extends React.Component {
           <div className={`border-t-2 border-gray-400 pt-5 grid grid-cols-1 md:grid-cols-4 gap-6 bg-gray-100 place-items-center mb-10 mt-4 sm:mt-8 mx-6 sm:mx-8 transform transition duration-500 ease-in-out -translate-y-${translateCarros}`}>
             {carrosMostrar}
           </div>
-          
           {/*Modal para mostrar Informacion del Carro*/}
           <div>
             {this.state.mostrarInfo && (<InfoCarro carro={carroMostrar} mostrarInfo={this.clickMostrarInfo} />)}
           </div>
           {/*Fin del modal*/}
         </div>
-        <div className="py-4 sm:py-20"></div>
       </div >
     );
   }

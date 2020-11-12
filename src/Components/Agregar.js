@@ -129,17 +129,18 @@ class Agregar extends React.Component {
             <div>step 2</div>
             <div>step 3</div>
           </div>
-          <div className="grid grid-cols-3 bg-red-800 max-w-4xl mx-auto rounded-lg shadow-2xl">
-            <div className="m-4 bg-blue-800">
+          <div className="grid grid-cols-4 bg-red-800 max-w-3xl mx-auto rounded-lg shadow-2xl">
+            <div className="grid grid-cols-1 place-content-center m-4 col-span-2 bg-blue-800">
               <ImagenPrincipal/>
-              <div>Hoal</div>
-              <div>Hoal</div>
-              <div>Hoal</div>
-              <div>Hoal</div>
-              <div>Hoal</div>
-              <div>Hoal</div>
             </div>
-            <div className="m-4 col-span-2 col-span-2 bg-green-800">HOla</div>
+            <div className="grid grid-cols-2 place-content-center col-span-2 mt-4 mb-4 mr-4 bg-green-800">
+              <div className="m-3 h-24 w-32 bg-blue-800">hi</div>
+              <div className="m-3 h-24 w-32 bg-blue-800">hi</div>
+              <div className="m-3 h-24 w-32 bg-blue-800">hi</div>
+              <div className="m-3 h-24 w-32 bg-blue-800">hi</div>
+              <div className="m-3 h-24 w-32 bg-blue-800">hi</div>
+              <div className="m-3 h-24 w-32 bg-blue-800">hi</div>
+            </div>
           </div>
         </>
         <body class="antialiased p-10">
