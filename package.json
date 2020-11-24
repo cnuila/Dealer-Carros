@@ -10,7 +10,7 @@
     "animate.css": "^4.1.1",
     "firebase": "^7.24.0",
     "jquery": "^3.5.1",
-    "postcss": "^8.0.5",
+    "postcss": "^8.1.10",
     "react": "^16.13.1",
     "react-color": "^2.18.1",
     "react-datepicker": "^3.1.3",
@@ -44,9 +44,9 @@
     ]
   },
   "devDependencies": {
-    "@tailwindcss/custom-forms": "^0.2.1",
-    "autoprefixer": "^9.8.6",
-    "postcss-cli": "^7.1.2",
-    "tailwindcss": "^1.8.10"
+    "@tailwindcss/forms": "^0.2.1",
+    "autoprefixer": "^10.0.2",
+    "postcss-cli": "^8.3.0",
+    "tailwindcss": "^2.0.1"
   }
 }

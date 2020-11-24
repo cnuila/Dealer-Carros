@@ -1,8 +1,4 @@
 module.exports = {
-  future: {
-    // removeDeprecatedGapUtilities: true,
-    // purgeLayersByDefault: true,
-  },
   purge: [],
   theme: {
     extend: {
@@ -31,7 +27,7 @@ module.exports = {
     borderColor: ['responsive', 'hover', 'focus', 'focus-within'],
   },
   plugins: [
-    require('@tailwindcss/custom-forms'),
+    require('@tailwindcss/forms'),
     require('autoprefixer'),
   ],
 }

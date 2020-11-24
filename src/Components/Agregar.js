@@ -67,7 +67,6 @@ class Agregar extends React.Component {
       inspeccionado: inspeccionado,
       titulo: titulo,
       lienHolder: lienHolder,
-      titulo: titulo,
       valorCompra: valorCompra,
       valorInvertido: valorInvertido,
       precioFinal: precioFinal,

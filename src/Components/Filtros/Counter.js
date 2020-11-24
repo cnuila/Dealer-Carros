@@ -73,7 +73,7 @@ function Counter(props) {
                     <span className="m-auto text-2xl font-thin">−</span>
                 </button>
 
-                <input className="outline-none focus:outline-none text-center w-full bg-gray-800 font-semibold text-md hover:text-gray-500 focus:text-gray-500  md:text-basecursor-default flex items-center text-gray-100  outline-none"
+                <input className="flex items-center bg-gray-800 w-full border-none focus:ring-0 text-center font-semibold text-md text-gray-100 hover:text-gray-500 focus:text-gray-500  md:text-basecursor-default"
                        type="text" value={props.valor} onChange={handleChange}></input>
 
                 <button className="bg-gray-800 text-gray-100 hover:text-gray-200 hover:bg-gray-700 h-full w-20 rounded-r cursor-pointer focus:outline-none"
