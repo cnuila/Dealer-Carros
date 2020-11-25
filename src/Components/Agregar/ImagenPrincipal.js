@@ -22,7 +22,7 @@ export default function ImagenPrincipal(props) {
                 </svg>
             </div>                          
             <img
-                className="z-0 animate__animated animate__zoomIn animate__faster h-full w-full transition duration-700 ease-in-out rounded-lg object-cover shadow-md"
+                className="z-0 h-full w-full animate__animated animate__zoomIn animate__faster rounded-lg object-cover shadow-md"
                 alt="Foto Carro"
                 src={foto}
             />                             
