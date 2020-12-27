@@ -1,10 +1,8 @@
 import React from "react";
-import ImagenPrincipal from './Agregar/ImagenPrincipal';
-import ListaFotos from './Agregar/ListaFotos';
+import ImagenesCarro from './Agregar/ImagenesCarro';
 import { db, storage } from '../firebase'
 import ColorPicker from './Filtros/ColorPicker';
 import { Link } from 'react-router-dom';
-import MultipleImageUploadComponent from './Agregar/UploadImages';
 
 class Agregar extends React.Component {
   constructor(props) {
@@ -129,24 +127,14 @@ class Agregar extends React.Component {
             <div>step 2</div>
             <div>step 3</div>
           </div>
-          <div className="grid grid-cols-4 h-70 bg-red-800 max-w-3xl mx-auto rounded-lg shadow-2xl">
-            <div className="grid grid-cols-1 place-content-center m-4 col-span-2 bg-blue-400">
-              <ImagenPrincipal/>
-            </div>
-            <div className="grid grid-cols-2 col-span-2 mt-4 mb-4 mr-4 bg-green-800">              
-              <div className="h-40 w-11/12 my-1 ml-2 bg-blue-400">hi</div>
-              
-            </div>
-          </div>
+          <ImagenesCarro />
         </>
         <body class="antialiased p-10">
           <form class=" bg-gray-200 max-w-2xl mx-auto rounded-lg  overflow-hidden py-6 space-y-10 shadow-2xl" >
             <h2 class="text-2xl font-bold text-center">Agregar Carro</h2>
             <h2 class="text-xl font-bold text-center ">Imágenes</h2>
             <h2 class="text-lg font-bold text-center ">Imagen principal</h2>
-            <ImagenPrincipal VIN={this.state.VIN} />
-            <h2 class="text-lg font-bold text-center ">Otras imagenes</h2>
-            <MultipleImageUploadComponent VIN={this.state.VIN} llenarArreglo={this.llenarArreglo} />
+            <h2 class="text-lg font-bold text-center ">Otras imagenes</h2>            
             <h2 class="text-2xl font-bold text-center underline">Información General</h2>
             {/*Marcas*/}
             <div class="  relative   max-w-sm mx-auto border-b-2 w-3/5  focus-within:border-blue-800 p-3">
