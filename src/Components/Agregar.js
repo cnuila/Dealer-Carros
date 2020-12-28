@@ -1,5 +1,7 @@
 import React from "react";
 import ImagenesCarro from './Agregar/ImagenesCarro';
+import InfoGeneral from './Agregar/InfoGeneral'
+import Pasos from "./Agregar/Pasos"
 import { db, storage } from '../firebase'
 import ColorPicker from './Filtros/ColorPicker';
 import { Link } from 'react-router-dom';
@@ -9,6 +11,10 @@ class Agregar extends React.Component {
     super(props)
     this.state = {
       ...this.estadoInicial,
+      pasos: [{ texto: "Información General", selected: true, terminado: false },
+      { texto: "Estado", selected: false, terminado: false },
+      { texto: "Valor", selected: false, terminado: false },
+      { texto: "Imágenes", selected: false, terminado: false }]
     }
     this.handleInputChange = this.handleInputChange.bind(this)
     this.llenarArreglo = this.llenarArreglo.bind(this)
@@ -90,7 +96,10 @@ class Agregar extends React.Component {
   }
 
   render() {
-    let { ano, color, precioMax, precioMin, salvage, clean, proveedor, titulo, inspeccionado, lienHolder } = this.state
+    let { ano, color, precioMax, precioMin, salvage, clean, proveedor, titulo, inspeccionado, lienHolder, pasos } = this.state
+    const mostrarPasos = pasos.map((paso, index) => {
+      return <Pasos key={index + 1} index={index + 1} selected={paso.selected} terminado={paso.terminado} texto={paso.texto} />
+    })
     return (
       <div className="bg-gray-100">
         {/*Inicio del navbar*/}
@@ -121,61 +130,26 @@ class Agregar extends React.Component {
 
         {/*Inicio Formulario*/}
         <>
-          <h1 class="text-2xl font-bold text-center">Agregar Carro</h1>
-          <div className="grid grid-cols-3 bg-gray-800 rounded-lg">
-            <div>step 1</div>
-            <div>step 2</div>
-            <div>step 3</div>
+
+          <div className="grid grid-cols-4 relative mx-auto mt-5 px-3 py-4 max-w-3xl place-items-center bg-gray-900 rounded-t-lg cursor-default border-b-2 border-gray-800">
+
+            <div className="flex absolute z-0 w-9/12 -mt-7 align-center items-center">
+              <div className="flex-1 w-full rounded-full bg-gray-200 py-0.5"></div>
+            </div>
+
+            {mostrarPasos}
+
           </div>
-          <ImagenesCarro />
+          <InfoGeneral/>
+          
         </>
         <body class="antialiased p-10">
           <form class=" bg-gray-200 max-w-2xl mx-auto rounded-lg  overflow-hidden py-6 space-y-10 shadow-2xl" >
             <h2 class="text-2xl font-bold text-center">Agregar Carro</h2>
             <h2 class="text-xl font-bold text-center ">Imágenes</h2>
             <h2 class="text-lg font-bold text-center ">Imagen principal</h2>
-            <h2 class="text-lg font-bold text-center ">Otras imagenes</h2>            
-            <h2 class="text-2xl font-bold text-center underline">Información General</h2>
-            {/*Marcas*/}
-            <div class="  relative   max-w-sm mx-auto border-b-2 w-3/5  focus-within:border-blue-800 p-3">
-              <h2 class="text-md font-bold p-0 ">VIN</h2>
-              <input type="text" name="VIN" placeholder="" onChange={this.handleInputChange} class="block w-full text-center appearance-none focus:outline-none bg-transparent" />
-            </div>
-            {/*Modelo*/}
-            <div class="  relative max-w-sm mx-auto border-b-2 w-3/5 focus-within:border-blue-800 p-3">
-              <h2 class="text-md font-bold p-0 ">Marca</h2>
-              <input type="text" name="Marca" placeholder="" onChange={this.handleInputChange} class="block w-full  text-center appearance-none focus:outline-none bg-transparent" />
-            </div>
-            {/*vin*/}
-            <div class="  relative max-w-sm mx-auto border-b-2 w-3/5 focus-within:border-blue-800 p-3">
-              <h2 class="text-md font-bold p-0 ">Modelo</h2>
-              <input type="text" name="Modelo" placeholder=" " onChange={this.handleInputChange} class="block w-full text-center appearance-none focus:outline-none bg-transparent" />
-            </div>
-            {/*Millaje*/}
-            <div class="  relative max-w-sm mx-auto border-b-2 w-3/5 focus-within:border-blue-800 p-3">
-              <h2 class="text-md font-bold p-0 ">Millaje</h2>
-              <input type="text" name="Millaje" placeholder="" onChange={this.handleInputChange} class="block w-full  text-center appearance-none focus:outline-none bg-transparent" />
-            </div>
-            {/*Codigo*/}
-            <div class="  relative max-w-sm mx-auto border-b-2 w-3/5 focus-within:border-blue-800 p-3">
-              <h2 class="text-md font-bold p-0 ">Codigo</h2>
-              <input type="text" name="Codigo" placeholder="" onChange={this.handleInputChange} class="block w-full  text-center appearance-none focus:outline-none bg-transparent" />
-            </div>
-            {/*Proveedor*/}
-            <div class="  relative max-w-sm mx-auto border-b-2 w-3/5 focus-within:border-blue-800 p-3">
-              <h2 class="text-md font-bold p-0 ">Proveedor</h2>
-              <input type="text" name="Proveedor" placeholder="" onChange={this.handleInputChange} class="block w-full  text-center appearance-none focus:outline-none bg-transparent" />
-            </div>
-            {/*ano*/}
-
-            <div class="relative max-w-sm mx-auto border-b-2 w-3/5 focus-within:border-blue-800 p-3">
-              <h2 class="text-md font-bold p-0 ">Año</h2>
-              <input type="number" min="1990" max="2021" name="Ano" placeholder="" onChange={this.handleInputChange} class="block w-full  text-center appearance-none focus:outline-none bg-transparent" />
-            </div>
-            <div class=" relative max-w-sm mx-auto w-2/3 md:w-3/5 focus-within:border-blue-800 md:p-3">
-              <h2 class="text-lg font-bold p-0">Color</h2>
-              <ColorPicker width={230} circleSize={22} color={color} handleInputChange={this.handleInputChange} />
-            </div>
+            <h2 class="text-lg font-bold text-center ">Otras imagenes</h2>
+            
             <h2 class="text-xl font-bold text-center -p-2">Estado del vehiculo</h2>
             <div className="my-2 w-full inline-block ">
               {/*Estado actual*/}

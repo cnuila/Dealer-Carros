@@ -30,9 +30,12 @@ export default class ImagenesCarro extends Component {
         })
     }
 
-    handleOnSubmit(e) {
+    handleOnSubmit = e => {
         e.preventDefault()
-        //¿Deben ser siempre 5 fotos?
+        const { imagenes } = this.state;
+        if (imagenes.length < 5){
+            alert("Deben haber 5 fotos")
+        }
     }
 
     render() {
@@ -58,20 +61,27 @@ export default class ImagenesCarro extends Component {
         })
         return (
             <form onSubmit={this.handleOnSubmit}>
-                <div className="grid grid-cols-4 h-72 bg-red-800 max-w-3xl mx-auto rounded-lg shadow-2xl">
-                    <div className="flex flex-col m-4 col-span-2 bg-blue-400">
-                        <h1 className="p-6 text-center text-lg font-semibold cursor-default">Fotos Vehículo</h1>
+                <div className="grid grid-cols-1 md:grid-cols-4 h-full md:h-72 bg-gray-900 max-w-3xl mx-2 lg:mx-auto rounded-b-lg shadow-2xl">
+                    <div className="flex flex-col m-4 md:col-span-2 rounded-md bg-gray-800">
+                        <h1 className="p-6 text-center text-lg font-semibold cursor-default text-gray-200">Fotos Vehículo</h1>
                         <ImagenPrincipal mandarFotos={this.traerFotos} imagenes={imagenes} />
-                        <OtrasImagenes mandarFotos={this.traerFotos} imagenes={imagenes} tamañoArray={imagenes.length} />
+                        <OtrasImagenes mandarFotos={this.traerFotos} imagenes={imagenes} />
                     </div>
-                    <div className="flex flex-col col-span-2">
-                        <div className="grid grid-cols-2 h-5/6 mt-4 mb-4 mr-4 bg-green-800">
+                    <div className="flex flex-col md:col-span-2">
+                        <div className="grid grid-cols-1 md:grid-cols-2 h-full md:h-5/6 mt-4 mb-4 mr-4">
                             {otrasFotos}
                         </div>
-                        <div className="flex bg-gray-900 hover:bg-gray-800 rounded-3xl mx-5 -mt-3 h-9 w-4/12 items-center self-end shadow-lg cursor-pointer">                           
-                            <button type="submit" className="mx-1 text-center w-full text-sm font-semibold focus:outline-none text-white">
-                                Siguiente
-                            </button>
+                        <div className="grid grid-cols-2 pr-3">
+                            <div className="flex bg-gray-900 hover:bg-gray-800 rounded-3xl -mt-3 h-9 w-8/12 items-center place-self-start shadow-lg cursor-pointer">
+                                <button className="mx-1 text-center w-full text-sm font-semibold focus:outline-none text-gray-200">
+                                    Anterior
+                                </button>
+                            </div>
+                            <div className="flex bg-gray-900 hover:bg-gray-800 rounded-3xl -mt-3 h-9 w-8/12 items-center place-self-end shadow-lg cursor-pointer">
+                                <button type="submit" className="mx-1 text-center w-full text-sm font-semibold focus:outline-none text-gray-200">
+                                    Finalizar
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>

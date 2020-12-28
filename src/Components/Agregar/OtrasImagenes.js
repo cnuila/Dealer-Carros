@@ -22,15 +22,15 @@ export default function OtrasImagenes(props) {
     }
 
     const activo = props.imagenes[0] === null || props.imagenes.length === 0
-        ? (<div className="flex relative bg-gray-900 hover:bg-gray-800 rounded-3xl disabled:opacity-50 mx-8 mt-6 h-11 items-center shadow-lg cursor-pointer" onClick={() => alert("Debes seleccionar la foto principal primero")}>                
-                <div className="z-0 mx-1 text-center w-full text-sm font-semibold focus:outline-none text-white">
+        ? (<div className="flex relative bg-gray-900 hover:bg-gray-700 rounded-3xl disabled:opacity-50 mx-8 mt-6 h-11 items-center shadow-lg cursor-pointer" onClick={() => alert("Debes seleccionar la foto principal primero")}>                
+                <div className="z-0 mx-1 text-center w-full text-sm font-semibold focus:outline-none text-gray-200">
                     Agregar más fotos
                 </div>
             </div>)
         : (
-            <div className="flex relative bg-gray-900 hover:bg-gray-800 rounded-3xl mx-8 mt-6 h-11 items-center shadow-lg cursor-pointer">
+            <div className="flex relative bg-gray-900 hover:bg-gray-700 rounded-3xl mx-8 mt-6 h-11 items-center shadow-lg cursor-pointer">
                 <input type="file" className="absolute z-10 opacity-0 cursor-pointer w-full h-full" accept="image/jpeg,image/jpg" multiple required onChange={handleFiles} />
-                <div className="z-0 mx-1 text-center w-full text-sm font-semibold focus:outline-none text-white">
+                <div className="z-0 mx-1 text-center w-full text-sm font-semibold focus:outline-none text-gray-200">
                     Agregar más fotos
                 </div>
             </div>)
