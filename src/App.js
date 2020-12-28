@@ -12,8 +12,8 @@ const App = () => {
       <Router>
         <Switch>
           <Route path="/Principal" exact component={Principal} />
-          <Route path="/login" component={LogIn} />
-          <Route path="/" component={Agregar} />
+          <Route path="/Login" component={LogIn} />
+          <Route path="/Agregar" component={Agregar} />
         </Switch>
       </Router>
     </AuthProvider>

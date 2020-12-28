@@ -16,6 +16,7 @@ class Principal extends React.Component {
     this.state = {
       estados: [
         { estado: "Disponible", selected: true, color: "text-green-500" },
+        { estado: "Reparacion", selected: false, color: "text-gray-400" },
         { estado: "Repo", selected: false, color: "text-red-600" },
         { estado: "Apartado", selected: false, color: "text-blue-600" },
         { estado: "Vendido", selected: false, color: "text-yellow-400" },
@@ -159,6 +160,13 @@ class Principal extends React.Component {
               Santos Motors
             </span>
           </div>
+
+
+          {/*Inicio search bar*/}
+          <input type="text" name="SearchBar" placeholder="Buscar Marca, Modelo, o Proveedor" onChange={this.handleInputChange} class="w-2/5 text-left appearance-none focus:outline-none bg-gray-200 rounded-lg" />
+          {/*Fin search bar*/}
+
+
           <div className="flex items-center">
             <Link to="/agregar-carro">
               <button className="ml-8 focus:outline-none bg-gray-900 hover:bg-gray-800 text-gray-100 font-bold py-1 px-4 rounded inline-flex items-center">
@@ -172,7 +180,7 @@ class Principal extends React.Component {
               </button>
             </Link>
             <button onClick={() => fb.auth().signOut()} className="focus:outline-none bg-gray-900 hover:bg-gray-800 text-gray-100 font-bold py-2 px-4 rounded inline-flex items-center">
-              <svg className="w-6 h-6 mr-2 fill-current text-gay-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+              <svg className="w-6 h-6 mr-2 fill-current text-gray-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                 <path d="M19 10l-6-5v3H6v4h7v3l6-5zM3 3h8V1H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H3V3z" />
               </svg>
               <span>Log out</span>

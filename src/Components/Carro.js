@@ -72,6 +72,8 @@ function Carro(props) {
     colorEstado = "text-blue-600"
   } else if (estado === "Vendido") {
     colorEstado = "text-yellow-400"
+  }else if (estado === "Reparacion") {
+    colorEstado = "text-gray-400"
   }
 
   let fotoCargando = (<div className="relative pb-48 bg-gray-400 h-full w-full rounded-lg shadow-md"></div>)
