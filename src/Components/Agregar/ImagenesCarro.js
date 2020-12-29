@@ -73,7 +73,7 @@ export default class ImagenesCarro extends Component {
                         </div>
                         <div className="grid grid-cols-2 pr-3">
                             <div className="flex bg-gray-900 hover:bg-gray-800 rounded-3xl -mt-3 h-9 w-8/12 items-center place-self-start shadow-lg cursor-pointer">
-                                <button className="mx-1 text-center w-full text-sm font-semibold focus:outline-none text-gray-200">
+                                <button type="button" className="mx-1 text-center w-full text-sm font-semibold focus:outline-none text-gray-200">
                                     Anterior
                                 </button>
                             </div>

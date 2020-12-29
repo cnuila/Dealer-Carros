@@ -75,7 +75,7 @@ export default function InfoGeneral(props) {
                     </div>
 
                 </div>
-                <div className="grid place-items-end pt-1 px-5">
+                <div className="grid place-items-end pt-1 px-7">
                     <div className="flex bg-gray-800 hover:bg-gray-700 rounded-3xl h-9 w-4/12 items-center shadow-lg cursor-pointer">
                         <button type="submit" className="mx-1 text-center w-full text-sm font-semibold focus:outline-none text-gray-200">
                             Siguiente

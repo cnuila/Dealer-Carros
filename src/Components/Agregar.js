@@ -138,7 +138,7 @@ class Agregar extends React.Component {
       pasoAmostrar = <InfoGeneral vin={vin} marca={marca} modelo={modelo} codigo={codigo} proveedor={proveedor} ano={ano} millaje={millaje} color={color} mandarPadre={this.traerDatos} siguienteStep={this.siguienteStep} />
     }
     if (pasos[1].selected) {
-      pasoAmostrar = <InfoEstado />
+      pasoAmostrar = <InfoEstado siguienteStep={this.siguienteStep} previoStep={this.previoStep}/>
     }
     if (pasos[3].selected) {
       pasoAmostrar = <ImagenesCarro />
@@ -203,8 +203,8 @@ class Agregar extends React.Component {
                   <input id="radio1" type="radio" name="Estado_actual" onChange={this.handleInputChange} value="Disponible" classname=" border-black hidden bg-gray-900" />
                   <label for="radio1" class="flex items-center cursor-pointer">
                     <span class=" inline-block mr-1 rounded-full border "></span>
-                Disponible
-              </label>
+                    Disponible
+                  </label>
                 </div>
                 <div class="flex items-center mr-4 mb-4">
                   <input id="radio2" type="radio" name="Estado_actual" onChange={this.handleInputChange} value="Apartado" classname=" border-black hidden bg-gray-900" />
