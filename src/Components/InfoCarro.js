@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { storage } from "../firebase"
-import Dropdown from './Dropdown'
 
 function InfoCarro(props) {
     let [foto, setFoto] = useState(null)
@@ -62,17 +61,41 @@ function InfoCarro(props) {
 
 
                     {/*Imagenes*/}
-                    <div className="rounded-md transform -translate-x-24 w-69 h-74 bg-gray-100">
+                    <div className="rounded-md transform -translate-x-24 w-69 h-74 bg-gray-700">
                         {loading ? fotoCargando : fotoCargada}
-
-
-
-                        <Dropdown />
-
-
+                        <div className="bg-gray-900 h-10 w-3/4 transform -translate-y-5 rounded-md ml-10 flex flex-wrap content-center">
+                            <select className="px-6 bg-gray-200 ml-4 rounded-lg h-3/4">
+                                <option value="Disponible">
+                                    Disponible
+                                    </option>
+                                <option value="Reparacion">
+                                    Reparacion
+                                    </option>
+                                <option value="Repo">
+                                    Repo
+                                    </option>
+                                <option value="Apartados">
+                                    Apartados
+                                    </option>
+                            </select>
+                            <button className="w-8 h-3/4 grid justify-items-center ml-5 mr-2">
+                                <svg className="mt-1 h-3/4 w-4 fill-current text-gray-200 " xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                    <path d="M311.18 78.008L32.23 356.958.613 485.716a21.221 21.221 0 0025.671 25.671l128.759-31.617 278.95-278.95L311.18 78.008zM40.877 471.123l10.871-44.271 33.4 33.4-44.271 10.871zM502.598 86.818L425.182 9.402c-12.536-12.536-32.86-12.536-45.396 0l-30.825 30.825 122.812 122.812 30.825-30.825c12.536-12.535 12.536-32.86 0-45.396z" />
+                                </svg>
+                            </button>
+                            <button className="w-8 h-3/4 grid justify-items-center">
+                                <svg className="mt-1 h-3/4 w-4 fill-current text-gray-200 " viewBox="0 -22 512 511" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M512 233.82L299.223.5v139.203h-45.239C113.711 139.703 0 253.414 0 393.687v73.77l20.094-22.02a360.573 360.573 0 01266.324-117.5h12.805v139.204zm0 0" />
+                                </svg>
+                            </button>
+                        </div>
+                        <div className="grid grid-col-2">
+                        {loading ? fotoCargando : fotoCargada}
+                        {loading ? fotoCargando : fotoCargada}
+                        {loading ? fotoCargando : fotoCargada}
+                        {loading ? fotoCargando : fotoCargada}
+                        </div>
                     </div>
-
-
                     {/*Informacion*/}
                     <div className="h-74 transform w-78 -translate-x-24">
                         <div className="h-20">
