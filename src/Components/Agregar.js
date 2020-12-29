@@ -1,5 +1,6 @@
 import React from "react";
 import ImagenesCarro from './Agregar/ImagenesCarro';
+import InfoEstado from './Agregar/InfoEstado'
 import InfoGeneral from './Agregar/InfoGeneral'
 import Pasos from "./Agregar/Pasos"
 import { db, storage } from '../firebase'
@@ -9,8 +10,8 @@ class Agregar extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      pasos: [{ texto: "Información General", selected: true, terminado: false },
-      { texto: "Estado", selected: false, terminado: false },
+      pasos: [{ texto: "Información General", selected: false, terminado: true },
+      { texto: "Estado", selected: true, terminado: false },
       { texto: "Valor", selected: false, terminado: false },
       { texto: "Imágenes", selected: false, terminado: false }],
       vin: "",
@@ -131,6 +132,19 @@ class Agregar extends React.Component {
     const mostrarPasos = pasos.map((paso, index) => {
       return <Pasos key={index + 1} index={index + 1} selected={paso.selected} terminado={paso.terminado} texto={paso.texto} />
     })
+
+    let pasoAmostrar = (<></>)
+    if (pasos[0].selected) {
+      pasoAmostrar = <InfoGeneral vin={vin} marca={marca} modelo={modelo} codigo={codigo} proveedor={proveedor} ano={ano} millaje={millaje} color={color} mandarPadre={this.traerDatos} siguienteStep={this.siguienteStep} />
+    }
+    if (pasos[1].selected) {
+      pasoAmostrar = <InfoEstado />
+    }
+    if (pasos[3].selected) {
+      pasoAmostrar = <ImagenesCarro />
+    }
+
+
     return (
       <div className="bg-gray-100">
         {/*Inicio del navbar*/}
@@ -171,8 +185,7 @@ class Agregar extends React.Component {
             {mostrarPasos}
 
           </div>
-          <InfoGeneral vin={vin} marca={marca} modelo={modelo} codigo={codigo} proveedor={proveedor} ano={ano} millaje={millaje} color={color} mandarPadre={this.traerDatos} siguienteStep={this.siguienteStep} />
-
+          {pasoAmostrar}
         </>
         <body class="antialiased p-10">
           <form class=" bg-gray-200 max-w-2xl mx-auto rounded-lg  overflow-hidden py-6 space-y-10 shadow-2xl" >
