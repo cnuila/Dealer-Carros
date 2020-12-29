@@ -1,59 +1,88 @@
 import React from 'react'
+import Counter from '../Utilidades/Counter'
+import ColorPicker from '../Utilidades/ColorPicker'
 
-export default function InfoGeneral() {
+export default function InfoGeneral(props) {
+
+    const handleInputChange = ({ target }) => {
+        props.mandarPadre(target)
+    }
+
+    const { vin, marca, modelo, codigo, proveedor, ano, millaje, color } = props
+
+    const handleOnSubmit = e => {
+        e.preventDefault()
+        if (millaje === "Cualquiera") {
+            alert("Debe ingresar un millaje")
+        } else {
+            if (ano === "Cualquiera") {
+                alert("Debe ingresar un año")
+            } else {
+                if (color === "transparent") {
+                    alert("Debe ingresar un color")
+                } else {
+                    props.siguienteStep(0)
+                }
+            }
+        }
+    }
+
     return (
-        <div className="grid grid-cols-1 md:grid-cols-2 h-full md:h-72 bg-gray-900 max-w-3xl mx-2 lg:mx-auto rounded-b-lg shadow-2xl">
+        <form onSubmit={handleOnSubmit}>
+            <div className="flex flex-col h-72 bg-gray-900 max-w-3xl mx-2 lg:mx-auto rounded-b-lg shadow-2xl">
+                <div className="grid grid-cols-1 md:grid-cols-2 p-3">
 
-            <div className="flex flex-row bg-gray-900 mx-9 my-3 text-white focus-within:text-gray-400">
-                <input className="block bg-gray-900 text-sm font-semibold border-b-2 placeholder-white focus:placeholder-gray-400 border-gray-900 focus:border-gray-400 py-1 pt-4 mr-3 mb-2 w-11/12 focus:outline-none" name="vin" type="text" placeholder="21PCS" required />
-            </div>
+                    <div className="block px-8 pt-5">
+                        <h2 className="text-gray-200 px-2 font-semibold text-lg">VIN</h2>
+                        <input type="text" value={vin} className="block bg-gray-900 text-gray-200 ml-4 px-2 py-2 w-11/12 border-b-2 border-gray-800 focus:border-gray-700 placeholder-gray-500 focus:placeholder-gray-400 focus:outline-none" name="vin" placeholder="Ej. P21CS" required onChange={handleInputChange} />
+                    </div>
 
-            <label class="block p-5">
-                <h2 className="text-gray-200">VIN</h2>
-                <input type="text" class="block bg-gray-900 font-semibold border-b-2 placeholder-gray-200 focus:placeholder-gray-300 py-2 w-11/12 focus:outline-none" placeholder="P21CS"/>
-            </label>
+                    <div className="block px-8 pt-5">
+                        <h2 className="text-gray-200 px-2 font-semibold text-lg">Marca</h2>
+                        <input type="text" value={marca} className="block bg-gray-900 text-gray-200 ml-4 px-2 py-2 w-11/12 border-b-2 border-gray-800 focus:border-gray-700 placeholder-gray-500 focus:placeholder-gray-400 focus:outline-none" name="marca" placeholder="Ej. Tesla" required onChange={handleInputChange} />
+                    </div>
 
-                <div className="px-10 py-3">
-                    <h2 className="text-md font-semibold text-gray-200">VIN</h2>
-                    <div className="flex border-b-2 border-gray-800">
-                        <input className="bg-gray-900 text-white px-3 placeholder-gray-400 text-sm w-11/12 focus:outline-none" type="text" name="vin" placeholder="P21CS" required />
+                    <div className="block px-8 pt-5">
+                        <h2 className="text-gray-200 px-2 font-semibold text-lg">Modelo</h2>
+                        <input type="text" value={modelo} className="block bg-gray-900 text-gray-200 ml-4 px-2 py-2 w-11/12 border-b-2 border-gray-800 focus:border-gray-700 placeholder-gray-500 focus:placeholder-gray-400 focus:outline-none" name="modelo" placeholder="Ej. Model X" required onChange={handleInputChange} />
+                    </div>
+
+                    <div className="block px-8 pt-5">
+                        <h2 className="text-gray-200 px-2 font-semibold text-lg">Código</h2>
+                        <input type="text" value={codigo} className="block bg-gray-900 text-gray-200 ml-4 px-2 py-2 w-11/12 border-b-2 border-gray-800 focus:border-gray-700 placeholder-gray-500 focus:placeholder-gray-400 focus:outline-none" name="codigo" placeholder="Ej. SANTOS" required onChange={handleInputChange} />
+                    </div>
+
+                    <div className="block px-8 pt-5">
+                        <h2 className="text-gray-200 px-2 font-semibold text-lg">Proveedor</h2>
+                        <input type="text" value={proveedor} className="block bg-gray-900 text-gray-200 ml-4 px-2 py-2 w-11/12 border-b-2 border-gray-800 focus:border-gray-700 placeholder-gray-500 focus:placeholder-gray-400 focus:outline-none" name="proveedor" placeholder="Ej. Grupo Q" required onChange={handleInputChange} />
+                    </div>
+
+                    <div className="block px-8 pt-5">
+                        <h2 className="text-gray-200 px-2 font-semibold text-lg">Año</h2>
+                        <Counter nombre={"ano"} valor={ano} minimo={1950} required={true} handleInputChange={handleInputChange} />
+                    </div>
+
+                    <div className="block px-8 pt-5">
+                        <h2 className="text-gray-200 px-2 font-semibold text-lg">Millaje</h2>
+                        <Counter nombre={"millaje"} valor={millaje} minimo={100000} required={true} handleInputChange={handleInputChange} />
+                    </div>
+
+                    <div className="block px-8 pt-5">
+                        <h2 className="text-gray-200 px-2 font-semibold text-lg">Color</h2>
+                        <div className="pl-7 py-2">
+                            <ColorPicker width={230} circleSize={22} color={color} handleInputChange={handleInputChange} />
+                        </div>
+                    </div>
+
+                </div>
+                <div className="grid place-items-end pt-1 px-5">
+                    <div className="flex bg-gray-800 hover:bg-gray-700 rounded-3xl h-9 w-4/12 items-center shadow-lg cursor-pointer">
+                        <button type="submit" className="mx-1 text-center w-full text-sm font-semibold focus:outline-none text-gray-200">
+                            Siguiente
+                        </button>
                     </div>
                 </div>
-                {/*Modelo*/}
-                <div className="  relative max-w-sm mx-auto border-b-2 w-3/5 focus-within:border-blue-800 p-3">
-                    <h2 className="text-md font-bold p-0 ">Marca</h2>
-                    <input type="text" name="Marca" placeholder="" className="block w-full  text-center appearance-none focus:outline-none bg-transparent" />
-                </div>
-                {/*vin*/}
-                <div className="  relative max-w-sm mx-auto border-b-2 w-3/5 focus-within:border-blue-800 p-3">
-                    <h2 className="text-md font-bold p-0 ">Modelo</h2>
-                    <input type="text" name="Modelo" placeholder=" " className="block w-full text-center appearance-none focus:outline-none bg-transparent" />
-                </div>
-                {/*Millaje*/}
-                <div className="  relative max-w-sm mx-auto border-b-2 w-3/5 focus-within:border-blue-800 p-3">
-                    <h2 className="text-md font-bold p-0 ">Millaje</h2>
-                    <input type="text" name="Millaje" placeholder="" className="block w-full  text-center appearance-none focus:outline-none bg-transparent" />
-                </div>
-                {/*Codigo*/}
-                <div className="  relative max-w-sm mx-auto border-b-2 w-3/5 focus-within:border-blue-800 p-3">
-                    <h2 className="text-md font-bold p-0 ">Codigo</h2>
-                    <input type="text" name="Codigo" placeholder="" className="block w-full  text-center appearance-none focus:outline-none bg-transparent" />
-                </div>
-                {/*Proveedor*/}
-                <div className="  relative max-w-sm mx-auto border-b-2 w-3/5 focus-within:border-blue-800 p-3">
-                    <h2 className="text-md font-bold p-0 ">Proveedor</h2>
-                    <input type="text" name="Proveedor" placeholder="" className="block w-full  text-center appearance-none focus:outline-none bg-transparent" />
-                </div>
-                {/*ano*/}
-
-                <div className="relative max-w-sm mx-auto border-b-2 w-3/5 focus-within:border-blue-800 p-3">
-                    <h2 className="text-md font-bold p-0 ">Año</h2>
-                    <input type="number" min="1990" max="2021" name="Ano" placeholder="" className="block w-full  text-center appearance-none focus:outline-none bg-transparent" />
-                </div>
-                <div className=" relative max-w-sm mx-auto w-2/3 md:w-3/5 focus-within:border-blue-800 md:p-3">
-                    <h2 className="text-lg font-bold p-0">Color</h2>
-
-                </div>
-        </div>
+            </div>
+        </form>
     )
 }

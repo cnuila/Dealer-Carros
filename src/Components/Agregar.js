@@ -3,32 +3,34 @@ import ImagenesCarro from './Agregar/ImagenesCarro';
 import InfoGeneral from './Agregar/InfoGeneral'
 import Pasos from "./Agregar/Pasos"
 import { db, storage } from '../firebase'
-import ColorPicker from './Filtros/ColorPicker';
 import { Link } from 'react-router-dom';
 
 class Agregar extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      ...this.estadoInicial,
       pasos: [{ texto: "Información General", selected: true, terminado: false },
       { texto: "Estado", selected: false, terminado: false },
       { texto: "Valor", selected: false, terminado: false },
-      { texto: "Imágenes", selected: false, terminado: false }]
+      { texto: "Imágenes", selected: false, terminado: false }],
+      vin: "",
+      marca: "",
+      modelo: "",
+      codigo: "",
+      proveedor: "",
+      millaje: "Cualquiera",
+      ano: "Cualquiera",
+      color: "transparent",
     }
     this.handleInputChange = this.handleInputChange.bind(this)
     this.llenarArreglo = this.llenarArreglo.bind(this)
+
+    this.traerDatos = this.traerDatos.bind(this)
+    this.siguienteStep = this.siguienteStep.bind(this)
+    this.previoStep = this.previoStep.bind(this)
   }
 
   estadoInicial = {
-    marca: "",
-    modelo: "",
-    VIN: "",
-    millaje: "",
-    codigo: "",
-    proveedor: "",
-    ano: "",
-    color: "",
     estado: "",
     inspeccionado: "",
     titulo: "",
@@ -39,6 +41,35 @@ class Agregar extends React.Component {
     precioFinal: "",
     fotos: [],
   }
+
+  traerDatos = ({ name, value }) => {
+    console.log(name, value)
+    this.setState({
+      [name]: value,
+    })
+  }
+
+  siguienteStep = indexActual => {
+    const { pasos } = this.state
+    let changeStep = [...pasos]
+    changeStep[indexActual].terminado = true
+    changeStep[indexActual].selected = false
+    changeStep[indexActual + 1].selected = true
+    this.setState({
+      pasos: changeStep,
+    })
+  }
+
+  previoStep = indexActual => {
+    const { pasos } = this.state
+    let changeStep = [...pasos]
+    changeStep[indexActual].selected = false
+    changeStep[indexActual - 1].selected = true
+    this.setState({
+      pasos: changeStep,
+    })
+  }
+
 
   llenarArreglo = (arreglo) => {
     this.setState({
@@ -96,7 +127,7 @@ class Agregar extends React.Component {
   }
 
   render() {
-    let { ano, color, precioMax, precioMin, salvage, clean, proveedor, titulo, inspeccionado, lienHolder, pasos } = this.state
+    let { vin, marca, modelo, codigo, proveedor, ano, millaje, color, pasos } = this.state
     const mostrarPasos = pasos.map((paso, index) => {
       return <Pasos key={index + 1} index={index + 1} selected={paso.selected} terminado={paso.terminado} texto={paso.texto} />
     })
@@ -140,8 +171,8 @@ class Agregar extends React.Component {
             {mostrarPasos}
 
           </div>
-          <InfoGeneral/>
-          
+          <InfoGeneral vin={vin} marca={marca} modelo={modelo} codigo={codigo} proveedor={proveedor} ano={ano} millaje={millaje} color={color} mandarPadre={this.traerDatos} siguienteStep={this.siguienteStep} />
+
         </>
         <body class="antialiased p-10">
           <form class=" bg-gray-200 max-w-2xl mx-auto rounded-lg  overflow-hidden py-6 space-y-10 shadow-2xl" >
@@ -149,7 +180,7 @@ class Agregar extends React.Component {
             <h2 class="text-xl font-bold text-center ">Imágenes</h2>
             <h2 class="text-lg font-bold text-center ">Imagen principal</h2>
             <h2 class="text-lg font-bold text-center ">Otras imagenes</h2>
-            
+
             <h2 class="text-xl font-bold text-center -p-2">Estado del vehiculo</h2>
             <div className="my-2 w-full inline-block ">
               {/*Estado actual*/}

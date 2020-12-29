@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import ColorPicker from "./Filtros/ColorPicker"
-import Checkbox from "./Filtros/Checkbox"
-import Counter from "./Filtros/Counter"
+import ColorPicker from "./Utilidades/ColorPicker"
+import Checkbox from "./Utilidades/Checkbox"
+import Counter from "./Utilidades/Counter"
 import { db } from "../firebase"
 
 class Filtros extends Component {
