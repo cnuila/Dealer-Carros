@@ -12,7 +12,7 @@ export default function Navbar() {
             </div>
 
             {/*Inicio search bar*/}
-            <input type="text" name="SearchBar" placeholder="Buscar Marca, Modelo, o Proveedor"  class="w-2/5 text-left appearance-none focus:outline-none bg-gray-200 rounded-lg" />
+            <input type="text" name="SearchBar" placeholder="Buscar Marca, Modelo, o Proveedor"  className="w-2/5 text-left appearance-none focus:outline-none bg-gray-200 rounded-lg" />
             {/*Fin search bar*/}
 
             <div className="flex items-center">

@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 
 export default function ImagenPrincipal(props) {
 
-    const [foto, setFoto] = useState(null)
+    //estado inicial verifica si ya hay una foto en el array de fotos que se manda de agregar
+    const estadoInicial = (props.imagenes[0] !== null && props.imagenes[0] !== undefined ? URL.createObjectURL(props.imagenes[0]) : null)    
+    const [foto, setFoto] = useState(estadoInicial)
 
     const subirFoto = e => {
         let { imagenes } = props
@@ -11,7 +13,7 @@ export default function ImagenPrincipal(props) {
             arrayMandar.push(e.target.files[0])
         } else {
             arrayMandar[0] = e.target.files[0]
-        }
+        }        
         props.mandarFotos(arrayMandar)
         setFoto(URL.createObjectURL(e.target.files[0]))
     }

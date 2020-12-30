@@ -6,40 +6,37 @@ export default class ImagenesCarro extends Component {
 
     constructor(props) {
         super(props)
-        this.state = {
-            imagenes: [],
-        }
         this.traerFotos = this.traerFotos.bind(this)
     }
 
     traerFotos(arrayAgregar) {
-        this.setState({
-            imagenes: arrayAgregar
-        })
+        let objetoMandar = {name:"imagenes", value:[...arrayAgregar]}
+        this.props.mandarPadre(objetoMandar)
     }
 
     borrarFoto = (indexFoto) => {
-        const { imagenes } = this.state
+        const { imagenes } = this.props
         let copiaArray = [...imagenes]
         //eliminar elemento
         copiaArray = copiaArray.filter((foto, index) => {
             return index !== indexFoto
         })
-        this.setState({
-            imagenes: copiaArray
-        })
+        let objetoMandar = {name:"imagenes", value:[...copiaArray]}
+        this.props.mandarPadre(objetoMandar)
     }
 
     handleOnSubmit = e => {
         e.preventDefault()
-        const { imagenes } = this.state;
+        const { imagenes } = this.props;
         if (imagenes.length < 5){
             alert("Deben haber 5 fotos")
+        } else {
+            this.props.guardarDB()
         }
     }
 
     render() {
-        const { imagenes } = this.state
+        const { imagenes } = this.props
         const otrasFotos = imagenes.map((foto, index) => {
             if (index >= 1) {
                 return (
@@ -72,12 +69,12 @@ export default class ImagenesCarro extends Component {
                             {otrasFotos}
                         </div>
                         <div className="grid grid-cols-2 pr-3">
-                            <div className="flex bg-gray-900 hover:bg-gray-800 rounded-3xl -mt-3 h-9 w-8/12 items-center place-self-start shadow-lg cursor-pointer">
-                                <button type="button" className="mx-1 text-center w-full text-sm font-semibold focus:outline-none text-gray-200">
+                            <div className="flex bg-gray-800 hover:bg-gray-700 rounded-3xl -mt-3 h-9 w-8/12 items-center place-self-start shadow-lg cursor-pointer">
+                                <button type="button" className="mx-1 text-center w-full text-sm font-semibold focus:outline-none text-gray-200" onClick={() => this.props.previoStep(3)}>
                                     Anterior
                                 </button>
                             </div>
-                            <div className="flex bg-gray-900 hover:bg-gray-800 rounded-3xl -mt-3 h-9 w-8/12 items-center place-self-end shadow-lg cursor-pointer">
+                            <div className="flex bg-gray-800 hover:bg-gray-700 rounded-3xl -mt-3 h-9 w-8/12 items-center place-self-end shadow-lg cursor-pointer">
                                 <button type="submit" className="mx-1 text-center w-full text-sm font-semibold focus:outline-none text-gray-200">
                                     Finalizar
                                 </button>
