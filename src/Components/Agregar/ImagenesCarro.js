@@ -6,11 +6,14 @@ export default class ImagenesCarro extends Component {
 
     constructor(props) {
         super(props)
+        this.state = {
+            loading: false
+        }
         this.traerFotos = this.traerFotos.bind(this)
     }
 
     traerFotos(arrayAgregar) {
-        let objetoMandar = {name:"imagenes", value:[...arrayAgregar]}
+        let objetoMandar = { name: "imagenes", value: [...arrayAgregar] }
         this.props.mandarPadre(objetoMandar)
     }
 
@@ -21,14 +24,14 @@ export default class ImagenesCarro extends Component {
         copiaArray = copiaArray.filter((foto, index) => {
             return index !== indexFoto
         })
-        let objetoMandar = {name:"imagenes", value:[...copiaArray]}
+        let objetoMandar = { name: "imagenes", value: [...copiaArray] }
         this.props.mandarPadre(objetoMandar)
     }
 
     handleOnSubmit = e => {
         e.preventDefault()
         const { imagenes } = this.props;
-        if (imagenes.length < 5){
+        if (imagenes.length < 5) {
             alert("Deben haber 5 fotos")
         } else {
             this.props.guardarDB()
@@ -36,7 +39,7 @@ export default class ImagenesCarro extends Component {
     }
 
     render() {
-        const { imagenes } = this.props
+        const { imagenes, loading } = this.props
         const otrasFotos = imagenes.map((foto, index) => {
             if (index >= 1) {
                 return (
@@ -74,11 +77,22 @@ export default class ImagenesCarro extends Component {
                                     Anterior
                                 </button>
                             </div>
-                            <div className="flex bg-gray-800 hover:bg-gray-700 rounded-3xl -mt-3 h-9 w-8/12 items-center place-self-end shadow-lg cursor-pointer">
-                                <button type="submit" className="mx-1 text-center w-full text-sm font-semibold focus:outline-none text-gray-200">
-                                    Finalizar
-                                </button>
-                            </div>
+                            {loading
+                                ? <div className="flex bg-green-600 hover:bg-green-700 cursor-not-allowed rounded-3xl -mt-3 h-9 w-8/12 items-center place-self-end shadow-lg">
+                                    <div className="ml-4 pt-px mr-2 text-center text-sm font-semibold focus:outline-none text-gray-200">
+                                        Guardando
+                                    </div>
+                                    <svg className="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                        <circle className="stroke-current opacity-25" strokeWidth="4" cx="12" cy="12" r="10"/>
+                                        <path className="fill-current opacity-75" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
+                                    </svg>
+                                </div>
+                                : <div className="flex bg-gray-800 hover:bg-gray-700 rounded-3xl -mt-3 h-9 w-8/12 items-center place-self-end shadow-lg cursor-pointer">
+                                    <button type="submit" className="mx-1 text-center w-full text-sm font-semibold focus:outline-none text-gray-200">
+                                        Finalizar
+                                    </button>
+                                </div>}
+
                         </div>
                     </div>
                 </div>

@@ -9,31 +9,11 @@ import { db, storage } from '../firebase'
 import { Link } from 'react-router-dom';
 
 class Agregar extends React.Component {
+
   constructor(props) {
     super(props)
     this.state = {
-      pasos: [{ texto: "Información General", selected: false, terminado: true },
-      { texto: "Estado", selected: false, terminado: true },
-      { texto: "Valor", selected: false, terminado: true },
-      { texto: "Imágenes", selected: true, terminado: false }],
-      vin: "12",
-      marca: "Tesla",
-      modelo: "Model Y",
-      codigo: "SANTOS",
-      proveedor: "Toyota",
-      millaje: "750000",
-      ano: "2017",
-      color: "#777777",
-      estado: "Disponible",
-      inspeccionado: false,
-      titulo: true,
-      linkHolder: true,
-      salvage: true,
-      clean: false,
-      valorCompra: "23000",
-      valorInvertido: "400",
-      precioFinal: "27000",
-      imagenes: [],
+      ...this.estadoInicial,
     }
 
     this.traerDatos = this.traerDatos.bind(this)
@@ -41,6 +21,32 @@ class Agregar extends React.Component {
     this.siguienteStep = this.siguienteStep.bind(this)
     this.previoStep = this.previoStep.bind(this)
     this.guardarDB = this.guardarDB.bind(this)
+  }
+
+  estadoInicial = {
+    pasos: [{ texto: "Información General", selected: true, terminado: false },
+    { texto: "Estado", selected: false, terminado: false },
+    { texto: "Valor", selected: false, terminado: false },
+    { texto: "Imágenes", selected: false, terminado: false }],
+    vin: "",
+    marca: "",
+    modelo: "",
+    codigo: "",
+    proveedor: "",
+    millaje: "Cualquiera",
+    ano: "Cualquiera",
+    color: "transparent",
+    estado: "Disponible",
+    inspeccionado: false,
+    titulo: false,
+    linkHolder: false,
+    salvage: true,
+    clean: false,
+    valorCompra: "",
+    valorInvertido: "",
+    precioFinal: "",
+    imagenes: [],
+    loading: false,
   }
 
   traerDatos = ({ name, value }) => {
@@ -78,9 +84,11 @@ class Agregar extends React.Component {
   }
 
   guardarDB = async () => {
-    console.log(this.state)
+    this.setState({ loading: true })
     const { vin, marca, modelo, codigo, proveedor, ano, millaje, color, estado, inspeccionado, titulo, linkHolder, salvage, clean, valorCompra, valorInvertido, precioFinal, imagenes } = this.state
+    
     let carro = { marca, modelo, codigo, proveedor, ano, millaje, estado, valorCompra, valorInvertido, precioFinal }
+    
     let colorCarro = "Rojo"
     if (color === "#0047cb") {
       colorCarro = "Azul"
@@ -98,6 +106,7 @@ class Agregar extends React.Component {
       colorCarro = "Gris"
     }
     carro = { ...carro, color: colorCarro }
+
     if (inspeccionado) {
       carro = { ...carro, inspeccionado }
     }
@@ -113,33 +122,37 @@ class Agregar extends React.Component {
     if (clean) {
       carro = { ...carro, clean }
     }
-    //const fotones = await this.guardarImagenes(imagenes, vin)
-    /*db.collection("Prueba").doc(vin).set(carro).then(() => {
-      console.log("se escribió")
-    }).catch(err => {
-      console.log(err)
-    })*/
-    //console.log(fotones)
-    console.log("carro", carro)
-  }
 
-  guardarImagenes = (imagenes, vin) => {
-    return new Promise(resolve => {
-      let dirFotos = []
-      let storageRef = storage.ref();
-      imagenes.forEach(imagen => {
-        let carroRef = storageRef.child(`${vin}/${imagen.name}`);
-        carroRef.put(imagen).then(() => {
-          dirFotos.push(carroRef.toString())
-        })
+    let dirFotos = []
+    let storageRef = storage.ref();
+    let i = 0
+    while (i <= 4) {
+      try {
+        let carroRef = storageRef.child(`${vin}/${imagenes[i].name}`);
+        await carroRef.put(imagenes[i])
+        dirFotos.push(carroRef.toString())
+        i++
+      } catch (err) {
+        alert(err)
+      }
+    }
+    carro = { ...carro, fotos: dirFotos }
+
+    db.collection("carros").doc(vin).set(carro).then(() => {
+      this.setState({ 
+        ...this.estadoInicial, 
+        pasos: [{ texto: "Información General", selected: true, terminado: false },
+        { texto: "Estado", selected: false, terminado: false },
+        { texto: "Valor", selected: false, terminado: false },
+        { texto: "Imágenes", selected: false, terminado: false }]
       })
-      resolve(dirFotos)
-    });
+    }).catch(err => {
+      alert(err)
+    })
   }
-
 
   render() {
-    let { vin, marca, modelo, codigo, proveedor, ano, millaje, color, estado, inspeccionado, titulo, linkHolder, salvage, clean, valorCompra, valorInvertido, precioFinal, imagenes, pasos } = this.state
+    let { vin, marca, modelo, codigo, proveedor, ano, millaje, color, estado, inspeccionado, titulo, linkHolder, salvage, clean, valorCompra, valorInvertido, precioFinal, imagenes, pasos, loading } = this.state
 
     //controla los steps
     const mostrarPasos = pasos.map((paso, index) => {
@@ -157,7 +170,7 @@ class Agregar extends React.Component {
       pasoAmostrar = <InfoCosto precioFinal={precioFinal} valorCompra={valorCompra} valorInvertido={valorInvertido} mandarPadre={this.traerDatos} siguienteStep={this.siguienteStep} previoStep={this.previoStep} />
     }
     if (pasos[3].selected) {
-      pasoAmostrar = <ImagenesCarro imagenes={imagenes} guardarDB={this.guardarDB} mandarPadre={this.traerDatos} previoStep={this.previoStep} />
+      pasoAmostrar = <ImagenesCarro imagenes={imagenes} loading={loading} guardarDB={this.guardarDB} mandarPadre={this.traerDatos} previoStep={this.previoStep} />
     }
 
     return (
