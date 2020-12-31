@@ -1,11 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 export default function ImagenPrincipal(props) {
 
-    const [foto, setFoto] = useState(null)
+    const { imagenes } = props
+    let existeFoto = (imagenes[0] !== null && imagenes[0] !== undefined)
+    let fotoMostrar = null
+    if (existeFoto) {
+        fotoMostrar = URL.createObjectURL(props.imagenes[0])
+    }
 
     const subirFoto = e => {
-        let { imagenes } = props
         let arrayMandar = [...imagenes]
         if (arrayMandar.length === 0) {
             arrayMandar.push(e.target.files[0])
@@ -13,11 +17,9 @@ export default function ImagenPrincipal(props) {
             arrayMandar[0] = e.target.files[0]
         }
         props.mandarFotos(arrayMandar)
-        setFoto(URL.createObjectURL(e.target.files[0]))
     }
 
     const borrarFoto = () => {
-        setFoto(null)
         let { imagenes } = props
         let arrayMandar = [...imagenes]
         arrayMandar[0] = null
@@ -34,7 +36,7 @@ export default function ImagenPrincipal(props) {
             <img
                 className="z-0 h-full w-full rounded-lg object-cover shadow-md"
                 alt="Foto Carro"
-                src={foto}
+                src={fotoMostrar}
             />
         </div>);
 
@@ -53,7 +55,7 @@ export default function ImagenPrincipal(props) {
 
     return (
         <>
-            {foto ? fotoLista : sinFoto}
+            {existeFoto ? fotoLista : sinFoto}
         </>
     );
 }
