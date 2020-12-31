@@ -89,11 +89,43 @@ function InfoCarro(props) {
                                 </svg>
                             </button>
                         </div>
-                        <div className="grid grid-col-2">
-                        {loading ? fotoCargando : fotoCargada}
-                        {loading ? fotoCargando : fotoCargada}
-                        {loading ? fotoCargando : fotoCargada}
-                        {loading ? fotoCargando : fotoCargada}
+                        <div className="grid grid-cols-2 gap-y-4 gap-x-8 ml-12 h-40 w-60">
+
+
+
+
+                            <div className="rounded-md h-20 w-28 object-cover bg-black">
+                                <img
+                                    className="rounded-md object-cover shadow-md"
+                                    alt="Carro"
+                                    src={foto}
+                                />
+                            </div>
+                            <div className="rounded-md h-20 w-28 object-cover bg-black">
+                                <img
+                                    className="rounded-md object-cover shadow-md"
+                                    alt="Carro"
+                                    src={foto}
+                                />
+                            </div>
+                            <div className="rounded-md h-20 w-28 object-cover bg-black">
+                                <img
+                                    className="rounded-md object-cover shadow-md"
+                                    alt="Carro"
+                                    src={foto}
+                                />
+                            </div>
+                            <div className="rounded-md h-20 w-28 object-cover bg-black">
+                                <img
+                                    className="rounded-md object-cover shadow-md"
+                                    alt="Carro"
+                                    src={foto}
+                                />
+                            </div>
+
+
+
+
                         </div>
                     </div>
                     {/*Informacion*/}
