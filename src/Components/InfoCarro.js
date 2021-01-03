@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { storage } from "../firebase"
+import swal from 'sweetalert';
 
 function InfoCarro(props) {
     let [foto, setFoto] = useState(null)
@@ -25,6 +26,19 @@ function InfoCarro(props) {
         props.mostrarInfo(estado)
     }
 
+    const clickVenderCarro = () => (
+        swal({title: "Oops!", icon:"warning", text:"Lo sentimos pero esta funcion sigue en desarrollo."})
+    )
+    const clickEditarCarro = () => (
+        swal({title: "Oops!", icon:"warning", text:"Lo sentimos pero esta funcion sigue en desarrollo."})
+    )
+    const clickEliminarCarro = () => (
+        swal({title: "Oops!", icon:"warning", text:"Lo sentimos pero esta funcion sigue en desarrollo."})
+    )
+    const clickShareCarro = () => (
+        swal({title: "Oops!", icon:"warning", text:"Lo sentimos pero esta funcion sigue en desarrollo."})
+    )
+
     let fotoCargando = (
         <>
             <div className="animate-pulse col-span-8 rounded-b-none h-64 w-full object-cover rounded-md shadow-md bg-gray-100">
@@ -33,7 +47,7 @@ function InfoCarro(props) {
     )
     let fotoCargada = (
         <>
-            <div className="rounded-b-none rounded-md col-span-4 h-64 pb-48 bg-black">
+            <div className="rounded-b-none rounded-md col-span-4 h-64 bg-black">
                 <img
                     className="rounded-b-none rounded-md h-64 w-full object-cover shadow-md"
                     alt="Carro"
@@ -47,24 +61,22 @@ function InfoCarro(props) {
         <>
             <div className="absolute overflow-hidden animate__animated animate__zoomIn animate__faster fixed z-40 justify-center items-center flex inset-0 outline-none focus:outline-none bg-opacity-50">
 
+
+
+
                 {/*Container*/}
                 <div className="pb-8 pr-3 absolute grid grid-cols-2 bg-gray-900 rounded-md h-80 w-7/12">
-
-
                     <button className="col-span-2 top-0 right-0 p-1 ml-auto bg-transparent border-0 text-black float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
                         onClick={() => handleClick(false)}>
                         <span className="mb-4 mr-2 text-white h-8 w-8 text-4xl block outline-none focus:outline-none">
                             x
                         </span>
                     </button>
-
-
-
                     {/*Imagenes*/}
-                    <div className="rounded-md transform -translate-x-24 w-69 h-74 bg-gray-700">
+                    <div className="rounded-md transform -translate-x-24 w-69 h-74 bg-gray-800">
                         {loading ? fotoCargando : fotoCargada}
-                        <div className="bg-gray-900 h-10 w-3/4 transform -translate-y-5 rounded-md ml-10 flex flex-wrap content-center">
-                            <select className="px-6 bg-gray-200 ml-4 rounded-lg h-3/4">
+                        <div className="bg-gray-900 h-10 w-3/4 transform -translate-y-5 rounded-md ml-10 flex flex-wrap content-center shadow-2xl">
+                            <select className="px-3 bg-gray-200 ml-4 rounded-lg h-3/4">
                                 <option value="Disponible">
                                     Disponible
                                     </option>
@@ -78,111 +90,170 @@ function InfoCarro(props) {
                                     Apartados
                                     </option>
                             </select>
-                            <button className="w-8 h-3/4 grid justify-items-center ml-5 mr-2">
-                                <svg className="mt-1 h-3/4 w-4 fill-current text-gray-200 " xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                            <button className="w-8 h-3/4 grid justify-items-center ml-3 mr-1 " onClick={clickEditarCarro}>
+                                <svg className="mt-1 h-3/4 w-4 fill-current text-gray-200" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                                     <path d="M311.18 78.008L32.23 356.958.613 485.716a21.221 21.221 0 0025.671 25.671l128.759-31.617 278.95-278.95L311.18 78.008zM40.877 471.123l10.871-44.271 33.4 33.4-44.271 10.871zM502.598 86.818L425.182 9.402c-12.536-12.536-32.86-12.536-45.396 0l-30.825 30.825 122.812 122.812 30.825-30.825c12.536-12.535 12.536-32.86 0-45.396z" />
                                 </svg>
                             </button>
-                            <button className="w-8 h-3/4 grid justify-items-center">
+                            <button className="w-8 h-3/4 grid justify-items-center mr-1" onClick={clickEliminarCarro}>
+                                <svg className="mt-1 h-3/4 w-4 fill-current text-gray-200" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                    <path d="M424 64h-88V48c0-26.51-21.49-48-48-48h-64c-26.51 0-48 21.49-48 48v16H88c-22.091 0-40 17.909-40 40v32c0 8.837 7.163 16 16 16h384c8.837 0 16-7.163 16-16v-32c0-22.091-17.909-40-40-40zM208 48c0-8.82 7.18-16 16-16h64c8.82 0 16 7.18 16 16v16h-96zM78.364 184a5 5 0 00-4.994 5.238l13.2 277.042c1.22 25.64 22.28 45.72 47.94 45.72h242.98c25.66 0 46.72-20.08 47.94-45.72l13.2-277.042a5 5 0 00-4.994-5.238zM320 224c0-8.84 7.16-16 16-16s16 7.16 16 16v208c0 8.84-7.16 16-16 16s-16-7.16-16-16zm-80 0c0-8.84 7.16-16 16-16s16 7.16 16 16v208c0 8.84-7.16 16-16 16s-16-7.16-16-16zm-80 0c0-8.84 7.16-16 16-16s16 7.16 16 16v208c0 8.84-7.16 16-16 16s-16-7.16-16-16z" />
+                                </svg>
+                            </button>
+                            <button className="w-8 h-3/4 grid justify-items-center" onClick={clickShareCarro}>
                                 <svg className="mt-1 h-3/4 w-4 fill-current text-gray-200 " viewBox="0 -22 512 511" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M512 233.82L299.223.5v139.203h-45.239C113.711 139.703 0 253.414 0 393.687v73.77l20.094-22.02a360.573 360.573 0 01266.324-117.5h12.805v139.204zm0 0" />
                                 </svg>
                             </button>
                         </div>
-                        <div className="grid grid-cols-2 gap-y-4 gap-x-8 ml-12 h-40 w-60">
-
-
-
-
-                            <div className="rounded-md h-20 w-28 object-cover bg-black">
+                        <div className="grid grid-cols-2 h-52 w-58 transform -translate-y-3 pl-11">
+                            {/*Aqui ira el map para traer las 4 fotos*/}
+                            <div className="rounded-md h-20 w-28 object-cover bg-black transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105">
                                 <img
-                                    className="rounded-md object-cover shadow-md"
+                                    className="rounded-md object-cover h-20 w-28 shadow-md"
                                     alt="Carro"
                                     src={foto}
                                 />
                             </div>
-                            <div className="rounded-md h-20 w-28 object-cover bg-black">
+                            <div className="rounded-md h-20 w-28 object-cover bg-black transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105">
                                 <img
-                                    className="rounded-md object-cover shadow-md"
+                                    className="rounded-md object-cover h-20 w-28 shadow-md"
                                     alt="Carro"
                                     src={foto}
                                 />
                             </div>
-                            <div className="rounded-md h-20 w-28 object-cover bg-black">
+                            <div className="rounded-md h-20 w-28 object-cover bg-black transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105">
                                 <img
-                                    className="rounded-md object-cover shadow-md"
+                                    className="rounded-md object-cover h-20 w-28 shadow-md"
                                     alt="Carro"
                                     src={foto}
                                 />
                             </div>
-                            <div className="rounded-md h-20 w-28 object-cover bg-black">
+                            <div className="rounded-md h-20 w-28 object-cover bg-black transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105">
                                 <img
-                                    className="rounded-md object-cover shadow-md"
+                                    className="rounded-md object-cover h-20 w-28 shadow-md"
                                     alt="Carro"
                                     src={foto}
                                 />
                             </div>
-
-
-
-
                         </div>
                     </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                     {/*Informacion*/}
-                    <div className="h-74 transform w-78 -translate-x-24">
-                        <div className="h-20">
-                            <h3 className="text-4xl font-semibold text-gray-100">
-                                {props.carro.marca} - {props.carro.modelo}
-                            </h3>
+                    <div className="h-74 w-80 transform -translate-x-32 grid grid-cols-2">
+                        <div className="h-11 col-span-2">
+                            <div className="flex pb-5 ">
+                                <div>
+                                    <h3 className="text-5xl font-semibold text-gray-100">
+                                        {props.carro.marca}
+
+                                    </h3>
+                                    <p className="text-md text-gray-300 ml-1 mt-2">
+                                        VIN: {props.carro.id}
+                                    </p>
+                                </div>
+                                <h3 className="text-5xl font-semibold text-gray-100 ml-4">
+                                    -
+                                </h3>
+                                <div className="ml-4">
+                                    <h3 className="text-5xl font-semibold text-gray-100">
+                                        {props.carro.modelo}
+
+                                    </h3>
+                                    <p className="text-md text-gray-300 ml-1 mt-2">
+                                        Codigo: {props.carro.codigo}
+                                    </p>
+                                </div>
+                            </div>
                         </div>
-                        <div className="h-70 overflow-auto ">
-                            <p className="my-4 text-gray-600 text-lg leading-relaxed">
-                                VIN : {props.carro.id}
-                            </p>
-                            <p className="my-4 text-gray-600 text-lg leading-relaxed">
-                                Codigo : {props.carro.codigo}
-                            </p>
-                            <p className="my-4 text-gray-600 text-lg leading-relaxed">
-                                Color : {props.carro.color}
-                            </p>
-                            <p className="my-4 text-gray-600 text-lg leading-relaxed">
-                                Millaje : {props.carro.millaje}
-                            </p>
-                            <p className="my-4 text-gray-600 text-lg leading-relaxed">
-                                Año : {props.carro.ano}
-                            </p>
-                            <p className="my-4 text-gray-600 text-lg leading-relaxed">
-                                Tipo del titulo : {props.carro.clean}
-                            </p>
-                            <p className="my-4 text-gray-600 text-lg leading-relaxed">
-                                Proveedor : {props.carro.proveedor}
-                            </p>
-                            <p className="my-4 text-gray-600 text-lg leading-relaxed">
-                                Millaje : {props.carro.millaje}
-                            </p>
-                            <p className="my-4 text-gray-600 text-lg leading-relaxed">
-                                Estado : {props.carro.estado}
-                            </p>
-                            <p className="my-4 text-gray-600 text-lg leading-relaxed">
-                                Inspeccionado : {props.carro.inspeccionado}
-                            </p>
-                            <p className="my-4 text-gray-600 text-lg leading-relaxed">
-                                Titulo a Mano : {props.carro.titulo}
-                            </p>
-                            <p className="my-4 text-gray-600 text-lg leading-relaxed">
-                                Lien Holder : {props.carro.lienHolder}
-                            </p>
-                            <p className="my-4 text-gray-600 text-lg leading-relaxed">
-                                Valor de la Compra : {props.carro.valorCompra}
-                            </p>
-                            <p className="my-4 text-gray-600 text-lg leading-relaxed">
-                                Valor Invertido : {props.carro.valorInvertido}
-                            </p>
-                            <p className="my-4 text-gray-600 text-lg leading-relaxed">
-                                Valor para Venta : {props.carro.precioFinal}
-                            </p>
+                        <div className="pt-5">
+                            <h2 className="text-gray-100 px-2 font-semibold text-xl underline">
+                                General
+                            </h2>
+                            <div className="ml-2">
+                                <p className="text-gray-300 px-2 text-md py-2 grid">
+                                    Color: {props.carro.color}
+                                </p>
+                                <p className="text-gray-300 px-2 text-md py-2">
+                                    Millaje: {props.carro.millaje}
+                                </p>
+                                <p className="text-gray-300 px-2 text-md py-2">
+                                    Año: {props.carro.ano}
+                                </p>
+                                <p className="text-gray-300 px-2 text-md py-2">
+                                    Titulo: {props.carro.tipoTitulo}
+                                </p>
+                            </div>
+
+                        </div>
+                        <div className="pt-5">
+                            <h6 className="text-gray-100 px-2 font-semibold text-xl underline">
+                                Estado
+                            </h6>
+                            <div className="ml-2">
+                                <p className="text-gray-300 px-2  text-md py-2">
+                                    Inspeccionado: {props.carro.color}
+                                </p>
+                                <p className="text-gray-300 px-2  text-md py-2">
+                                    Titulo en Mano: {props.carro.millaje}
+                                </p>
+                                <p className="text-gray-300 px-2  text-md py-2">
+                                    Lien Holder: {props.carro.ano}
+                                </p>
+                            </div>
+
+                        </div>
+                        <div className="col-span-2">
+                            <h6 className="text-gray-100 px-2 font-semibold text-xl underline">
+                                Precio
+                            </h6>
+                            <div className="ml-2">
+                                <div className="flex">
+                                    <p className="text-gray-300 px-2  text-md py-2 col-span-2">
+                                        Compra: {props.carro.color}
+                                    </p>
+                                    <p className="text-gray-300 px-2  text-md py-2 col-span-2 ml-12">
+                                        Venta: {props.carro.millaje}
+                                    </p>
+                                </div>
+
+                                <p className="text-gray-300 px-2 text-md py-2">
+                                    Down Payment: {props.carro.ano}
+                                </p>
+                            </div>
+
                         </div>
                     </div>
+
+
+
+                    <div className="flex grid justify-items-center col-span-2 ml-60 transform -translate-y-4">
+                        <button className="bg-yellow-400 w-36 h-10" onClick={clickVenderCarro}>
+                            Vender
+                        </button>
+                    </div>
+
+
+
+
+
 
                 </div>
             </div>
