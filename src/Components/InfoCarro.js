@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { storage } from "../firebase"
-import swal from 'sweetalert';
+import Swal from 'sweetalert2';
+import { Switch } from 'react-router-dom';
+import ComboBox from './ComboBox';
+import {db} from '../firebase'
 
 function InfoCarro(props) {
+    const { id, ano, marca, modelo, fotos, estado } = props.carro;
     let [foto, setFoto] = useState(null)
     let [loading, setLoading] = useState(true)
-
-    let { fotos } = props.carro
 
     useEffect(() => {
         //obtener foto del storage
@@ -22,21 +24,53 @@ function InfoCarro(props) {
         descargarFoto()
     })
 
-    const handleClick = (estado) => {
-        props.mostrarInfo(estado)
+    const handleEstadoModal = (estadoModal) => {
+        props.mostrarInfo(estadoModal)
     }
 
+
+
+
     const clickVenderCarro = () => (
-        swal({title: "Oops!", icon:"warning", text:"Lo sentimos pero esta funcion sigue en desarrollo."})
+        Swal.fire({ title: "Oops!", icon: "warning", text: "Lo sentimos pero esta funcion sigue en desarrollo." })
     )
     const clickEditarCarro = () => (
-        swal({title: "Oops!", icon:"warning", text:"Lo sentimos pero esta funcion sigue en desarrollo."})
+        Swal.fire({ title: "Oops!", icon: "warning", text: "Lo sentimos pero esta funcion sigue en desarrollo." })
     )
     const clickEliminarCarro = () => (
-        swal({title: "Oops!", icon:"warning", text:"Lo sentimos pero esta funcion sigue en desarrollo."})
+        Swal.fire({
+            title: 'Estas Seguro?',
+            text: "Una vez borrado no hay vuelta atras!",
+            icon: 'warning',
+
+            background: '#F3F4F6',
+
+            showCancelButton: true,
+
+            confirmButtonColor: '#CC0000',
+            confirmButtonText: 'Borrar',
+
+            cancelButtonColor: '#395494',
+            cancelButtonText: 'Cancelar',
+
+        }).then((result) => {
+            if (result.isConfirmed) {
+                var carro = db.collection("carros").doc(id)
+                carro.delete().then(function () {
+                    Swal.fire(
+                        'Eliminado!',
+                        'El carro se ha eliminado con exito',
+                        'success'
+                    )
+                    handleEstadoModal(false)
+                }).catch(function (error) {
+                    console.error("Error removing document: ", error);
+                });
+            }
+        })
     )
     const clickShareCarro = () => (
-        swal({title: "Oops!", icon:"warning", text:"Lo sentimos pero esta funcion sigue en desarrollo."})
+        Swal.fire({ title: "Oops!", icon: "warning", text: "Lo sentimos pero esta funcion sigue en desarrollo." })
     )
 
     let fotoCargando = (
@@ -56,7 +90,6 @@ function InfoCarro(props) {
             </div>
         </>
     )
-
     return (
         <>
             <div className="absolute overflow-hidden animate__animated animate__zoomIn animate__faster fixed z-40 justify-center items-center flex inset-0 outline-none focus:outline-none bg-opacity-50">
@@ -67,7 +100,7 @@ function InfoCarro(props) {
                 {/*Container*/}
                 <div className="pb-8 pr-3 absolute grid grid-cols-2 bg-gray-900 rounded-md h-80 w-7/12">
                     <button className="col-span-2 top-0 right-0 p-1 ml-auto bg-transparent border-0 text-black float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
-                        onClick={() => handleClick(false)}>
+                        onClick={() => handleEstadoModal(false)}>
                         <span className="mb-4 mr-2 text-white h-8 w-8 text-4xl block outline-none focus:outline-none">
                             x
                         </span>
@@ -76,20 +109,7 @@ function InfoCarro(props) {
                     <div className="rounded-md transform -translate-x-24 w-69 h-74 bg-gray-800">
                         {loading ? fotoCargando : fotoCargada}
                         <div className="bg-gray-900 h-10 w-3/4 transform -translate-y-5 rounded-md ml-10 flex flex-wrap content-center shadow-2xl">
-                            <select className="px-3 bg-gray-200 ml-4 rounded-lg h-3/4">
-                                <option value="Disponible">
-                                    Disponible
-                                    </option>
-                                <option value="Reparacion">
-                                    Reparacion
-                                    </option>
-                                <option value="Repo">
-                                    Repo
-                                    </option>
-                                <option value="Apartados">
-                                    Apartados
-                                    </option>
-                            </select>
+                            <ComboBox carro={props.carro} />
                             <button className="w-8 h-3/4 grid justify-items-center ml-3 mr-1 " onClick={clickEditarCarro}>
                                 <svg className="mt-1 h-3/4 w-4 fill-current text-gray-200" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                                     <path d="M311.18 78.008L32.23 356.958.613 485.716a21.221 21.221 0 0025.671 25.671l128.759-31.617 278.95-278.95L311.18 78.008zM40.877 471.123l10.871-44.271 33.4 33.4-44.271 10.871zM502.598 86.818L425.182 9.402c-12.536-12.536-32.86-12.536-45.396 0l-30.825 30.825 122.812 122.812 30.825-30.825c12.536-12.535 12.536-32.86 0-45.396z" />
@@ -189,7 +209,7 @@ function InfoCarro(props) {
                             </h2>
                             <div className="ml-2">
                                 <p className="text-gray-300 px-2 text-md py-2 grid">
-                                    Color: {props.carro.color}
+                                    Color: {props.carro.color},{props.carro.estado}
                                 </p>
                                 <p className="text-gray-300 px-2 text-md py-2">
                                     Millaje: {props.carro.millaje}
