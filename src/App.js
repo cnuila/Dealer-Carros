@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Agregar from './Components/Agregar';
-import Principal from './Components/Principal';
+import Inventario from './Components/Inventario';
 import LogIn from './Components/LogIn';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { AuthProvider } from './Components/Auth';
@@ -11,7 +11,7 @@ const App = () => {
     <AuthProvider>
       <Router>
         <Switch>
-          <Route path="/" exact component={Principal} />
+          <Route path="/" exact component={Inventario} />
           <Route path="/login" component={LogIn} />
           <Route path="/agregar" component={Agregar} />
         </Switch>

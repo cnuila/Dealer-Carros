@@ -9,7 +9,7 @@ function ColorPicker(props) {
         let colorActual = "transparent"
         if (props.color !== color.hex) {
             colorActual = color.hex
-        }       
+        }
         let target = {
             name: "color",
             type: "color",
@@ -21,7 +21,7 @@ function ColorPicker(props) {
         props.handleInputChange(event)
     };
 
-    const colors= ["#FF0000", "#0047CB", "#FBFF00", "#FFFFFF", "#000000", "#777777"]
+    const colors = ["#FFFFFF", "#000000", "#777777", "#C0C0C0", "#FF0000", "#0047CB", "#FBFF00", "#FF8A65"]
 
     return (
         <CirclePicker color={props.color}

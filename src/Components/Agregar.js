@@ -1,10 +1,10 @@
 import React from "react";
 import Navbar from './Navbar'
-import Pasos from "./Agregar/Pasos"
-import InfoGeneral from './Agregar/InfoGeneral'
-import InfoEstado from './Agregar/InfoEstado'
-import InfoCosto from './Agregar/InfoCosto'
-import ImagenesCarro from './Agregar/ImagenesCarro'
+import Pasos from "./Agregar Carro/Pasos"
+import InfoGeneral from './Agregar Carro/InfoGeneral'
+import InfoEstado from './Agregar Carro/InfoEstado'
+import InfoCosto from './Agregar Carro/InfoCosto'
+import ImagenesCarro from './Agregar Carro/ImagenesCarro'
 import { db, storage } from '../firebase'
 import { Link } from 'react-router-dom';
 

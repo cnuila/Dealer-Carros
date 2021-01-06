@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import ImagenPrincipal from './ImagenPrincipal'
 import OtrasImagenes from './OtrasImagenes'
+import Swal from 'sweetalert2'
 
 export default class ImagenesCarro extends Component {
 
@@ -32,7 +33,11 @@ export default class ImagenesCarro extends Component {
         e.preventDefault()
         const { imagenes } = this.props;
         if (imagenes.length < 5) {
-            alert("Deben haber 5 fotos")
+            Swal.fire(
+                '¡Ops!',
+                'Debes seleccionar 5 fotos',
+                'warning'
+              )
         } else {
             this.props.guardarDB()
         }

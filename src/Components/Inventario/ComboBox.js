@@ -1,6 +1,6 @@
 import React from 'react'
 import Swal from 'sweetalert2';
-import { db } from '../firebase'
+import { db } from '../../firebase'
 
 export default function ComboBox(props) {
     let { estado, id, modelo, marca} = props.carro
