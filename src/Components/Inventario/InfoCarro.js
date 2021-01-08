@@ -1,15 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { storage } from "../../firebase"
 import Swal from 'sweetalert2';
-<<<<<<< HEAD:src/Components/InfoCarro.js
 import ComboBoxCambiarEstado from './ComboBoxCambiarEstado';
 import {db} from '../firebase'
-=======
 import ShareCarro from './ShareCarro'
-import { Switch } from 'react-router-dom';
-import ComboBox from './ComboBox'
 import {db} from '../../firebase'
->>>>>>> b985d451f8dd2cfe07f7036278b764793411a35b:src/Components/Inventario/InfoCarro.js
 
 function InfoCarro(props) {
     const { id, ano, marca, modelo, fotos, estado } = props.carro;
