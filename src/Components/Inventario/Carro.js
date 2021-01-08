@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { storage } from "../firebase"
+import { storage } from "../../firebase"
 
 function Carro(props) {
 

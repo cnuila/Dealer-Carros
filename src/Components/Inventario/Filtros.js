@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import ColorPicker from "./Utilidades/ColorPicker"
-import Checkbox from "./Utilidades/Checkbox"
-import Counter from "./Utilidades/Counter"
-import { db } from "../firebase"
+import ColorPicker from "../Utilidades/ColorPicker"
+import Checkbox from "../Utilidades/Checkbox"
+import Counter from "../Utilidades/Counter"
+import Swal from "sweetalert2"
+import { db } from "../../firebase"
 
 class Filtros extends Component {
 
@@ -22,9 +23,8 @@ class Filtros extends Component {
         salvage: false,
         clean: false,
         titulo: false,
-        proveedor: false,
         inspeccionado: false,
-        lienHolder: false,
+        linkHolder: false,
     }
 
     handleInputChange({ target }) {
@@ -32,8 +32,8 @@ class Filtros extends Component {
         let valor
         if (type === "checkbox") {
             valor = target.checked
-        } else {            
-            valor = target.value            
+        } else {
+            valor = target.value
         }
         this.setState({
             [name]: valor,
@@ -41,9 +41,9 @@ class Filtros extends Component {
     }
 
     aplicarFiltros = () => {
-        let { ano, color, precioMax, precioMin, salvage, clean, proveedor, titulo, inspeccionado, lienHolder } = this.state
+        let { ano, color, precioMax, precioMin, salvage, clean, titulo, inspeccionado, linkHolder } = this.state
         if (ano !== "Cualquiera" || color !== "transparent" || precioMax !== "Cualquiera" || precioMin !== "Cualquiera" ||
-            salvage !== false || clean !== false || proveedor !== false || titulo !== false || inspeccionado !== false || lienHolder !== false) {
+            salvage !== false || clean !== false || titulo !== false || inspeccionado !== false || linkHolder !== false) {
 
             let query = db.collection("carros")
 
@@ -67,8 +67,8 @@ class Filtros extends Component {
                 query = query.where("inspeccionado", "==", true)
             }
 
-            if (lienHolder !== false) {
-                query = query.where("lienHolder", "==", true)
+            if (linkHolder !== false) {
+                query = query.where("linkHolder", "==", true)
             }
 
             if (color !== "transparent") {
@@ -90,6 +90,12 @@ class Filtros extends Component {
                 if (color === "#777777") {
                     color = "Gris"
                 }
+                if (color === "#c0c0c0") {
+                    color = "Plateado"
+                }
+                if (color === "#ff8a65") {
+                    color = "Otro"
+                }
                 query = query.where("color", "==", color)
             }
 
@@ -105,20 +111,20 @@ class Filtros extends Component {
                 query = query.orderBy("precioFinal")
             }
 
-            if (proveedor !== false) {
-                query = query.orderBy("proveedor")
-            }
-
             this.props.mostrarConsulta(query)
         } else {
-            alert("No puede filtrar sin seleccionar un campo")
+            Swal.fire(
+                '¡Ops!',
+                'No puedes filtrar si no seleccionas un campo',
+                'warning'
+              )
         }
     }
 
     reiniciar = () => {
-        let { ano, color, precioMax, precioMin, salvage, clean, proveedor, titulo, inspeccionado, lienHolder } = this.state        
+        let { ano, color, precioMax, precioMin, salvage, clean, proveedor, titulo, inspeccionado, linkHolder } = this.state
         if (ano !== "Cualquiera" || color !== "transparent" || precioMax !== "Cualquiera" || precioMin !== "Cualquiera" ||
-            salvage !== false || clean !== false || proveedor !== false || titulo !== false || inspeccionado !== false || lienHolder !== false) {
+            salvage !== false || clean !== false || proveedor !== false || titulo !== false || inspeccionado !== false || linkHolder !== false) {
             let query = db.collection("carros").orderBy("marca")
             this.props.mostrarConsulta(query)
             this.setState({
@@ -128,7 +134,7 @@ class Filtros extends Component {
     }
 
     render() {
-        let { ano, color, precioMax, precioMin, salvage, clean, proveedor, titulo, inspeccionado, lienHolder } = this.state
+        let { ano, color, precioMax, precioMin, salvage, clean, titulo, inspeccionado, linkHolder } = this.state
         return (
             <div className="grid grid-cols-2 sm:grid-cols-4 bg-gray-900 rounded-lg text-sm font-semibold mx-8 sm:mx-12 p-5 text-gray-100">
 
@@ -138,15 +144,6 @@ class Filtros extends Component {
                     </div>
                     <div>
                         <Counter nombre={"ano"} valor={ano} minimo={1950} handleInputChange={this.handleInputChange} />
-                    </div>
-                </div>
-
-                <div className="flex items-center space-x-4 transform scale-95 sm:scale-100 sm:m-1 col-span-2 sm:col-span-1">
-                    <div>
-                        Color
-                    </div>
-                    <div>
-                        <ColorPicker width={230} circleSize={22} color={color} handleInputChange={this.handleInputChange} />
                     </div>
                 </div>
 
@@ -168,7 +165,7 @@ class Filtros extends Component {
                     </div>
                 </div>
 
-                <div className="m-2 sm:mb-1">
+                <div className="m-2 sm:mt-4">
                     <Checkbox texto="Salvage" nombre="salvage" handleInputChange={this.handleInputChange} checked={salvage} />
                 </div>
 
@@ -185,11 +182,16 @@ class Filtros extends Component {
                 </div>
 
                 <div className="m-2 sm:mb-1">
-                    <Checkbox texto="Lien Holder" nombre="lienHolder" handleInputChange={this.handleInputChange} checked={lienHolder} />
+                    <Checkbox texto="Link Holder" nombre="linkHolder" handleInputChange={this.handleInputChange} checked={linkHolder} />
                 </div>
 
-                <div className="m-2 sm:mb-1">
-                    <Checkbox texto="Proveedor" nombre="proveedor" handleInputChange={this.handleInputChange} checked={proveedor} />
+                <div className="flex items-center space-x-4 transform scale-95 sm:scale-100 sm:m-1 col-span-2 sm:col-span-1">
+                    <div>
+                        Color
+                    </div>
+                    <div>
+                        <ColorPicker width={300} circleSize={22} color={color} handleInputChange={this.handleInputChange} />
+                    </div>
                 </div>
 
                 <div className="sm:col-start-4 m-2 sm:mb-1 place-self-center sm:place-self-end col-span-2 sm:col-span-1">

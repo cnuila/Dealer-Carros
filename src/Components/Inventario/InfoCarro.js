@@ -1,8 +1,15 @@
 import React, { useState, useEffect } from 'react'
-import { storage } from "../firebase"
+import { storage } from "../../firebase"
 import Swal from 'sweetalert2';
+<<<<<<< HEAD:src/Components/InfoCarro.js
 import ComboBoxCambiarEstado from './ComboBoxCambiarEstado';
 import {db} from '../firebase'
+=======
+import ShareCarro from './ShareCarro'
+import { Switch } from 'react-router-dom';
+import ComboBox from './ComboBox'
+import {db} from '../../firebase'
+>>>>>>> b985d451f8dd2cfe07f7036278b764793411a35b:src/Components/Inventario/InfoCarro.js
 
 function InfoCarro(props) {
     const { id, ano, marca, modelo, fotos, estado } = props.carro;
@@ -119,13 +126,10 @@ function InfoCarro(props) {
                                     <path d="M424 64h-88V48c0-26.51-21.49-48-48-48h-64c-26.51 0-48 21.49-48 48v16H88c-22.091 0-40 17.909-40 40v32c0 8.837 7.163 16 16 16h384c8.837 0 16-7.163 16-16v-32c0-22.091-17.909-40-40-40zM208 48c0-8.82 7.18-16 16-16h64c8.82 0 16 7.18 16 16v16h-96zM78.364 184a5 5 0 00-4.994 5.238l13.2 277.042c1.22 25.64 22.28 45.72 47.94 45.72h242.98c25.66 0 46.72-20.08 47.94-45.72l13.2-277.042a5 5 0 00-4.994-5.238zM320 224c0-8.84 7.16-16 16-16s16 7.16 16 16v208c0 8.84-7.16 16-16 16s-16-7.16-16-16zm-80 0c0-8.84 7.16-16 16-16s16 7.16 16 16v208c0 8.84-7.16 16-16 16s-16-7.16-16-16zm-80 0c0-8.84 7.16-16 16-16s16 7.16 16 16v208c0 8.84-7.16 16-16 16s-16-7.16-16-16z" />
                                 </svg>
                             </button>
-                            <button className="w-8 h-3/4 grid justify-items-center" onClick={clickShareCarro}>
-                                <svg className="mt-1 h-3/4 w-4 fill-current text-gray-200 " viewBox="0 -22 512 511" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M512 233.82L299.223.5v139.203h-45.239C113.711 139.703 0 253.414 0 393.687v73.77l20.094-22.02a360.573 360.573 0 01266.324-117.5h12.805v139.204zm0 0" />
-                                </svg>
-                            </button>
+                            <ShareCarro/>
+                            
                         </div>
-                        <div className="grid grid-cols-2 h-52 w-58 transform -translate-y-3 pl-11">
+                        <div className="grid grid-cols-2 h-52 w-58 z-0 transform -translate-y-3 pl-11">
                             {/*Aqui ira el map para traer las 4 fotos*/}
                             <div className="rounded-md h-20 w-28 object-cover bg-black transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105">
                                 <img

@@ -1,6 +1,7 @@
 import React from 'react'
 import Counter from '../Utilidades/Counter'
 import ColorPicker from '../Utilidades/ColorPicker'
+import Swal from 'sweetalert2'
 
 export default function InfoGeneral(props) {
 
@@ -13,13 +14,25 @@ export default function InfoGeneral(props) {
     const handleOnSubmit = e => {
         e.preventDefault()
         if (millaje === "Cualquiera") {
-            alert("Debe ingresar un millaje")
+            Swal.fire(
+                '¡Ops!',
+                'Debes ingresar un millaje',
+                'warning'
+              )
         } else {
             if (ano === "Cualquiera") {
-                alert("Debe ingresar un año")
+                Swal.fire(
+                    '¡Ops!',
+                    'Debes ingresar un año',
+                    'warning'
+                  )
             } else {
                 if (color === "transparent") {
-                    alert("Debe ingresar un color")
+                    Swal.fire(
+                        '¡Ops!',
+                        'Debes escoger un color',
+                        'warning'
+                      )
                 } else {
                     props.siguienteStep(0)
                 }
@@ -70,7 +83,7 @@ export default function InfoGeneral(props) {
                     <div className="block px-8 pt-5">
                         <h2 className="text-gray-200 px-2 font-semibold text-lg underline">Color</h2>
                         <div className="pl-7 py-2">
-                            <ColorPicker width={230} circleSize={22} color={color} handleInputChange={handleInputChange} />
+                            <ColorPicker width={300} circleSize={22} color={color} handleInputChange={handleInputChange} />
                         </div>
                     </div>
 

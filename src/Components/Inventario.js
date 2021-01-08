@@ -1,9 +1,9 @@
 import React from "react";
-import Carro from "./Carro";
-import Estado from "./Estado";
-import Filtros from "./Filtros";
-import InfoCarro from "./InfoCarro";
-import CarroCargando from "./CarroCargando";
+import Carro from "./Inventario/Carro";
+import Estado from "./Inventario/Estado";
+import Filtros from "./Inventario/Filtros";
+import InfoCarro from "./Inventario/InfoCarro";
+import CarroCargando from "./Inventario/CarroCargando";
 import CarroAveriado from "../CarroAveriado.png";
 import { db } from "../firebase"
 import Navbar from "./Navbar";
