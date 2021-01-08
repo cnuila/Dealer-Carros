@@ -2,7 +2,9 @@ import React from 'react'
 import { Link } from 'react-router-dom';
 import fb from "../firebase"
 
-export default function Navbar() {
+export default function Navbar(props) {
+    let compo = props.componente
+
     return (
         <nav className="justify-center flex items-center justify-between flex-wrap bg-gray-900 p-3">
             <div className="flex items-center ml-2 mb-3 lg:ml-0 lg:mb-0 flex-shrink-0 text-white mr-6">
@@ -10,11 +12,14 @@ export default function Navbar() {
                     Santos Motors
             </span>
             </div>
-
-            {/*Inicio search bar*/}
-            <input type="text" name="SearchBar" placeholder="Buscar Marca, Modelo, o Proveedor"  className="w-2/5 text-left appearance-none focus:outline-none bg-gray-200 rounded-lg" />
-            {/*Fin search bar*/}
-
+            {compo === "Principal" ?
+                <div className="w-2/5 text-left appearance-none focus:outline-none bg-gray-200 rounded-lg">
+                    {/*Inicio search bar*/}
+                    <input type="text" name="SearchBar" placeholder="Buscar Marca, Modelo, o Proveedor" className="h-7 w-full text-left appearance-none focus:outline-none bg-gray-200 rounded-lg" />
+                    {/*Fin search bar*/}
+                </div> :
+                <div></div>
+            }
             <div className="flex items-center">
                 <Link to="/agregar">
                     <button className="ml-8 focus:outline-none bg-gray-900 hover:bg-gray-800 text-gray-100 font-bold py-1 px-4 rounded inline-flex items-center">
