@@ -1,11 +1,11 @@
 import React from "react";
-import Navbar from './Navbar'
+import Navbar from '../Navbar'
 import Pasos from "./Agregar Carro/Pasos"
 import InfoGeneral from './Agregar Carro/InfoGeneral'
 import InfoEstado from './Agregar Carro/InfoEstado'
 import InfoCosto from './Agregar Carro/InfoCosto'
 import ImagenesCarro from './Agregar Carro/ImagenesCarro'
-import { db, storage } from '../firebase'
+import { db, storage } from '../../firebase'
 import { Link } from 'react-router-dom';
 
 class Agregar extends React.Component {
