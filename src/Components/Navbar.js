@@ -4,6 +4,8 @@ import fb from "../firebase"
 import SearchBar from "./Utilidades/SearchBar"
 
 export default function Navbar(props) {
+    let compo = props.componente
+
     return (
         <nav className="justify-center flex items-center justify-between flex-wrap bg-gray-900 p-3">
             <div className="flex items-center ml-2 mb-3 lg:ml-0 lg:mb-0 flex-shrink-0 text-white mr-6">
@@ -11,11 +13,10 @@ export default function Navbar(props) {
                     Santos Motors
             </span>
             </div>
-
-            {/*Inicio search bar*/}            
-            <SearchBar mostrarConsulta={props.mostrarConsulta}/>
-            {/*Fin search bar*/}
-
+            {compo === "Principal"
+                ? <SearchBar mostrarConsulta={props.mostrarConsulta} />
+                : <></>
+            }
             <div className="flex items-center">
                 <Link to="/agregar">
                     <button className="ml-8 focus:outline-none bg-gray-900 hover:bg-gray-800 text-gray-100 font-bold py-1 px-4 rounded inline-flex items-center">

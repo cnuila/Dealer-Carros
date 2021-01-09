@@ -153,7 +153,7 @@ class Principal extends React.Component {
     return (
       <div className="bg-gray-100">
         {/*Inicio del navbar*/}
-        <Navbar mostrarConsulta={this.mostrarConsulta}/>
+        <Navbar componente={"Principal"} mostrarConsulta={this.mostrarConsulta}/>
         {/*fin del navbar*/}
         <div>
           {/*Botones Estado y filtro*/}
