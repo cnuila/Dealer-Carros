@@ -37,14 +37,19 @@ class Principal extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.carros !== this.state.carros) {
-      this.setState({
-        loading: false,
-      })
+      setTimeout(() => {
+        this.setState({
+          loading: false,
+        })
+      },600)
     }
   }
 
   //funcion que renderiza la query que se envía
   mostrarConsulta = async (query) => {
+    this.setState({
+      loading: true
+    })
     query.onSnapshot((querySnapshot) => {
       const rCarros = []
       querySnapshot.forEach((doc) => {
@@ -82,7 +87,11 @@ class Principal extends React.Component {
     })
     this.setState({
       estados: temp,
+      loading: true,
     })
+    setTimeout(() => {
+      this.setState({loading:false})
+    }, 450)
   }
 
   //funcion que muestra los filtros
@@ -153,7 +162,7 @@ class Principal extends React.Component {
     return (
       <div className="bg-gray-100">
         {/*Inicio del navbar*/}
-        <Navbar componente={"Principal"} mostrarConsulta={this.mostrarConsulta}/>
+        <Navbar componente={"Principal"} mostrarConsulta={this.mostrarConsulta} />
         {/*fin del navbar*/}
         <div>
           {/*Botones Estado y filtro*/}
