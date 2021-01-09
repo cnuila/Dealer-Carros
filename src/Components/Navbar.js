@@ -1,8 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 import fb from "../firebase"
+import SearchBar from "./Utilidades/SearchBar"
 
-export default function Navbar() {
+export default function Navbar(props) {
     return (
         <nav className="justify-center flex items-center justify-between flex-wrap bg-gray-900 p-3">
             <div className="flex items-center ml-2 mb-3 lg:ml-0 lg:mb-0 flex-shrink-0 text-white mr-6">
@@ -11,8 +12,8 @@ export default function Navbar() {
             </span>
             </div>
 
-            {/*Inicio search bar*/}
-            <input type="text" name="SearchBar" placeholder="Buscar Marca, Modelo, o Proveedor"  className="w-2/5 text-left appearance-none focus:outline-none bg-gray-200 rounded-lg" />
+            {/*Inicio search bar*/}            
+            <SearchBar mostrarConsulta={props.mostrarConsulta}/>
             {/*Fin search bar*/}
 
             <div className="flex items-center">
