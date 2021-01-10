@@ -1,24 +1,21 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 import fb from "../firebase"
+import SearchBar from "./Utilidades/SearchBar"
 
 export default function Navbar(props) {
     let compo = props.componente
 
     return (
-        <nav className="justify-center flex items-center justify-between flex-wrap bg-gray-900 p-3">
+        <nav className="flex items-center justify-between flex-wrap bg-gray-900 p-3">
             <div className="flex items-center ml-2 mb-3 lg:ml-0 lg:mb-0 flex-shrink-0 text-white mr-6">
                 <span className="font-bold text-4xl tracking-tight pl-10">
                     Santos Motors
             </span>
             </div>
-            {compo === "Principal" ?
-                <div className="w-2/5 text-left appearance-none focus:outline-none bg-gray-200 rounded-lg">
-                    {/*Inicio search bar*/}
-                    <input type="text" name="SearchBar" placeholder="Buscar Marca, Modelo, o Proveedor" className="h-7 w-full text-left appearance-none focus:outline-none bg-gray-200 rounded-lg" />
-                    {/*Fin search bar*/}
-                </div> :
-                <div></div>
+            {compo === "Principal"
+                ? <SearchBar mostrarConsulta={props.mostrarConsulta} />
+                : <></>
             }
             <div className="flex items-center">
                 <Link to="/agregar">

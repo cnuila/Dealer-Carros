@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Agregar from './Components/Agregar';
+import Agregar from './Components/Inventario/Agregar';
 import Inventario from './Components/Inventario';
 import LogIn from './Components/LogIn';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';

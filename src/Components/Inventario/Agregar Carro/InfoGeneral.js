@@ -1,6 +1,6 @@
 import React from 'react'
-import Counter from '../Utilidades/Counter'
-import ColorPicker from '../Utilidades/ColorPicker'
+import Counter from '../../Utilidades/Counter'
+import ColorPicker from '../../Utilidades/ColorPicker'
 import Swal from 'sweetalert2'
 
 export default function InfoGeneral(props) {

@@ -38,7 +38,7 @@ export default function ShareCarro() {
                     }
                 })
                 if (numeroWhatsapp) {
-                    console.log(numeroWhatsapp)
+                    console.log("wha",numeroWhatsapp)
                 }
             } else {
                 const { value: email } = await Swal.fire({
