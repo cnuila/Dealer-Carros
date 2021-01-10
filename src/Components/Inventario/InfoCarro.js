@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { storage } from "../../firebase"
 import Swal from 'sweetalert2';
 import ComboBoxCambiarEstado from './ComboBoxCambiarEstado';
-import {db} from '../firebase'
 import ShareCarro from './ShareCarro'
 import {db} from '../../firebase'
 

@@ -46,9 +46,6 @@ export default function ComboBox(props) {
                 <option value="Reparacion">
                     Reparacion
                 </option>
-                <option value="Repo">
-                    Repo
-                </option>
                 <option value="Apartado">
                     Apartados
                 </option>
@@ -62,12 +59,6 @@ export default function ComboBox(props) {
                 </option>
                 <option value="Disponible">
                     Disponible
-                </option>
-                <option value="Repo">
-                    Repo
-                </option>
-                <option value="Apartado">
-                    Apartados
                 </option>
             </select>
         )
@@ -97,12 +88,6 @@ export default function ComboBox(props) {
                 <option value="Disponible">
                     Disponible
                 </option>
-                <option value="Reparacion">
-                    Reparacion
-                </option>
-                <option value="Repo">
-                    Repo
-                </option>
             </select>
         )
     } else if (estado === "Vendido") {
@@ -110,9 +95,6 @@ export default function ComboBox(props) {
             <select className="px-3 bg-gray-200 ml-4 rounded-lg h-3/4" id="estadoCarro" onChange={cambiarEstadoCarro}>
                 <option value="Vendido">
                     Vendido
-                    </option>
-                <option value="Apartados">
-                    Apartados
                     </option>
                 <option value="Disponible">
                     Disponible
