@@ -9,16 +9,22 @@ import LandingPage from "./Components/LandingPage"
 
 const App = () => {
   return (
+
     <AuthProvider>
       <Router>
         <Switch>
+<<<<<<< HEAD
           <Route path="/lp" exact component={LandingPage} />
           <Route path="/" exact component={Inventario} />
+=======
+          <Route path="/" exact component={LandingPage} />
+>>>>>>> 8dbc7a1ba7ca059efe39073df76ec70170287b22
           <Route path="/login" component={LogIn} />
           <Route path="/agregar" component={Agregar} />
         </Switch>
       </Router>
     </AuthProvider>
+    
   );
 }
 

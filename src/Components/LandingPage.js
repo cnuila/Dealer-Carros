@@ -3,6 +3,7 @@ import Navbar from './Navbar';
 
 export default function LandingPage() {
 
+<<<<<<< HEAD
 
     return (
 
@@ -24,5 +25,12 @@ export default function LandingPage() {
     )
 
 
+=======
+    <div className="bg-red-300">
+
+        <Navbar/>
+
+    </div>
+>>>>>>> 8dbc7a1ba7ca059efe39073df76ec70170287b22
 }
 
