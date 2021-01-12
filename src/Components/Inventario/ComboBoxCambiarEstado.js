@@ -1,15 +1,18 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Swal from 'sweetalert2';
 import { db } from '../../firebase'
 
 export default function ComboBox(props) {
-    let { estado, id, modelo, marca} = props.carro
+    let { estado, id, modelo, marca } = props.carro
+    const [selected, setSelected] = useState(props.estados[0])
 
-    const cambiarEstadoCarro = () => {
-        let estadoSeleccionado = document.getElementById("estadoCarro").value
+    const cambiarEstadoCarro = ({ target }) => {
+        const { value } = target 
+        const { estados } = props       
+        //let seleccionado = estados.filter(estado => estado === value)        
         Swal.fire({
             title: 'Estas Seguro?',
-            text: "Se cambiara el estado del " + marca + " " + modelo + " a " + estadoSeleccionado ,
+            text: "Se cambiara el estado del " + marca + " " + modelo + " a " + value ,
             icon: 'warning',
 
             background: '#F3F4F6',
@@ -27,31 +30,34 @@ export default function ComboBox(props) {
                 let carroACambiar = db.collection("carros").doc(id)
 
                 carroACambiar.update({
-                    estado: estadoSeleccionado
+                    estado: value
                 }).then(function () {
-                    Swal.fire({ title: "Cambio exitoso!", icon: "success", text: "El estado del " + marca + " " + modelo + " se cambio a " + estadoSeleccionado})
+                    Swal.fire({ title: "Cambio exitoso!", icon: "success", text: "El estado del " + marca + " " + modelo + " se cambio a " + value})
                 }).catch(function (error) {
                     console.error("Error updating document: ", error);
                 });
-            }
+            } else {
+                setSelected(estados[0])
+            }            
         })
     }
 
-    if (estado === "Disponible") {
-        return (
-            <select className="px-3 bg-gray-200 ml-4 rounded-lg h-3/4" id="estadoCarro" onChange={cambiarEstadoCarro}>
-                <option value="Disponible">
-                    Disponible
-                </option>
-                <option value="Reparacion">
-                    Reparacion
-                </option>
-                <option value="Apartado">
-                    Apartados
-                </option>
-            </select>
-        )
-    } else if (estado === "Reparacion") {
+    return (
+        <select className="px-3 bg-gray-200 ml-4 rounded-lg h-3/4" name="estadoCarro" value={selected} onChange={cambiarEstadoCarro}>
+            {props.estados.map((estado, index) => {
+                let valor = estado
+                if (index === 0) {
+                    return (<option key={index} value={valor} disabled hidden>
+                        {valor}
+                    </option>)
+                }
+                return (<option key={index} value={valor}>
+                    {valor}
+                </option>)
+            })}
+        </select>
+    )
+    /*else if (estado === "Reparacion") {
         return (
             <select className="px-3 bg-gray-200 ml-4 rounded-lg h-3/4" id="estadoCarro" onChange={cambiarEstadoCarro}>
                 <option value="Reparacion">
@@ -107,5 +113,5 @@ export default function ComboBox(props) {
                     </option>
             </select>
         )
-    }
+    }*/
 }

@@ -6,6 +6,7 @@ import InfoEstado from './Agregar Carro/InfoEstado'
 import InfoCosto from './Agregar Carro/InfoCosto'
 import ImagenesCarro from './Agregar Carro/ImagenesCarro'
 import { db, storage } from '../../firebase'
+import Swal from 'sweetalert2'
 import { Link } from 'react-router-dom';
 
 class Agregar extends React.Component {
@@ -26,25 +27,25 @@ class Agregar extends React.Component {
   estadoInicial = {
     pasos: [{ texto: "Información General", selected: true, terminado: false },
     { texto: "Estado", selected: false, terminado: false },
-    { texto: "Valor", selected: false, terminado: false },
+    { texto: "Valor", selected: true, terminado: false },
     { texto: "Imágenes", selected: false, terminado: false }],
-    vin: "",
-    marca: "",
-    modelo: "",
-    codigo: "",
-    proveedor: "",
-    millaje: "Cualquiera",
-    ano: "Cualquiera",
-    color: "transparent",
+    vin: "1222",
+    marca: "Toyota",
+    modelo: "Corolla",
+    codigo: "Santos",
+    proveedor: "Trade-In",
+    millaje: 1232,
+    ano: 1233,
+    color: "#0047cb",
     estado: "Disponible",
-    inspeccionado: false,
+    inspeccionado: true,
     titulo: false,
     linkHolder: false,
     salvage: true,
     clean: false,
-    valorCompra: "",
-    valorInvertido: "",
-    precioFinal: "",
+    valorCompra: 2000,
+    valorInvertido: 500,
+    precioFinal: 5000,
     imagenes: [],
     loading: false,
   }
@@ -86,9 +87,9 @@ class Agregar extends React.Component {
   guardarDB = async () => {
     this.setState({ loading: true })
     const { vin, marca, modelo, codigo, proveedor, ano, millaje, color, estado, inspeccionado, titulo, linkHolder, salvage, clean, valorCompra, valorInvertido, precioFinal, imagenes } = this.state
-    
-    let carro = { marca, modelo, codigo, proveedor, ano, millaje, estado, valorCompra, valorInvertido, precioFinal }
-    
+
+    let carro = { marca, modelo, codigo, proveedor, ano, millaje, estado, valorCompra, valorInvertido, precioFinal, downPayment: (precioFinal) * 0.2, }
+
     let colorCarro = "Rojo"
     if (color === "#0047cb") {
       colorCarro = "Azul"
@@ -123,24 +124,33 @@ class Agregar extends React.Component {
       carro = { ...carro, clean }
     }
 
-    let dirFotos = []
-    let storageRef = storage.ref();
-    let i = 0
-    while (i <= 4) {
-      try {
-        let carroRef = storageRef.child(`${vin}/${imagenes[i].name}`);
-        await carroRef.put(imagenes[i])
-        dirFotos.push(carroRef.toString())
-        i++
-      } catch (err) {
-        alert(err)
+    if (imagenes.length !== 0) {
+      let dirFotos = []
+      let storageRef = storage.ref();
+      let i = 0
+      while (i <= 4) {
+        try {
+          let carroRef = storageRef.child(`${vin}/${imagenes[i].name}`);
+          await carroRef.put(imagenes[i])
+          dirFotos.push(carroRef.toString())
+          i++
+        } catch (err) {
+          alert(err)
+        }
       }
+      carro = { ...carro, fotos: dirFotos }
     }
-    carro = { ...carro, fotos: dirFotos }
 
     db.collection("carros").doc(vin).set(carro).then(() => {
-      this.setState({ 
-        ...this.estadoInicial, 
+      Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: 'Se guardó el carro',
+        showConfirmButton: false,
+        timer: 2000
+      })
+      this.setState({
+        ...this.estadoInicial,
         pasos: [{ texto: "Información General", selected: true, terminado: false },
         { texto: "Estado", selected: false, terminado: false },
         { texto: "Valor", selected: false, terminado: false },
@@ -151,9 +161,9 @@ class Agregar extends React.Component {
     })
   }
 
+
   render() {
     let { vin, marca, modelo, codigo, proveedor, ano, millaje, color, estado, inspeccionado, titulo, linkHolder, salvage, clean, valorCompra, valorInvertido, precioFinal, imagenes, pasos, loading } = this.state
-
     //controla los steps
     const mostrarPasos = pasos.map((paso, index) => {
       return <Pasos key={index + 1} index={index + 1} selected={paso.selected} terminado={paso.terminado} texto={paso.texto} />

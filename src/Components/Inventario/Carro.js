@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import CarroSinFoto from "../../Imágenes/CarroSinFoto.jpg"
 import { storage } from "../../firebase"
 
 function Carro(props) {
@@ -12,16 +13,24 @@ function Carro(props) {
 
   useEffect(() => {
     //obtener foto del storage
-    let gsReference = storage.refFromURL(fotos[0])
-    async function descargarFoto() {
-      gsReference.getDownloadURL().then(direc => {
-        setFoto(direc)
+    if (fotos === undefined) {
+      function noHayFoto() {
+        setFoto(CarroSinFoto)
         setLoading(false)
-      }).catch((err) => {
-        console.log(err)
-      })
+      }
+      noHayFoto()
+    } else {
+      let gsReference = storage.refFromURL(fotos[0])
+      async function descargarFoto() {
+        gsReference.getDownloadURL().then(direc => {
+          setFoto(direc)
+          setLoading(false)
+        }).catch((err) => {
+          console.log(err)
+        })
+      }
+      descargarFoto()
     }
-    descargarFoto()
   })
 
   //mandar a principal el estado 
@@ -72,7 +81,7 @@ function Carro(props) {
     colorEstado = "text-blue-600"
   } else if (estado === "Vendido") {
     colorEstado = "text-yellow-400"
-  }else if (estado === "Reparacion") {
+  } else if (estado === "Reparacion") {
     colorEstado = "text-gray-400"
   }
 

@@ -1,4 +1,5 @@
 import React from 'react'
+import Checkbox from '../../Utilidades/Checkbox'
 
 export default function InfoEstado(props) {
 
@@ -10,115 +11,56 @@ export default function InfoEstado(props) {
     }
 
     const inputOnChange = ({ target }) => {
-        const { name, value } = target
+        const { name, type } = target
         let insertarObjeto = {}
-        if (name === "estado") {
-            insertarObjeto = { estado: value }
-        }
-        if (name === "inspeccionado" && value === "si") {
-            insertarObjeto = { inspeccionado: true }
-        } else {
-            if (name === "inspeccionado" && value === "no") {
-                insertarObjeto = { inspeccionado: false }
-            }
-        }
-        if (name === "titulo" && value === "si") {
-            insertarObjeto = { titulo: true }
-        } else {
-            if (name === "titulo" && value === "no") {
-                insertarObjeto = { titulo: false }
-            }
-        }
-        if (name === "linkHolder" && value === "si") {
-            insertarObjeto = { linkHolder: true }
-        } else {
-            if (name === "linkHolder" && value === "no") {
-                insertarObjeto = { linkHolder: false }
-            }
-        }
-        if (name === "tipoTitulo") {
-            if (value === "salvage") {
-                insertarObjeto = { salvage: true, clean: false }
+        if (type === "checkbox"){
+            insertarObjeto = { [name]: target.checked}        
+        } else {            
+            if (name === "tipoTitulo") {
+                if (target.value === "salvage") {
+                    insertarObjeto = { salvage: true, clean: false }
+                } else {
+                    insertarObjeto = { clean: true, salvage: false }
+                }
             } else {
-                insertarObjeto = { clean: true, salvage: false }
+                insertarObjeto = { [name]: target.value }
             }
-        }
+        }    
         props.mandarObjeto(insertarObjeto)
     }
 
     return (
         <form onSubmit={handleOnSubmit}>
             <div className="flex flex-col h-72 bg-gray-900 max-w-3xl mx-2 lg:mx-auto rounded-b-lg shadow-2xl">
-                <div className="grid grid-cols-2 gap-10 bg-green-00 p-3">
-                    <div className="col-span-2 px-8 pt-5 ">
+                <div className="grid grid-cols-2 gap-10 mb-3 p-3">
+                    <div className="col-span-2 px-8 pt-5">
                         <h2 className="text-gray-200 px-2 font-semibold text-lg underline">Estado Actual</h2>
-                        <div className="grid grid-cols-3 mt-2 pl-3">
+                        <div className="grid grid-cols-2 mt-2 pl-3">
                             <div>
                                 <input type="radio" className="ml-4 my-1" id="disponible" name="estado" value="Disponible" onChange={inputOnChange} checked={estado === "Disponible"} required />
-                                <label htmlFor="disponible" className="text-gray-300 ml-2">Disponible</label>
+                                <label htmlFor="disponible" className="text-gray-200 ml-2">Disponible</label>
                             </div>
                             <div>
                                 <input type="radio" id="apartado" className="ml-4 my-1" name="estado" value="Apartado" onChange={inputOnChange} checked={estado === "Apartado"} />
-                                <label htmlFor="apartado" className="text-gray-300 ml-2">Apartado</label>
-                            </div>
-                            <div>                                
-                                <input type="radio" id="trade" className="ml-4 my-1" name="estado" value="Trade" onChange={inputOnChange} checked={estado === "Trade"} />
-                                <label htmlFor="trade" className="text-gray-300 ml-2">Trade</label>
+                                <label htmlFor="apartado" className="text-gray-200 ml-2">Apartado</label>
                             </div>
                             <div>                                
                                 <input type="radio" id="repo" className="ml-4 my-1" name="estado" value="Repo" onChange={inputOnChange} checked={estado === "Repo"}/>
-                                <label htmlFor="repo" className="text-gray-300 ml-2">Repo</label>
-                            </div>
-                            <div>
-                                <input type="radio" id="devuelto" className="ml-4 my-1" name="estado" value="Devuelto" onChange={inputOnChange} checked={estado === "Devuelto"}/>
-                                <label htmlFor="devuelto" className="text-gray-300 ml-2">Devuelto</label>
+                                <label htmlFor="repo" className="text-gray-200 ml-2">Repo</label>
                             </div>
                             <div>
                                 <input type="radio" id="reparacion" className="ml-4 my-1" name="estado" value="Reparacion" onChange={inputOnChange} checked={estado === "Reparacion"} />
-                                <label htmlFor="reparacion" className="text-gray-300 ml-2">Reparación</label>
+                                <label htmlFor="reparacion" className="text-gray-200 ml-2">Reparación</label>
                             </div>
                         </div>
                     </div>
-                    <div className="px-8 pt-5 border-r-2 border-gray-800">
-                        <h2 className="text-gray-200 px-2 font-semibold text-lg underline">Inspeccionado</h2>
-                        <div className="grid grid-cols-2 mt-2 pl-3">
-                            <div>
-                                <input type="radio" className="ml-4 my-1" id="siInsp" name="inspeccionado" value="si" onChange={inputOnChange} required checked={inspeccionado} />
-                                <label htmlFor="siInsp" className="text-gray-300 ml-2">Sí</label>
-                            </div>
-                            <div>
-                                <input type="radio" id="noInsp" className="my-1" name="inspeccionado" value="no" onChange={inputOnChange} checked={!inspeccionado} />
-                                <label htmlFor="noInsp" className="text-gray-300 ml-2">No</label>
-                            </div>
+                    
+                    <div className="px-8 py-2 border-r-2 border-gray-800">
+                        <div className="grid grid-cols-2 mt-2 pl-3 text-gray-200 text-lg font-semibold underline">
+                            <Checkbox texto="Título" nombre="titulo" handleInputChange={inputOnChange} checked={titulo} />
                         </div>
                     </div>
-                    <div className="px-8 pt-5" >
-                        <h2 className="text-gray-200 px-2 font-semibold text-lg underline">Titulo</h2>
-                        <div className="grid grid-cols-2 mt-2 ml-3">
-                            <div>
-                                <input type="radio" className="ml-4 my-1" id="siTit" name="titulo" value="si" onChange={inputOnChange} required checked={titulo} />
-                                <label htmlFor="siTit" className="text-gray-300 ml-2">Sí</label>
-                            </div>
-                            <div>
-                                <input type="radio" id="noTit" className="my-1" name="titulo" value="no" onChange={inputOnChange} checked={!titulo} />
-                                <label htmlFor="noTit" className="text-gray-300 ml-2">No</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="px-8 pt-5 border-r-2 border-gray-800">
-                        <h2 className="text-gray-200 px-2 font-semibold text-lg underline">Link Holder</h2>
-                        <div className="grid grid-cols-2 mt-2 ml-3">
-                            <div>
-                                <input type="radio" className="ml-4 my-1" id="siLink" name="linkHolder" value="si" onChange={inputOnChange} required checked={linkHolder}/>
-                                <label htmlFor="siLink" className="text-gray-300 ml-2">Sí</label>
-                            </div>
-                            <div>
-                                <input type="radio" id="noLien" className="my-1" name="linkHolder" value="no" onChange={inputOnChange} checked={!linkHolder} />
-                                <label htmlFor="noLink" className="text-gray-300 ml-2">No</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="px-8 pt-5">
+                    <div className="px-8 py-2">
                         <h2 className="text-gray-200 px-2 font-semibold text-lg underline">Tipo Título</h2>
                         <div className="grid grid-cols-2 mt-2 ml-3">
                             <div>
@@ -131,9 +73,19 @@ export default function InfoEstado(props) {
                             </div>
                         </div>
                     </div>
+                    <div className="px-8 py-4 border-r-2 border-gray-800">
+                        <div className="grid grid-cols-2 mt-2 pl-3 text-gray-200 text-lg font-semibold underline">
+                            <Checkbox texto="Link Holder" nombre="linkHolder" handleInputChange={inputOnChange} checked={linkHolder} />
+                        </div>
+                    </div>
+                    <div className="px-8 py-4">
+                        <div className="grid grid-cols-2 mt-2 pl-3 text-gray-200 text-lg font-semibold underline">
+                            <Checkbox texto="Inspeccionado" nombre="inspeccionado" handleInputChange={inputOnChange} checked={inspeccionado} />
+                        </div>
+                    </div>                    
 
                 </div>
-                <div className="grid grid-cols-2 px-7 mt-6">
+                <div className="grid grid-cols-2 px-7 mt-6 pt-0.5">
                     <div className="flex bg-gray-800 hover:bg-gray-700 rounded-3xl h-9 w-8/12 items-center place-self-start shadow-lg cursor-pointer">
                         <button type="button" className="mx-1 text-center w-full text-sm font-semibold focus:outline-none text-gray-200" onClick={() => props.previoStep(1)}>
                             Anterior

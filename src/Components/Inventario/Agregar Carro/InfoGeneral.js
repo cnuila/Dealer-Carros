@@ -72,12 +72,12 @@ export default function InfoGeneral(props) {
 
                     <div className="block px-8 pt-5">
                         <h2 className="text-gray-200 px-2 font-semibold text-lg underline">Año</h2>
-                        <Counter nombre={"ano"} valor={ano} minimo={1950} required={true} handleInputChange={handleInputChange} />
+                        <Counter nombre={"ano"} valor={ano} minimo={1980} required={true} handleInputChange={handleInputChange} />
                     </div>
 
                     <div className="block px-8 pt-5">
                         <h2 className="text-gray-200 px-2 font-semibold text-lg underline">Millaje</h2>
-                        <Counter nombre={"millaje"} valor={millaje} minimo={100000} step={100} required={true} handleInputChange={handleInputChange} />
+                        <Counter nombre={"millaje"} valor={millaje} minimo={0} step={100} required={true} handleInputChange={handleInputChange} />
                     </div>
 
                     <div className="block px-8 pt-5">

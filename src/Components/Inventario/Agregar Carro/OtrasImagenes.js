@@ -31,7 +31,7 @@ export default function OtrasImagenes(props) {
     }
 
     const activo = props.imagenes[0] === null || props.imagenes.length === 0
-        ? (<div className="flex relative bg-gray-900 hover:bg-gray-700 rounded-3xl disabled:opacity-50 mx-8 mt-6 h-11 items-center shadow-lg cursor-pointer" onClick={() => Swal.fire('¡Ops!', 'Debes seleccionar la foto principal primero', 'error')}>
+        ? (<div className="flex relative bg-gray-900 hover:bg-gray-700 rounded-3xl disabled:opacity-50 mx-8 mt-6 h-11 items-center shadow-lg cursor-pointer" onClick={() => Swal.fire('¡Ops!', 'Debes seleccionar la foto principal primero', 'warning')}>
             <div className="z-0 mx-1 text-center w-full text-sm font-semibold focus:outline-none text-gray-200">
                 Agregar más fotos
                 </div>
@@ -45,7 +45,7 @@ export default function OtrasImagenes(props) {
                 </div>
             </div>)
             : (<div className="flex relative bg-gray-900 hover:bg-gray-700 rounded-3xl mx-8 mt-6 h-11 items-center shadow-lg cursor-pointer">
-                <input type="file" className="absolute z-10 opacity-0 cursor-pointer w-full h-full" accept="image/jpeg,image/jpg" multiple required onChange={handleFiles} />
+                <input type="file" className="absolute z-10 opacity-0 cursor-pointer w-full h-full" accept="image/jpeg,image/jpg" multiple onChange={handleFiles} />
                 <div className="z-0 mx-1 text-center w-full text-sm font-semibold focus:outline-none text-gray-200">
                     Agregar más fotos
                     </div>

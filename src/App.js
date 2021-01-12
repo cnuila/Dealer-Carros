@@ -5,12 +5,14 @@ import LogIn from './Components/LogIn';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { AuthProvider } from './Components/Auth';
 import PrivateRoute from "./Components/PrivateRoute"
+import LandingPage from "./Components/LandingPage"
 
 const App = () => {
   return (
     <AuthProvider>
       <Router>
         <Switch>
+          <Route path="/lp" exact component={LandingPage} />
           <Route path="/" exact component={Inventario} />
           <Route path="/login" component={LogIn} />
           <Route path="/agregar" component={Agregar} />

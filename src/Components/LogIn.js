@@ -1,6 +1,6 @@
 import React, { useCallback, useContext} from 'react'
-import logoImg from "../img1.jpeg";
-import Mobile from "../MobileLog.png";
+import logoImg from "../Imágenes/img1.jpeg";
+import Mobile from "../Imágenes/MobileLog.png";
 import {Redirect } from "react-router";
 import fb from "../firebase"
 import {AuthContext} from "./Auth.js"

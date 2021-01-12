@@ -136,7 +136,7 @@ class Filtros extends Component {
     render() {
         let { ano, color, precioMax, precioMin, salvage, clean, titulo, inspeccionado, linkHolder } = this.state
         return (
-            <div className="grid grid-cols-2 sm:grid-cols-4 bg-gray-900 rounded-lg text-sm font-semibold mx-8 sm:mx-12 p-5 text-gray-100">
+            <div className="grid grid-cols-2 sm:grid-cols-4 bg-gray-900 rounded-lg text-sm font-semibold mx-8 sm:mx-12 p-5 text-gray-200">
 
                 <div className="flex items-center space-x-1 m-2 sm:m-1 col-span-2 sm:col-span-1">
                     <div>

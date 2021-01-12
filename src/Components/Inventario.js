@@ -4,7 +4,7 @@ import Estado from "./Inventario/Estado";
 import Filtros from "./Inventario/Filtros";
 import InfoCarro from "./Inventario/InfoCarro";
 import CarroCargando from "./Inventario/CarroCargando";
-import CarroAveriado from "./Inventario/CarroAveriado.png";
+import CarroAveriado from "../Imágenes/CarroAveriado.png";
 import { db } from "../firebase"
 import Navbar from "./Navbar";
 

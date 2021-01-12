@@ -3,7 +3,15 @@ import React from 'react'
 export default function InfoCosto(props) {
 
     const handleInputChange = ({ target }) => {
-        props.mandarPadre(target)
+        let { name, value } = target
+        if (value !== ""){
+            value = parseInt(target.value,10)
+        }
+        let targetN = {
+            name,
+            value
+        }
+        props.mandarPadre(targetN)
     }
 
     const handleOnSubmit = e => {

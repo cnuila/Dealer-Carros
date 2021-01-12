@@ -32,7 +32,7 @@ export default class ImagenesCarro extends Component {
     handleOnSubmit = e => {
         e.preventDefault()
         const { imagenes } = this.props;
-        if (imagenes.length < 5) {
+        if (imagenes.length >= 1 && imagenes.length < 5) {
             Swal.fire(
                 '¡Ops!',
                 'Debes seleccionar 5 fotos',
