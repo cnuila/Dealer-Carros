@@ -249,8 +249,10 @@ function InfoCarro(props) {
                                     <p className="text-gray-300 px-2  text-md py-2 col-span-2 ml-12">
                                         Venta: {props.carro.millaje}
                                     </p>
+                                    <p className="text-gray-300 px-2  text-md py-2 col-span-2 ml-12">
+                                        Total Cost: {props.carro.millaje}
+                                    </p>
                                 </div>
-
                                 <p className="text-gray-300 px-2 text-md py-2">
                                     Down Payment: {props.carro.ano}
                                 </p>

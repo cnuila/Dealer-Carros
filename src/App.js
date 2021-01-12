@@ -5,18 +5,21 @@ import LogIn from './Components/LogIn';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { AuthProvider } from './Components/Auth';
 import PrivateRoute from "./Components/PrivateRoute"
+import LandingPage from "./Components/LandingPage"
 
 const App = () => {
   return (
+
     <AuthProvider>
       <Router>
         <Switch>
-          <Route path="/" exact component={Inventario} />
+          <Route path="/" exact component={LandingPage} />
           <Route path="/login" component={LogIn} />
           <Route path="/agregar" component={Agregar} />
         </Switch>
       </Router>
     </AuthProvider>
+    
   );
 }
 

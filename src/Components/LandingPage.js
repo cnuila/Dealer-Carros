@@ -1,6 +1,11 @@
 import React from "react";
 import Navbar from './Navbar';
 
-function InfoCarro(props) {
-                                                                                                                                                                                                                                                                                                                                                                                                                                   
+export default function LandingPage() {
+
+    <div className="bg-red-300">
+
+        <Navbar/>
+
+    </div>
 }
