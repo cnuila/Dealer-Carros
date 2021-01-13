@@ -30,8 +30,8 @@ class Agregar extends React.Component {
     { texto: "Valor", selected: false, terminado: false },
     { texto: "Imágenes", selected: true, terminado: false }],
     vin: "1222",
-    marca: "Tesla",
-    modelo: "Corolla",
+    marca: "Honda",
+    modelo: "CR-V",
     codigo: "Santos",
     proveedor: "Trade-In",
     millaje: 1232,
@@ -86,7 +86,6 @@ class Agregar extends React.Component {
 
   guardarDB = async () => {
     this.setState({ loading: true })
-    const { datos } = this.props.location.state
     const { vin, marca, modelo, codigo, proveedor, ano, millaje, color, estado, inspeccionado, titulo, linkHolder, salvage, clean, valorCompra, valorInvertido, precioFinal, imagenes } = this.state
 
     let carro = { marca, modelo, codigo, proveedor, ano, millaje, estado, valorCompra, valorInvertido, precioFinal, downPayment: (precioFinal) * 0.2, }
@@ -142,17 +141,20 @@ class Agregar extends React.Component {
       carro = { ...carro, fotos: dirFotos }
     }
 
-    /*let existeMarca = datos.filter(dato => dato.valor === carro.marca)
-    let existeProveedor = datos.filter(dato => dato.valor === carro.proveedor)
-    let existeModelo = datos.filter(dato => dato.valor === carro.modelo)
+    let datosSearchBar = []
+    await db.collection("searchBarCarros").get()
+      .then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+          datosSearchBar.push({ ...doc.data(), id: doc.id })
+        })
+      });
 
-    console.log(existeMarca)
-    console.log(existeProveedor.length)
-    console.log(existeModelo.length)
-    console.log(vin)
-    console.log(carro)*/
+    let existeMarca = datosSearchBar.filter(dato => dato.valor === carro.marca)
+    let existeProveedor = datosSearchBar.filter(dato => dato.valor === carro.proveedor)
+    let existeModelo = datosSearchBar.filter(dato => dato.valor === carro.modelo)
+
     db.collection("carros").doc(vin).set(carro).then(() => {
-      /*for (let i = 0; i < 3; i++) {
+      for (let i = 0; i < 3; i++) {
         let arreglo = existeMarca
         let tipo = "Marca"
         let valor = carro.marca
@@ -166,9 +168,10 @@ class Agregar extends React.Component {
           tipo = "Modelo"
           valor = carro.modelo
         }
+        
         if (arreglo.length === 1) {
           let { id, cantidad } = arreglo[0]
-          let cant = cantidad+1
+          let cant = cantidad + 1
           db.collection("searchBarCarros").doc(id).update({
             cantidad: cant
           })
@@ -179,7 +182,8 @@ class Agregar extends React.Component {
             cantidad: 1
           })
         }
-      }*/
+      }
+
       Swal.fire({
         position: 'top-end',
         icon: 'success',
@@ -187,6 +191,7 @@ class Agregar extends React.Component {
         showConfirmButton: false,
         timer: 2000
       })
+
       this.setState({
         ...this.estadoInicial,
         pasos: [{ texto: "Información General", selected: true, terminado: false },
@@ -201,12 +206,6 @@ class Agregar extends React.Component {
 
 
   render() {
-
-    //const { dataSearchBar } = this.props.location.state
-    /*dataSearchBar.map(dato => {
-      console.log(dato)
-      return dato
-    })*/
 
     let { vin, marca, modelo, codigo, proveedor, ano, millaje, color, estado, inspeccionado, titulo, linkHolder, salvage, clean, valorCompra, valorInvertido, precioFinal, imagenes, pasos, loading } = this.state
     //controla los steps
