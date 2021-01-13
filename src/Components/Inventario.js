@@ -20,6 +20,7 @@ class Principal extends React.Component {
         { estado: "Apartado", selected: false, color: "text-blue-600" },
         { estado: "Vendido", selected: false, color: "text-yellow-400" },
       ],
+      dataSearchBar:[],
       loading: true,
       carros: [],
       mostrarFiltros: false,
@@ -32,6 +33,7 @@ class Principal extends React.Component {
   }
 
   componentDidMount() {
+    this.getDatosSearchBar()
     this.getCarros()
   }
 
@@ -63,8 +65,22 @@ class Principal extends React.Component {
 
   //funcion asíncrona que trae todos los carros
   getCarros = async () => {
-    let query = db.collection("carros").orderBy("marca")
+    let query = db.collection("carros").orderBy("marca")    
     this.mostrarConsulta(query)
+  }
+
+  getDatosSearchBar = async () => {
+    let query = db.collection("searchBarCarros")
+    //hacer disabled el search
+    query.onSnapshot((querySnapshot) => {
+      const datos = []
+      querySnapshot.forEach((doc) =>{
+        datos.push({...doc.data(), id:doc.id})
+      })
+      this.setState({
+        dataSearchBar:datos,
+      })
+    })
   }
 
   //funcion que retorna el estado seleccionado
@@ -112,7 +128,7 @@ class Principal extends React.Component {
   render() {
     //renderizar los botones de estado
     let botonesEstados;
-    let { estados, carros, carroMostrar } = this.state;
+    let { estados, carros, carroMostrar, dataSearchBar } = this.state;
     botonesEstados = estados.map((boton) => {
       return (
         <>
@@ -162,7 +178,7 @@ class Principal extends React.Component {
     return (
       <div className="bg-gray-100">
         {/*Inicio del navbar*/}
-        <Navbar componente={"Principal"} mostrarConsulta={this.mostrarConsulta} />
+        <Navbar componente={"Principal"} mostrarConsulta={this.mostrarConsulta} dataSearchBar={dataSearchBar}/>
         {/*fin del navbar*/}
         <div>
           {/*Botones Estado y filtro*/}

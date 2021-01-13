@@ -27,10 +27,10 @@ class Agregar extends React.Component {
   estadoInicial = {
     pasos: [{ texto: "Información General", selected: true, terminado: false },
     { texto: "Estado", selected: false, terminado: false },
-    { texto: "Valor", selected: true, terminado: false },
-    { texto: "Imágenes", selected: false, terminado: false }],
+    { texto: "Valor", selected: false, terminado: false },
+    { texto: "Imágenes", selected: true, terminado: false }],
     vin: "1222",
-    marca: "Toyota",
+    marca: "Tesla",
     modelo: "Corolla",
     codigo: "Santos",
     proveedor: "Trade-In",
@@ -86,6 +86,7 @@ class Agregar extends React.Component {
 
   guardarDB = async () => {
     this.setState({ loading: true })
+    const { datos } = this.props.location.state
     const { vin, marca, modelo, codigo, proveedor, ano, millaje, color, estado, inspeccionado, titulo, linkHolder, salvage, clean, valorCompra, valorInvertido, precioFinal, imagenes } = this.state
 
     let carro = { marca, modelo, codigo, proveedor, ano, millaje, estado, valorCompra, valorInvertido, precioFinal, downPayment: (precioFinal) * 0.2, }
@@ -141,7 +142,44 @@ class Agregar extends React.Component {
       carro = { ...carro, fotos: dirFotos }
     }
 
+    /*let existeMarca = datos.filter(dato => dato.valor === carro.marca)
+    let existeProveedor = datos.filter(dato => dato.valor === carro.proveedor)
+    let existeModelo = datos.filter(dato => dato.valor === carro.modelo)
+
+    console.log(existeMarca)
+    console.log(existeProveedor.length)
+    console.log(existeModelo.length)
+    console.log(vin)
+    console.log(carro)*/
     db.collection("carros").doc(vin).set(carro).then(() => {
+      /*for (let i = 0; i < 3; i++) {
+        let arreglo = existeMarca
+        let tipo = "Marca"
+        let valor = carro.marca
+        if (i === 1) {
+          arreglo = existeProveedor
+          tipo = "Proveedor"
+          valor = carro.proveedor
+        }
+        if (i === 2) {
+          arreglo = existeModelo
+          tipo = "Modelo"
+          valor = carro.modelo
+        }
+        if (arreglo.length === 1) {
+          let { id, cantidad } = arreglo[0]
+          let cant = cantidad+1
+          db.collection("searchBarCarros").doc(id).update({
+            cantidad: cant
+          })
+        } else {
+          db.collection("searchBarCarros").add({
+            tipo: tipo,
+            valor: valor,
+            cantidad: 1
+          })
+        }
+      }*/
       Swal.fire({
         position: 'top-end',
         icon: 'success',
@@ -163,6 +201,13 @@ class Agregar extends React.Component {
 
 
   render() {
+
+    //const { dataSearchBar } = this.props.location.state
+    /*dataSearchBar.map(dato => {
+      console.log(dato)
+      return dato
+    })*/
+
     let { vin, marca, modelo, codigo, proveedor, ano, millaje, color, estado, inspeccionado, titulo, linkHolder, salvage, clean, valorCompra, valorInvertido, precioFinal, imagenes, pasos, loading } = this.state
     //controla los steps
     const mostrarPasos = pasos.map((paso, index) => {

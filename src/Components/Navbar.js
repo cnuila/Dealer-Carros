@@ -5,7 +5,7 @@ import SearchBar from "./Utilidades/SearchBar"
 
 export default function Navbar(props) {
     let compo = props.componente
-
+    
     return (
         <nav className="flex items-center justify-between flex-wrap bg-gray-900 p-3">
             <div className="flex items-center ml-2 mb-3 lg:ml-0 lg:mb-0 flex-shrink-0 text-white mr-6">
@@ -14,11 +14,14 @@ export default function Navbar(props) {
             </span>
             </div>
             {compo === "Principal"
-                ? <SearchBar mostrarConsulta={props.mostrarConsulta} />
+                ? <SearchBar mostrarConsulta={props.mostrarConsulta} sugerencias={props.dataSearchBar} />
                 : <></>
             }
             <div className="flex items-center">
-                <Link to="/agregar">
+                <Link to={{
+                    pathname: '/agregar',
+                    state: { datos:props.dataSearchBar, },
+                }}>
                     <button className="ml-8 focus:outline-none bg-gray-900 hover:bg-gray-800 text-gray-100 font-bold py-1 px-4 rounded inline-flex items-center">
                         <svg className="w-8 h-8 mr-3 fill-current text-gray-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488.001 488.001">
                             <path

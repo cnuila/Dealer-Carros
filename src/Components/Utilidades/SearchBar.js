@@ -1,17 +1,18 @@
 import React, { useState } from 'react'
 import { db } from "../../firebase"
 
-const sugerencias = [{ tipo: "Proveedor", valor: "Trade" }, { tipo: "Marca", valor: "Honda" },
+/*const sugerencias = [{ tipo: "Proveedor", valor: "Trade" }, { tipo: "Marca", valor: "Honda" },
 { tipo: "Modelo", valor: "Civic" }, { tipo: "Marca", valor: "Tesla" },
 { tipo: "Modelo", valor: "Model X" }, { tipo: "Proveedor", valor: "Frank" },
 { tipo: "Proveedor", valor: "Grupo Q" }, { tipo: "Marca", valor: "Aston Martin" },
 { tipo: "Modelo", valor: "Corolla" }, { tipo: "Marca", valor: "Toyota" },
 { tipo: "Marca", valor: "Kia" }, { tipo: "Modelo", valor: "Sportage" },
 { tipo: "Marca", valor: "Ford" }, { tipo: "Modelo", valor: "CR-V" },
-{ tipo: "Modelo", valor: "Focus" }]
+{ tipo: "Modelo", valor: "Focus" }]*/
 
 export default function SearchBar(props) {
 
+    const sugerencias = props.sugerencias
     const [sugerenciaActual, setSugerenciaActual] = useState(-1)
     const [sugerenciasFiltradas, setSugerenciasFiltradas] = useState([])
     const [mostrarSugerencias, setMostrarSugerencias] = useState(false)
