@@ -5,7 +5,7 @@ import InfoGeneral from './Agregar Carro/InfoGeneral'
 import InfoEstado from './Agregar Carro/InfoEstado'
 import InfoCosto from './Agregar Carro/InfoCosto'
 import ImagenesCarro from './Agregar Carro/ImagenesCarro'
-import { db, storage } from '../../firebase'
+import { db, storage, firestore } from '../../firebase'
 import Swal from 'sweetalert2'
 import { Link } from 'react-router-dom';
 
@@ -141,7 +141,10 @@ class Agregar extends React.Component {
       carro = { ...carro, fotos: dirFotos }
     }
 
-    let datosSearchBar = []
+    let existeVin = (await db.collection('books').where(firestore.FieldPath.documentId(), '==', vin).get()).size
+    console.log(existeVin)
+
+    /*let datosSearchBar = []
     await db.collection("searchBarCarros").get()
       .then(querySnapshot => {
         querySnapshot.forEach(doc => {
@@ -201,7 +204,7 @@ class Agregar extends React.Component {
       })
     }).catch(err => {
       alert(err)
-    })
+    })*/
   }
 
 

@@ -11,8 +11,8 @@ export default function ComboBox(props) {
         const { estados } = props       
         //let seleccionado = estados.filter(estado => estado === value)        
         Swal.fire({
-            title: 'Estas Seguro?',
-            text: "Se cambiara el estado del " + marca + " " + modelo + " a " + value ,
+            title: '¿Estás Seguro?',
+            text: "Se cambiará el estado del " + marca + " " + modelo + " a " + value ,
             icon: 'warning',
 
             background: '#F3F4F6',
