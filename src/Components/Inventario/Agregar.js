@@ -28,24 +28,24 @@ class Agregar extends React.Component {
     pasos: [{ texto: "Información General", selected: true, terminado: false },
     { texto: "Estado", selected: false, terminado: false },
     { texto: "Valor", selected: false, terminado: false },
-    { texto: "Imágenes", selected: true, terminado: false }],
-    vin: "1223",
-    marca: "Honda",
-    modelo: "CR-V",
-    codigo: "Santos",
-    proveedor: "Trade-In",
-    millaje: 1232,
-    ano: 1233,
-    color: "#0047cb",
+    { texto: "Imágenes", selected: false, terminado: false }],
+    vin: "",
+    marca: "",
+    modelo: "",
+    codigo: "",
+    proveedor: "",
+    millaje: "Cualquiera",
+    ano: "Cualquiera",
+    color: "transparent",
     estado: "Disponible",
-    inspeccionado: true,
+    inspeccionado: false,
     titulo: false,
     linkHolder: false,
     salvage: true,
     clean: false,
-    valorCompra: 2000,
-    valorInvertido: 500,
-    precioFinal: 5000,
+    valorCompra: "",
+    valorInvertido: "",
+    precioFinal: "",
     imagenes: [],
     loading: false,
   }
@@ -219,7 +219,6 @@ class Agregar extends React.Component {
       })
     }
   }
-
 
   render() {
 
