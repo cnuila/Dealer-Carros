@@ -7,7 +7,7 @@ import { db } from '../../firebase'
 import CarroSinFoto from "../../Imágenes/CarroSinFoto.jpg"
 
 function InfoCarro(props) {
-    const { id, ano, marca, modelo, fotos, estado } = props.carro;
+    const { id, ano, marca, modelo, proveedor, fotos, estado } = props.carro;
     let [foto, setFoto] = useState(null)
     let [loading, setLoading] = useState(true)
 
@@ -43,7 +43,8 @@ function InfoCarro(props) {
     const clickEditarCarro = () => (
         Swal.fire({ title: "Oops!", icon: "warning", text: "Lo sentimos pero esta funcion sigue en desarrollo." })
     )
-    const clickEliminarCarro = () => (
+
+    const clickEliminarCarro = () => {
         Swal.fire({
             title: 'Estas Seguro?',
             text: "Una vez borrado no hay vuelta atras!",
@@ -59,10 +60,32 @@ function InfoCarro(props) {
             cancelButtonColor: '#395494',
             cancelButtonText: 'Cancelar',
 
-        }).then((result) => {
+        }).then(async result => {
+            const { dataSearchBar } = props
             if (result.isConfirmed) {
-                var carro = db.collection("carros").doc(id)
-                carro.delete().then(function () {
+                let carro = db.collection("carros").doc(id)
+                await carro.delete().then(() => {
+                    //verificar si ya existen en el searchBar
+                    let existeMarca = dataSearchBar.filter(dato => dato.valor === marca)
+                    let existeProveedor = dataSearchBar.filter(dato => dato.valor === proveedor)
+                    let existeModelo = dataSearchBar.filter(dato => dato.valor === modelo)
+                    for (let i = 0; i < 3; i++) {
+                        let objeto = existeMarca[0]
+                        if (i === 1) {
+                            objeto = existeProveedor[0]
+                        }
+                        if (i === 2) {
+                            objeto = existeModelo[0]
+                        }
+                        let cant = objeto.cantidad
+                        if (cant === 1) {
+                            db.collection("searchBarCarros").doc(objeto.id).delete()
+                        } else {
+                            db.collection("searchBarCarros").doc(objeto.id).update({
+                                cantidad: --cant
+                            })
+                        }
+                    }
                     Swal.fire(
                         'Eliminado!',
                         'El carro se ha eliminado con exito',
@@ -74,7 +97,8 @@ function InfoCarro(props) {
                 });
             }
         })
-    )
+    }
+
     const clickShareCarro = () => (
         Swal.fire({ title: "Oops!", icon: "warning", text: "Lo sentimos pero esta funcion sigue en desarrollo." })
     )
@@ -114,12 +138,16 @@ function InfoCarro(props) {
                         {loading ? fotoCargando : fotoCargada}
                         <div className="bg-gray-900 h-10 w-3/4 transform -translate-y-5 rounded-md ml-10 flex flex-wrap content-center shadow-2xl">
                             <ComboBoxCambiarEstado carro={props.carro} estados={["Disponible", "Apartado", "Reparacion"]} />
+<<<<<<< HEAD
                             <button className="w-8 h-3/4 grid justify-items-center ml-3 mr-1 " onClick={clickEditarCarro}>
+=======
+                            <button type="button" className="w-8 h-3/4 grid justify-items-center ml-3 mr-1 " onClick={clickEditarCarro}>
+>>>>>>> 029bae8dcc8ec376651251a2eb2d2edb639b0d63
                                 <svg className="mt-1 h-3/4 w-4 fill-current text-gray-200" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                                     <path d="M311.18 78.008L32.23 356.958.613 485.716a21.221 21.221 0 0025.671 25.671l128.759-31.617 278.95-278.95L311.18 78.008zM40.877 471.123l10.871-44.271 33.4 33.4-44.271 10.871zM502.598 86.818L425.182 9.402c-12.536-12.536-32.86-12.536-45.396 0l-30.825 30.825 122.812 122.812 30.825-30.825c12.536-12.535 12.536-32.86 0-45.396z" />
                                 </svg>
                             </button>
-                            <button className="w-8 h-3/4 grid justify-items-center mr-1" onClick={clickEliminarCarro}>
+                            <button type="button" className="w-8 h-3/4 grid justify-items-center mr-1 focus:outline-none outline-none" onClick={clickEliminarCarro}>
                                 <svg className="mt-1 h-3/4 w-4 fill-current text-gray-200" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                                     <path d="M424 64h-88V48c0-26.51-21.49-48-48-48h-64c-26.51 0-48 21.49-48 48v16H88c-22.091 0-40 17.909-40 40v32c0 8.837 7.163 16 16 16h384c8.837 0 16-7.163 16-16v-32c0-22.091-17.909-40-40-40zM208 48c0-8.82 7.18-16 16-16h64c8.82 0 16 7.18 16 16v16h-96zM78.364 184a5 5 0 00-4.994 5.238l13.2 277.042c1.22 25.64 22.28 45.72 47.94 45.72h242.98c25.66 0 46.72-20.08 47.94-45.72l13.2-277.042a5 5 0 00-4.994-5.238zM320 224c0-8.84 7.16-16 16-16s16 7.16 16 16v208c0 8.84-7.16 16-16 16s-16-7.16-16-16zm-80 0c0-8.84 7.16-16 16-16s16 7.16 16 16v208c0 8.84-7.16 16-16 16s-16-7.16-16-16zm-80 0c0-8.84 7.16-16 16-16s16 7.16 16 16v208c0 8.84-7.16 16-16 16s-16-7.16-16-16z" />
                                 </svg>
@@ -159,21 +187,6 @@ function InfoCarro(props) {
                             </div>
                         </div>
                     </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -266,17 +279,11 @@ function InfoCarro(props) {
                     </div>
 
 
-
                     <div className="flex grid justify-items-center col-span-2 ml-60 transform -translate-y-4">
                         <button className="bg-yellow-400 w-36 h-10" onClick={clickVenderCarro}>
                             Vender
                         </button>
                     </div>
-
-
-
-
-
 
                 </div>
             </div>

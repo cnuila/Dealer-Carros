@@ -162,7 +162,7 @@ class Principal extends React.Component {
         </div>)
     } else {
       cargandoCarros = cargandoCarros.map(carro => {
-        return (<Carro info={carro} mostrarInfo={this.clickMostrarInfo} />)
+        return (<Carro info={{...carro, ...carro.fotos,}} mostrarInfo={this.clickMostrarInfo} />)
       })
     }
 
@@ -203,7 +203,7 @@ class Principal extends React.Component {
           </div>
           {/*Modal para mostrar Informacion del Carro*/}
           <div>
-            {this.state.mostrarInfo && (<InfoCarro carro={carroMostrar} mostrarInfo={this.clickMostrarInfo} />)}
+            {this.state.mostrarInfo && (<InfoCarro carro={carroMostrar} mostrarInfo={this.clickMostrarInfo} dataSearchBar={dataSearchBar}/>)}
           </div>
           {/*Fin del modal*/}
         </div>

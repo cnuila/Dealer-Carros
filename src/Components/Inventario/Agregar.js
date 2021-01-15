@@ -28,24 +28,24 @@ class Agregar extends React.Component {
     pasos: [{ texto: "Información General", selected: true, terminado: false },
     { texto: "Estado", selected: false, terminado: false },
     { texto: "Valor", selected: false, terminado: false },
-    { texto: "Imágenes", selected: true, terminado: false }],
-    vin: "1222",
-    marca: "Honda",
-    modelo: "CR-V",
-    codigo: "Santos",
-    proveedor: "Trade-In",
-    millaje: 1232,
-    ano: 1233,
-    color: "#0047cb",
+    { texto: "Imágenes", selected: false, terminado: false }],
+    vin: "",
+    marca: "",
+    modelo: "",
+    codigo: "",
+    proveedor: "",
+    millaje: "Cualquiera",
+    ano: "Cualquiera",
+    color: "transparent",
     estado: "Disponible",
-    inspeccionado: true,
+    inspeccionado: false,
     titulo: false,
     linkHolder: false,
     salvage: true,
     clean: false,
-    valorCompra: 2000,
-    valorInvertido: 500,
-    precioFinal: 5000,
+    valorCompra: "",
+    valorInvertido: "",
+    precioFinal: "",
     imagenes: [],
     loading: false,
   }
@@ -88,125 +88,137 @@ class Agregar extends React.Component {
     this.setState({ loading: true })
     const { vin, marca, modelo, codigo, proveedor, ano, millaje, color, estado, inspeccionado, titulo, linkHolder, salvage, clean, valorCompra, valorInvertido, precioFinal, imagenes } = this.state
 
-    let carro = { marca, modelo, codigo, proveedor, ano, millaje, estado, valorCompra, valorInvertido, precioFinal, downPayment: (precioFinal) * 0.2, }
+    let existeVin = (await db.collection('carros').where(firestore.FieldPath.documentId(), '==', vin).get()).size
+    if (existeVin === 1) {
+      Swal.fire(
+        '¡Ops!',
+        'El VIN ingresado ya existe, revisa si lo escribiste bien',
+        'warning'
+      ).then(() => {
+        this.setState({ loading: false })
+      })
+    } else {
 
-    let colorCarro = "Rojo"
-    if (color === "#0047cb") {
-      colorCarro = "Azul"
-    }
-    if (color === "#fbff00") {
-      colorCarro = "Amarillo"
-    }
-    if (color === "#ffffff") {
-      colorCarro = "Blanco"
-    }
-    if (color === "#000000") {
-      colorCarro = "Negro"
-    }
-    if (color === "#777777") {
-      colorCarro = "Gris"
-    }
-    carro = { ...carro, color: colorCarro }
-
-    if (inspeccionado) {
-      carro = { ...carro, inspeccionado }
-    }
-    if (titulo) {
-      carro = { ...carro, titulo }
-    }
-    if (linkHolder) {
-      carro = { ...carro, linkHolder }
-    }
-    if (salvage) {
-      carro = { ...carro, salvage }
-    }
-    if (clean) {
-      carro = { ...carro, clean }
-    }
-
-    if (imagenes.length !== 0) {
-      let dirFotos = []
-      let storageRef = storage.ref();
-      let i = 0
-      while (i <= 4) {
-        try {
-          let carroRef = storageRef.child(`${vin}/${imagenes[i].name}`);
-          await carroRef.put(imagenes[i])
-          dirFotos.push(carroRef.toString())
-          i++
-        } catch (err) {
-          alert(err)
-        }
+      let carro = { marca, modelo, codigo, proveedor, ano, millaje, estado, valorCompra, valorInvertido, precioFinal, downPayment: (precioFinal) * 0.2, }
+      
+      let colorCarro = "Rojo"
+      if (color === "#0047cb") {
+        colorCarro = "Azul"
       }
-      carro = { ...carro, fotos: dirFotos }
-    }
+      if (color === "#fbff00") {
+        colorCarro = "Amarillo"
+      }
+      if (color === "#ffffff") {
+        colorCarro = "Blanco"
+      }
+      if (color === "#000000") {
+        colorCarro = "Negro"
+      }
+      if (color === "#777777") {
+        colorCarro = "Gris"
+      }
+      carro = { ...carro, color: colorCarro }
 
-    let existeVin = (await db.collection('books').where(firestore.FieldPath.documentId(), '==', vin).get()).size
-    console.log(existeVin)
+      if (inspeccionado) {
+        carro = { ...carro, inspeccionado }
+      }
+      if (titulo) {
+        carro = { ...carro, titulo }
+      }
+      if (linkHolder) {
+        carro = { ...carro, linkHolder }
+      }
+      if (salvage) {
+        carro = { ...carro, salvage }
+      }
+      if (clean) {
+        carro = { ...carro, clean }
+      }
 
-    /*let datosSearchBar = []
-    await db.collection("searchBarCarros").get()
-      .then(querySnapshot => {
-        querySnapshot.forEach(doc => {
-          datosSearchBar.push({ ...doc.data(), id: doc.id })
+      if (imagenes.length !== 0) {
+        let dirFotos = []
+        let storageRef = storage.ref();
+        let i = 0
+        //guarda las fotos y guarda la direccion en un array
+        while (i <= 4) {
+          try {
+            let carroRef = storageRef.child(`${vin}/${imagenes[i].name}`);
+            await carroRef.put(imagenes[i])
+            dirFotos.push(carroRef.toString())
+            i++
+          } catch (err) {
+            alert(err)
+          }
+        }
+        carro = { ...carro, fotos: dirFotos }
+      }
+
+      let datosSearchBar = []
+      //leer todos los datos del searchBar
+      await db.collection("searchBarCarros").get()
+        .then(querySnapshot => {
+          querySnapshot.forEach(doc => {
+            datosSearchBar.push({ ...doc.data(), id: doc.id })
+          })
+        });
+      
+      //verificar si ya existen en el searchBar
+      let existeMarca = datosSearchBar.filter(dato => dato.valor === carro.marca)
+      let existeProveedor = datosSearchBar.filter(dato => dato.valor === carro.proveedor)
+      let existeModelo = datosSearchBar.filter(dato => dato.valor === carro.modelo)
+
+      db.collection("carros").doc(vin).set(carro).then(() => {
+        for (let i = 0; i < 3; i++) {
+          let arreglo = existeMarca
+          let tipo = "Marca"
+          let valor = carro.marca
+          if (i === 1) {
+            arreglo = existeProveedor
+            tipo = "Proveedor"
+            valor = carro.proveedor
+          }
+          if (i === 2) {
+            arreglo = existeModelo
+            tipo = "Modelo"
+            valor = carro.modelo
+          }
+          //si ya existe incrementa la cantidad si no crea uno nuevo
+          if (arreglo.length === 1) {
+            let { id, cantidad } = arreglo[0]
+            let cant = cantidad + 1
+            db.collection("searchBarCarros").doc(id).update({
+              cantidad: cant
+            })
+          } else {
+            db.collection("searchBarCarros").add({
+              tipo: tipo,
+              valor: valor,
+              cantidad: 1
+            })
+          }
+        }
+
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Se guardó el carro',
+          showConfirmButton: false,
+          timer: 2000
         })
-      });
 
-    let existeMarca = datosSearchBar.filter(dato => dato.valor === carro.marca)
-    let existeProveedor = datosSearchBar.filter(dato => dato.valor === carro.proveedor)
-    let existeModelo = datosSearchBar.filter(dato => dato.valor === carro.modelo)
-
-    db.collection("carros").doc(vin).set(carro).then(() => {
-      for (let i = 0; i < 3; i++) {
-        let arreglo = existeMarca
-        let tipo = "Marca"
-        let valor = carro.marca
-        if (i === 1) {
-          arreglo = existeProveedor
-          tipo = "Proveedor"
-          valor = carro.proveedor
-        }
-        if (i === 2) {
-          arreglo = existeModelo
-          tipo = "Modelo"
-          valor = carro.modelo
-        }
-        
-        if (arreglo.length === 1) {
-          let { id, cantidad } = arreglo[0]
-          let cant = cantidad + 1
-          db.collection("searchBarCarros").doc(id).update({
-            cantidad: cant
-          })
-        } else {
-          db.collection("searchBarCarros").add({
-            tipo: tipo,
-            valor: valor,
-            cantidad: 1
-          })
-        }
-      }
-
-      Swal.fire({
-        position: 'top-end',
-        icon: 'success',
-        title: 'Se guardó el carro',
-        showConfirmButton: false,
-        timer: 2000
+        //reiniciar estado
+        this.setState({
+          ...this.estadoInicial,
+          pasos: [{ texto: "Información General", selected: true, terminado: false },
+          { texto: "Estado", selected: false, terminado: false },
+          { texto: "Valor", selected: false, terminado: false },
+          { texto: "Imágenes", selected: false, terminado: false }]
+        })
+      }).catch(err => {
+        alert(err)
       })
-
-      this.setState({
-        ...this.estadoInicial,
-        pasos: [{ texto: "Información General", selected: true, terminado: false },
-        { texto: "Estado", selected: false, terminado: false },
-        { texto: "Valor", selected: false, terminado: false },
-        { texto: "Imágenes", selected: false, terminado: false }]
-      })
-    }).catch(err => {
-      alert(err)
-    })*/
+    }
   }
-
 
   render() {
 
