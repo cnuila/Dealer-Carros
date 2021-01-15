@@ -4,6 +4,7 @@ import Swal from 'sweetalert2';
 import ComboBoxCambiarEstado from './ComboBoxCambiarEstado';
 import ShareCarro from './ShareCarro'
 import { db } from '../../firebase'
+import CarroSinFoto from "../../Imágenes/CarroSinFoto.jpg"
 
 function InfoCarro(props) {
     const { id, ano, marca, modelo, fotos, estado } = props.carro;
@@ -12,16 +13,24 @@ function InfoCarro(props) {
 
     useEffect(() => {
         //obtener foto del storage
-        let gsReference = storage.refFromURL(fotos[0])
-        async function descargarFoto() {
-            gsReference.getDownloadURL().then(direc => {
-                setFoto(direc)
+        if (fotos === undefined) {
+            function noHayFoto() {
+                setFoto(CarroSinFoto)
                 setLoading(false)
-            }).catch((err) => {
-                console.log(err)
-            })
+            }
+            noHayFoto()
+        } else {
+            let gsReference = storage.refFromURL(fotos[0])
+            async function descargarFoto() {
+                gsReference.getDownloadURL().then(direc => {
+                    setFoto(direc)
+                    setLoading(false)
+                }).catch((err) => {
+                    console.log(err)
+                })
+            }
+            descargarFoto()
         }
-        descargarFoto()
     })
 
     const handleEstadoModal = (estadoModal) => {
@@ -104,7 +113,7 @@ function InfoCarro(props) {
                     <div className="rounded-md transform -translate-x-24 w-69 h-74 bg-gray-800">
                         {loading ? fotoCargando : fotoCargada}
                         <div className="bg-gray-900 h-10 w-3/4 transform -translate-y-5 rounded-md ml-10 flex flex-wrap content-center shadow-2xl">
-                            <ComboBoxCambiarEstado carro={props.carro} estados={["Disponible","Apartado","Reparacion"]} />
+                            <ComboBoxCambiarEstado carro={props.carro} estados={["Disponible", "Apartado", "Reparacion"]} />
                             <button className="w-8 h-3/4 grid justify-items-center ml-3 mr-1 " onClick={clickEditarCarro}>
                                 <svg className="mt-1 h-3/4 w-4 fill-current text-gray-200" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                                     <path d="M311.18 78.008L32.23 356.958.613 485.716a21.221 21.221 0 0025.671 25.671l128.759-31.617 278.95-278.95L311.18 78.008zM40.877 471.123l10.871-44.271 33.4 33.4-44.271 10.871zM502.598 86.818L425.182 9.402c-12.536-12.536-32.86-12.536-45.396 0l-30.825 30.825 122.812 122.812 30.825-30.825c12.536-12.535 12.536-32.86 0-45.396z" />
