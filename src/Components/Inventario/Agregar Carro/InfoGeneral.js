@@ -47,7 +47,7 @@ export default function InfoGeneral(props) {
 
                     <div className="block px-8 pt-5">
                         <h2 className="text-gray-200 px-2 font-semibold text-lg underline">VIN</h2>
-                        <input type="text" value={vin} className="block bg-gray-900 text-gray-200 ml-4 px-2 py-2 w-11/12 border-b-2 border-gray-800 focus:border-gray-700 placeholder-gray-500 focus:placeholder-gray-400 focus:outline-none" name="vin" placeholder="Ej. P21CS" required onChange={handleInputChange} />
+                              
                     </div>
 
                     <div className="block px-8 pt-5">

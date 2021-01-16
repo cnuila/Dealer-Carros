@@ -7,6 +7,7 @@ import InfoCosto from './Agregar Carro/InfoCosto'
 import ImagenesCarro from './Agregar Carro/ImagenesCarro'
 import { db, storage, firestore } from '../../firebase'
 import Swal from 'sweetalert2'
+
 import { Link } from 'react-router-dom';
 
 class Agregar extends React.Component {
