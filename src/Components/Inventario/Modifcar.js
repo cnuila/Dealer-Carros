@@ -3,12 +3,13 @@ import { storage } from "../../firebase"
 import Swal from 'sweetalert2';
 import ComboBoxCambiarEstado from './ComboBoxCambiarEstado';
 import CarroSinFoto from "../../Imágenes/CarroSinFoto.jpg"
+import Checkbox from '../Utilidades/Checkbox'
 
 export default function Modifcar(props) {
-    const { id, ano, marca, modelo, proveedor, fotos, estado } = props.carro;
+    const { fotos, marca, modelo, codigo, proveedor, ano, millaje, estado, valorCompra, valorInvertido, precioFinal, downPayment, inspeccionado, titulo, linkHolder, tipoTitulo } = props.carro;
     let [foto, setFoto] = useState(null)
     let [loading, setLoading] = useState(true)
-    let [modificar, setModificar] = useState(false)
+
     useEffect(() => {
         //obtener foto del storage
         if (fotos === undefined) {
@@ -30,10 +31,6 @@ export default function Modifcar(props) {
             descargarFoto()
         }
     })
-
-    const handleEstadoModal = (estadoModal) => {
-        props.mostrarInfo(estadoModal)
-    }
     let fotoCargando = (
         <>
             <div className="animate-pulse col-span-8 rounded-b-none h-64 w-full object-cover rounded-md shadow-md bg-gray-100">
@@ -51,11 +48,10 @@ export default function Modifcar(props) {
             </div>
         </>
     )
-    const clickGuardarCambios = () => (
-            (
-                Swal.fire({ title: "Modificado!", icon: "Success", text: "Se modifico el carro con exito." })
-            )
-    )
+    const clickGuardarCambios = (estadoModificar) => {
+        props.estadoModi(estadoModificar)
+        Swal.fire({ title: "Modificado!", icon: "Success", text: "Se modifico el carro con exito." })
+    }
 
     return (
         <>
@@ -64,7 +60,7 @@ export default function Modifcar(props) {
                 {/*Container*/}
                 <div className="pb-8 pr-3 absolute grid grid-cols-2 bg-gray-900 rounded-md h-80 w-7/12">
                     <button className="col-span-2 top-0 right-0 p-1 ml-auto bg-transparent border-0 text-black float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
-                        onClick={() => handleEstadoModal(false)}>
+                        onClick={() => props.estadoModal(false)}>
                         <span className="mb-4 mr-2 text-white h-8 w-8 text-4xl block outline-none focus:outline-none">
                             x
                         </span>
@@ -122,24 +118,16 @@ export default function Modifcar(props) {
                         <div className="h-11 col-span-2">
                             <div className="flex pb-5 ">
                                 <div>
-                                    <h3 className="text-5xl font-semibold text-gray-100">
-                                        {props.carro.marca}
-                                        <input type="text" value={marca} className="block bg-gray-900 text-gray-200 ml-4 px-2 py-2 w-11/12 border-b-2 border-gray-800 focus:border-gray-700 placeholder-gray-500 focus:placeholder-gray-400 focus:outline-none" name="marca" placeholder="Ej. Tesla" />
-                                    </h3>
+                                    <input type="text" value={marca} className="block text-xl font-semibold text-gray-100 bg-gray-900 px-2 py-2 w-3/5 border-b-2 border-gray-800 focus:border-gray-700 placeholder-gray-500 focus:placeholder-gray-400 focus:outline-none" name="marca" placeholder={props.carro.Marca} />
                                     <p className="text-md text-gray-300 ml-1 mt-2">
                                         VIN: {props.carro.id}
                                     </p>
                                 </div>
-                                <h3 className="text-5xl font-semibold text-gray-100 ml-4">
-                                    -
-                                </h3>
-                                <div className="ml-4">
-                                    <h3 className="text-5xl font-semibold text-gray-100">
-                                        {props.carro.modelo}
 
-                                    </h3>
-                                    <p className="text-md text-gray-300 ml-1 mt-2">
-                                        Codigo: {props.carro.codigo}
+                                <div className="ml-4">
+                                    <input type="text" value={modelo} className="block text-xl font-semibold text-gray-100 bg-gray-900 px-2 py-2 w-3/5 border-b-2 border-gray-800 focus:border-gray-700 placeholder-gray-500 focus:placeholder-gray-400 focus:outline-none" name="modelo" placeholder={props.carro.Modelo} />
+                                    <p className="flex text-md text-gray-300 ml-1 mt-2 m-1">
+                                        Codigo: <input type="text" value={codigo} className="block text-md text-gray-300 bg-gray-900 px-2 w-1/2 border-b-2 border-gray-800 focus:border-gray-700 placeholder-gray-500 focus:placeholder-gray-400 focus:outline-none" name="codigo" placeholder={props.carro.codigo} />
                                     </p>
                                 </div>
                             </div>
@@ -152,14 +140,11 @@ export default function Modifcar(props) {
                                 <p className="text-gray-300 px-2 text-md py-2 grid">
                                     Color: {props.carro.color},{props.carro.estado}
                                 </p>
-                                <p className="text-gray-300 px-2 text-md py-2">
-                                    Millaje: {props.carro.millaje}
+                                <p className="flex text-gray-300 px-2 text-md py-2">
+                                    Millaje: <input type="text" value={millaje} className="block text-md text-gray-300 bg-gray-900 ml-2 px-2 w-1/2 border-b-2 border-gray-800 focus:border-gray-700 placeholder-gray-500 focus:placeholder-gray-400 focus:outline-none" name="millaje" placeholder={props.carro.millaje} />
                                 </p>
-                                <p className="text-gray-300 px-2 text-md py-2">
-                                    Año: {props.carro.ano}
-                                </p>
-                                <p className="text-gray-300 px-2 text-md py-2">
-                                    Titulo: {props.carro.tipoTitulo}
+                                <p className="flex text-gray-300 px-2 text-md py-2">
+                                    Año: <input type="text" value={ano} className="block text-md text-gray-300 bg-gray-900 ml-2 px-2 w-1/2 border-b-2 border-gray-800 focus:border-gray-700 placeholder-gray-500 focus:placeholder-gray-400 focus:outline-none" name="ano" placeholder={props.carro.ano} />
                                 </p>
                             </div>
 
@@ -169,14 +154,17 @@ export default function Modifcar(props) {
                                 Estado
                             </h6>
                             <div className="ml-2">
-                                <p className="text-gray-300 px-2  text-md py-2">
-                                    Inspeccionado: {props.carro.color}
+                                <p className="flex text-gray-300 px-2 text-md py-2">
+                                    Inspeccionado: <Checkbox nombre="inspeccionado" />
                                 </p>
-                                <p className="text-gray-300 px-2  text-md py-2">
-                                    Titulo en Mano: {props.carro.millaje}
+                                <p className="flex text-gray-300 px-2 text-md py-2">
+                                    Titulo en Mano: <Checkbox nombre="titulo" />
                                 </p>
-                                <p className="text-gray-300 px-2  text-md py-2">
-                                    Link Holder: {props.carro.ano}
+                                <p className="flex text-gray-300 px-2 text-md py-2">
+                                    Link Holder: <Checkbox nombre="linkHolder" />
+                                </p>
+                                <p className="flex text-gray-300 px-2 text-md py-2">
+                                    Titulo Clean: <Checkbox nombre="tipoTitulo" />
                                 </p>
                             </div>
 
@@ -187,19 +175,24 @@ export default function Modifcar(props) {
                             </h6>
                             <div className="ml-2">
                                 <div className="flex">
-                                    <p className="text-gray-300 px-2  text-md py-2 col-span-2">
-                                        Compra: {props.carro.color}
+                                    <p className="flex text-gray-300 px-2  text-sm py-2 col-span-2">
+                                        Valor Compra: <input type="text" value={valorCompra} className="block text-md text-gray-300 bg-gray-900 ml-2 px-2 w-1/2 border-b-2 border-gray-800 focus:border-gray-700 placeholder-gray-500 focus:placeholder-gray-400 focus:outline-none" name="valorCompra" placeholder={props.carro.valorCompra} />
                                     </p>
-                                    <p className="text-gray-300 px-2  text-md py-2 col-span-2 ml-12">
-                                        Venta: {props.carro.millaje}
+                                    <p className="flex text-gray-300 px-2  text-sm py-2 col-span-2 ml-12">
+                                        Precio Final: <input type="text" value={precioFinal} className="block text-md text-gray-300 bg-gray-900 ml-2 px-2 w-1/2 border-b-2 border-gray-800 focus:border-gray-700 placeholder-gray-500 focus:placeholder-gray-400 focus:outline-none" name="precioFinal" placeholder={props.carro.precioFinal} />
                                     </p>
-                                    <p className="text-gray-300 px-2  text-md py-2 col-span-2 ml-12">
-                                        Total Cost: {props.carro.millaje}
+                                    <p className="flex text-gray-300 px-2  text-sm py-2 col-span-2 ml-12">
+                                        Total Cost: {props.carro.precioCompra + props.carro.precioInvertido}
                                     </p>
                                 </div>
-                                <p className="text-gray-300 px-2 text-md py-2">
-                                    Down Payment: {props.carro.ano}
-                                </p>
+                                <div className="flex">
+                                    <p className="flex text-gray-300 px-2  text-md py-2 col-span-2">
+                                        Valor Invertido: <input type="text" value={valorInvertido} className="block text-md text-gray-300 bg-gray-900 ml-2 px-2 w-1/2 border-b-2 border-gray-800 focus:border-gray-700 placeholder-gray-500 focus:placeholder-gray-400 focus:outline-none" name="valorInvertido" placeholder={props.carro.valorInvertido} />
+                                    </p>
+                                    <p className="flex text-gray-300 px-2 text-md py-2">
+                                        Down Payment: <input type="text" value={downPayment} className="block text-md text-gray-300 bg-gray-900 ml-2 px-2 w-1/2 border-b-2 border-gray-800 focus:border-gray-700 placeholder-gray-500 focus:placeholder-gray-400 focus:outline-none" name="downPayment" placeholder={props.carro.downPayment} />
+                                    </p>
+                                </div>
                             </div>
 
                         </div>
@@ -207,7 +200,7 @@ export default function Modifcar(props) {
 
 
                     <div className="flex grid justify-items-center col-span-2 ml-60 transform -translate-y-4">
-                        <button className="bg-green-400 w-36 h-10" onClick={clickGuardarCambios()}>
+                        <button className="bg-green-400 w-36 h-10" onClick={() => clickGuardarCambios(false)}>
                             Guardar
                         </button>
                     </div>

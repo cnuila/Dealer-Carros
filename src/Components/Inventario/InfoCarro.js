@@ -21,7 +21,7 @@ function InfoCarro(props) {
                 setLoading(false)
             }
             noHayFoto()
-        } else {            
+        } else {
             let gsReference = storage.refFromURL(fotos[0])
             async function descargarFoto() {
                 gsReference.getDownloadURL().then(direc => {
@@ -31,7 +31,7 @@ function InfoCarro(props) {
                     console.log(err)
                 })
             }
-        descargarFoto()                       
+            descargarFoto()
         }
     })
 
@@ -126,7 +126,7 @@ function InfoCarro(props) {
 
     if (modificar) {
         return (
-            <Modificar carro={props.carro} modificar={clickModificarCarro} />
+            <Modificar carro={props.carro} estadoModi={clickModificarCarro} estadoModal={handleEstadoModal} />
         );
     } else {
         return (
@@ -209,11 +209,10 @@ function InfoCarro(props) {
                                     </div>
                                     <h3 className="text-5xl font-semibold text-gray-100 ml-4">
                                         -
-                                </h3>
+                                    </h3>
                                     <div className="ml-4">
                                         <h3 className="text-5xl font-semibold text-gray-100">
                                             {props.carro.modelo}
-
                                         </h3>
                                         <p className="text-md text-gray-300 ml-1 mt-2">
                                             Codigo: {props.carro.codigo}
@@ -224,7 +223,7 @@ function InfoCarro(props) {
                             <div className="pt-5">
                                 <h2 className="text-gray-100 px-2 font-semibold text-xl underline">
                                     General
-                            </h2>
+                                </h2>
                                 <div className="ml-2">
                                     <p className="text-gray-300 px-2 text-md py-2 grid">
                                         Color: {props.carro.color},{props.carro.estado}
@@ -235,9 +234,7 @@ function InfoCarro(props) {
                                     <p className="text-gray-300 px-2 text-md py-2">
                                         Año: {props.carro.ano}
                                     </p>
-                                    <p className="text-gray-300 px-2 text-md py-2">
-                                        Titulo: {props.carro.tipoTitulo}
-                                    </p>
+                                    
                                 </div>
 
                             </div>
@@ -254,6 +251,9 @@ function InfoCarro(props) {
                                     </p>
                                     <p className="text-gray-300 px-2  text-md py-2">
                                         Link Holder: {props.carro.ano}
+                                    </p>
+                                    <p className="text-gray-300 px-2 text-md py-2">
+                                        Titulo: {props.carro.tipoTitulo}
                                     </p>
                                 </div>
 
