@@ -1,39 +1,39 @@
 import React, { useState, useEffect } from 'react'
-import { storage } from "../../firebase"
 import Swal from 'sweetalert2';
-import ComboBoxCambiarEstado from './ComboBoxCambiarEstado';
+import ComboBoxCambiarEstado from './ComboBoxCambiarEstado'
 import CarroSinFoto from "../../Imágenes/CarroSinFoto.jpg"
 import ShareCarro from './ShareCarro'
-import { db } from '../../firebase'
-import Modificar from './Modifcar';
+import { db, storage } from '../../firebase'
+import Modificar from './Modifcar'
 
 function InfoCarro(props) {
-    const { id, ano, marca, modelo, proveedor, fotos, estado} = props.carro;
-    let [foto, setFoto] = useState(null)
-    let [loading, setLoading] = useState(true)
+    const { id, ano, marca, modelo, proveedor, fotos, estado } = props.carro;
+
     let [modificar, setModificar] = useState(false)
+    const [fotosCarro, setFotosCarro] = useState([])
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
-        //obtener foto del storage
         if (fotos === undefined) {
-            function noHayFoto() {
-                setFoto(CarroSinFoto)
-                setLoading(false)
-            }
-            noHayFoto()
+            setFotosCarro([CarroSinFoto, CarroSinFoto, CarroSinFoto, CarroSinFoto, CarroSinFoto])
+            setLoading(false)
         } else {
-            let gsReference = storage.refFromURL(fotos[0])
             async function descargarFoto() {
-                gsReference.getDownloadURL().then(direc => {
-                    setFoto(direc)
-                    setLoading(false)
-                }).catch((err) => {
-                    console.log(err)
-                })
+                let arrayFotos = []
+                for (let i = 0; i < fotos.length; i++) {
+                    let gsReference = storage.refFromURL(fotos[i])
+                    await gsReference.getDownloadURL().then(direc => {
+                        arrayFotos.push(direc)
+                    }).catch((err) => {
+                        console.log(err)
+                    })
+                }
+                setFotosCarro(arrayFotos)
+                setLoading(false)
             }
             descargarFoto()
         }
-    })
+    }, [fotos])
 
     const handleEstadoModal = (estadoModal) => {
         props.mostrarInfo(estadoModal)
@@ -106,24 +106,7 @@ function InfoCarro(props) {
         Swal.fire({ title: "Oops!", icon: "warning", text: "Lo sentimos pero esta funcion sigue en desarrollo." })
     )
 
-    let fotoCargando = (
-        <>
-            <div className="animate-pulse col-span-8 rounded-b-none h-64 w-full object-cover rounded-md shadow-md bg-gray-100">
-            </div>
-        </>
-    )
-    let fotoCargada = (
-        <>
-            <div className="rounded-b-none rounded-md col-span-4 h-64 bg-black">
-                <img
-                    className="rounded-b-none rounded-md h-64 w-full object-cover shadow-md"
-                    alt="Carro"
-                    src={foto}
-                />
-            </div>
-        </>
-    )
-    let handleComboBox = (estado) => {
+    const handleComboBox = (estado) => {
         let arrayEstados = []
         if (estado === "Disponible") {
             arrayEstados = ["Disponible", "Apartado", "Reparacion"]
@@ -137,6 +120,12 @@ function InfoCarro(props) {
             arrayEstados = ["Vendido", "Disponible", "Reparacion", "Repo"]
         }
         return arrayEstados
+    }
+
+    const handleClickFoto = (index) => {
+        let nuevoArray = [fotosCarro[index]]
+        let filtrados = fotosCarro.filter((valor, ind) => index !== ind )
+        setFotosCarro([...nuevoArray,...filtrados])
     }
 
     if (modificar) {
@@ -158,7 +147,17 @@ function InfoCarro(props) {
                         </button>
                         {/*Imagenes*/}
                         <div className="rounded-md transform -translate-x-24 w-69 h-74 bg-gray-800">
-                            {loading ? fotoCargando : fotoCargada}
+                            
+                            {loading
+                                ? <div key={0} className={`bg-gray-400 animate-pulse rounded-b-none h-64 w-full object-cover rounded-md shadow-md`}></div>
+                                : <div key={0}>
+                                    <img
+                                        className={`rounded-b-none rounded-md h-64 w-full object-cover shadow-md`}
+                                        alt="Carro"
+                                        src={fotosCarro[0]}
+                                    />
+                                </div>}
+
                             <div className="bg-gray-900 h-10 w-3/4 transform -translate-y-5 rounded-md ml-10 flex flex-wrap content-center shadow-2xl">
                                 <ComboBoxCambiarEstado carro={props.carro} estados={handleComboBox(props.carro.estado)} estadoModal={handleEstadoModal} />
                                 <button type="button" className="w-8 h-3/4 grid justify-items-center ml-3 mr-1 " onClick={() => clickModificarCarro(true)}>
@@ -174,37 +173,28 @@ function InfoCarro(props) {
                                 <ShareCarro />
 
                             </div>
+
                             <div className="grid grid-cols-2 h-52 w-58 z-0 transform -translate-y-3 pl-11">
                                 {/*Aqui ira el map para traer las 4 fotos*/}
-                                <div className="rounded-md h-20 w-28 object-cover bg-black transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105">
-                                    <img
-                                        className="rounded-md object-cover h-20 w-28 shadow-md"
-                                        alt="Carro"
-                                        src={foto}
-                                    />
-                                </div>
-                                <div className="rounded-md h-20 w-28 object-cover bg-black transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105">
-                                    <img
-                                        className="rounded-md object-cover h-20 w-28 shadow-md"
-                                        alt="Carro"
-                                        src={foto}
-                                    />
-                                </div>
-                                <div className="rounded-md h-20 w-28 object-cover bg-black transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105">
-                                    <img
-                                        className="rounded-md object-cover h-20 w-28 shadow-md"
-                                        alt="Carro"
-                                        src={foto}
-                                    />
-                                </div>
-                                <div className="rounded-md h-20 w-28 object-cover bg-black transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105">
-                                    <img
-                                        className="rounded-md object-cover h-20 w-28 shadow-md"
-                                        alt="Carro"
-                                        src={foto}
-                                    />
-                                </div>
+                                {loading
+                                    ? ([1, 2, 3, 4].map((valor) => {
+                                        return <div key={valor} className="bg-gray-400 animate-pulse h-20 w-28 object-cover rounded-md shadow-md"></div>
+                                    }))
+                                    : fotosCarro.map((foto, index) => {
+                                        if (index !== 0) {
+                                            return (
+                                                <div key={index} onClick={() => handleClickFoto(index)}>
+                                                    <img
+                                                        className="rounded-md h-20 w-28 transition duration-300 ease-in-out transform hover:scale-105 object-cover shadow-md"
+                                                        alt="Carro"
+                                                        src={foto}
+                                                    />
+                                                </div>)
+                                        }
+                                        return null
+                                    })}
                             </div>
+
                         </div>
 
 

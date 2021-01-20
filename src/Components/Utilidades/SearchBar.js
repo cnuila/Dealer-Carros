@@ -39,15 +39,18 @@ export default function SearchBar(props) {
                 let query = db.collection("carros")
 
                 if (sugerenciaActual !== -1) {
-                    query = query.where(sugerenciasFiltradas[sugerenciaActual].tipo.toLowerCase(), "==", sugerenciasFiltradas[sugerenciaActual].valor)
+                    query = query.where(sugerenciasFiltradas[sugerenciaActual].tipo.toLowerCase(), "==", sugerenciasFiltradas[sugerenciaActual].valor.toLowerCase())
                     setPalabra(sugerenciasFiltradas[sugerenciaActual].valor)
                 }
                 if (sugerenciaActual === -1 && palabra !== "") {
+                    console.log("va")
                     let existe = sugerencias.filter(sugerencia => {
                         return sugerencia.valor === palabra
                     })
                     if (existe.length === 1) {
-                        query = query.where(existe[0].tipo.toLowerCase(), "==", existe[0].valor)
+                        query = query.where(existe[0].tipo.toLowerCase(), "==", existe[0].valor.toLowerCase())
+                    } else {
+                        query = query.where("marca", "==", "no")
                     }
                 }
                 props.mostrarConsulta(query)
@@ -92,7 +95,7 @@ export default function SearchBar(props) {
         setMostrarSugerencias(false)
         setPalabra(sugerencia.valor)
         //buscar
-        let query = db.collection("carros").where(sugerencia.tipo.toLowerCase(), "==", sugerencia.valor)
+        let query = db.collection("carros").where(sugerencia.tipo.toLowerCase(), "==", sugerencia.valor.toLowerCase())
         props.mostrarConsulta(query)
     }
 
@@ -137,7 +140,7 @@ export default function SearchBar(props) {
                                     seleccionado = "bg-gray-400"
                                 }
                                 return (
-                                    <li key={index} className={`flex flex-row py-1 px-4 cursor-pointer ${seleccionado} ${ultimo}`} onClick={() => handleOnClick(sugerencia)}>
+                                    <li key={index} className={`flex flex-row py-1 px-4 cursor-pointer capitalize ${seleccionado} ${ultimo}`} onClick={() => handleOnClick(sugerencia)}>
                                         <h3 className="pl-10 text-gray-900">{sugerencia.valor}</h3>
                                         <h3 className="pl-1 text-gray-700">- {sugerencia.tipo}</h3>
                                     </li>

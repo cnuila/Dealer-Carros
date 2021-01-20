@@ -117,7 +117,7 @@ class Filtros extends Component {
                 '¡Ops!',
                 'No puedes filtrar si no seleccionas un campo',
                 'warning'
-              )
+            )
         }
     }
 
@@ -136,18 +136,18 @@ class Filtros extends Component {
     render() {
         let { ano, color, precioMax, precioMin, salvage, clean, titulo, inspeccionado, linkHolder } = this.state
         return (
-            <div className="flex flex-col sm:grid sm:grid-cols-4 bg-gray-900 rounded-lg text-sm font-semibold mx-7 sm:mx-12 p-5 text-gray-200">
+            <div className="grid grid-cols-2 md:grid-cols-4 bg-gray-900 rounded-lg text-sm font-semibold mx-7 sm:mx-12 p-5 text-gray-200">
 
-                <div className="flex items-center space-x-1 m-2 sm:m-1 col-span-2 sm:col-span-1">
+                <div className="flex items-center space-x-1 mx-2 mb-2 sm:m-1 col-span-2 sm:col-span-1">
                     <div>
                         Año
                     </div>
                     <div>
-                        <Counter nombre={"ano"} valor={ano} minimo={1950} handleInputChange={this.handleInputChange} />
+                        <Counter nombre={"ano"} valor={ano} minimo={1980} handleInputChange={this.handleInputChange} />
                     </div>
                 </div>
 
-                <div className="flex space-x-3 sm:space-x-4 items-center m-2 sm:m-1 col-span-2 sm:col-span-1">
+                <div className="flex space-x-1 sm:space-x-4 items-center m-2 sm:m-1 col-span-2 sm:col-span-1">
                     <div>
                         Precio Min.
                     </div>
@@ -156,8 +156,8 @@ class Filtros extends Component {
                     </div>
                 </div>
 
-                <div className="flex space-x-3 sm:space-x-4 items-center m-2 sm:m-1 col-span-2 sm:col-span-1">
-                    <div>
+                <div className="flex space-x-1 sm:space-x-4 items-center m-2 sm:m-1 col-span-2 sm:col-span-1">
+                    <div className="">
                         Precio Max.
                     </div>
                     <div>
@@ -181,29 +181,30 @@ class Filtros extends Component {
                     <Checkbox texto="Inspeccionado" nombre="inspeccionado" handleInputChange={this.handleInputChange} checked={inspeccionado} />
                 </div>
 
-                <div className="m-2 sm:mb-1">
+                <div className="m-2 sm:mb-1 place-self-center md:place-self-start col-span-2 md:col-span-1 ">
                     <Checkbox texto="Link Holder" nombre="linkHolder" handleInputChange={this.handleInputChange} checked={linkHolder} />
                 </div>
 
-                <div className="flex items-center space-x-4 transform scale-95 sm:scale-100 sm:m-1 col-span-2 sm:col-span-1">
+                <div className="flex items-center space-x-4 transform scale-95 sm:scale-100 sm:m-1 col-span-2 sm:col-span-2">
                     <div>
                         Color
                     </div>
-                    <div>
+                    <div className="overflow-x-scroll md:overflow-hidden py-4 md:py-2 pl-2">
                         <ColorPicker width={300} circleSize={22} color={color} handleInputChange={this.handleInputChange} />
                     </div>
                 </div>
 
-                <div className="sm:col-start-4 m-2 sm:mb-1 place-self-center sm:place-self-end col-span-2 sm:col-span-1">
-                    <button className="focus:outline-none mx-4 sm:mx-5 bg-gray-800 hover:bg-gray-700 text-gray-100 font-semibold py-2 px-4 rounded inline-flex items-center"
+                <div className="md:col-start-4 m-2 md:mb-1 place-self-center md:place-self-end col-span-2 md:col-span-1">
+                    <button className="focus:outline-none mx-2 sm:mx-5 bg-gray-800 hover:bg-gray-700 text-gray-100 font-semibold py-2 px-4 rounded inline-flex items-center"
                         onClick={this.aplicarFiltros}>
                         <span className="flex-1">Aplicar</span>
                     </button>
-                    <button className="focus:outline-none mx-4 sm:mx-5 bg-gray-800 hover:bg-gray-700 text-gray-100 font-semibold py-2 px-4 rounded inline-flex items-center"
+                    <button className="focus:outline-none mx-2 sm:mx-5 bg-gray-800 hover:bg-gray-700 text-gray-100 font-semibold py-2 px-4 rounded inline-flex items-center"
                         onClick={this.reiniciar}>
                         <span className="flex-1">Limpiar</span>
                     </button>
                 </div>
+
 
 
             </div>

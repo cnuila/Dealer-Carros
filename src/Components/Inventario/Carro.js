@@ -100,7 +100,7 @@ function Carro(props) {
       {loading ? fotoCargando : fotoCargada}
       <div className="relative px-4 -mt-10">
         <div className="px-6 py-4 bg-gray-900 rounded-lg shadow-xl">
-          <div className="font-semibold text-md text-gray-100 mb-2 md:truncate">
+          <div className="font-semibold text-md text-gray-100 mb-2 capitalize md:truncate">
             {ano + " " + marca + " " + modelo}
           </div>
 

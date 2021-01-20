@@ -100,8 +100,8 @@ class Agregar extends React.Component {
       })
     } else {
 
-      let carro = { marca, modelo, codigo, proveedor, ano, millaje, estado, valorCompra, valorInvertido, precioFinal, downPayment: (precioFinal) * 0.2, }
-      
+      let carro = { marca:marca.toLowerCase(), modelo:modelo.toLowerCase(), codigo, proveedor:proveedor.toLowerCase(), ano, millaje, estado, valorCompra, valorInvertido, precioFinal, downPayment: (precioFinal) * 0.2, }
+
       let colorCarro = "Rojo"
       if (color === "#0047cb") {
         colorCarro = "Azul"
@@ -117,6 +117,12 @@ class Agregar extends React.Component {
       }
       if (color === "#777777") {
         colorCarro = "Gris"
+      }
+      if (color === "#c0c0c0") {
+        colorCarro = "Plateado"
+      }
+      if (color === "#ff8a65") {
+        colorCarro = "Otro"
       }
       carro = { ...carro, color: colorCarro }
 
@@ -162,7 +168,7 @@ class Agregar extends React.Component {
             datosSearchBar.push({ ...doc.data(), id: doc.id })
           })
         });
-      
+
       //verificar si ya existen en el searchBar
       let existeMarca = datosSearchBar.filter(dato => dato.valor === carro.marca)
       let existeProveedor = datosSearchBar.filter(dato => dato.valor === carro.proveedor)
@@ -171,16 +177,16 @@ class Agregar extends React.Component {
       db.collection("carros").doc(vin).set(carro).then(() => {
         for (let i = 0; i < 3; i++) {
           let arreglo = existeMarca
-          let tipo = "Marca"
+          let tipo = "marca"
           let valor = carro.marca
           if (i === 1) {
             arreglo = existeProveedor
-            tipo = "Proveedor"
+            tipo = "proveedor"
             valor = carro.proveedor
           }
           if (i === 2) {
             arreglo = existeModelo
-            tipo = "Modelo"
+            tipo = "modelo"
             valor = carro.modelo
           }
           //si ya existe incrementa la cantidad si no crea uno nuevo
