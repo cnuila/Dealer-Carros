@@ -33,6 +33,7 @@ export default function ComboBox(props) {
                     estado: value
                 }).then(function () {
                     Swal.fire({ title: "Cambio exitoso!", icon: "success", text: "El estado del " + marca + " " + modelo + " se cambio a " + value})
+                    props.estadoModal(false)
                 }).catch(function (error) {
                     console.error("Error updating document: ", error);
                 });
