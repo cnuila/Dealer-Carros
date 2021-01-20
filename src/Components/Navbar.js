@@ -5,14 +5,16 @@ import SearchBar from "./Utilidades/SearchBar"
 
 export default function Navbar(props) {
     let compo = props.componente
-    
+
     return (
         <nav className="flex items-center justify-between flex-wrap bg-gray-900 p-3">
-            <div className="flex items-center ml-2 mb-3 lg:ml-0 lg:mb-0 flex-shrink-0 text-white mr-6">
-                <span className="font-bold text-4xl tracking-tight pl-10">
-                    Santos Motors
+            <Link to='/inventario'>
+                <button type="button" className="flex items-center ml-2 mb-3 lg:ml-0 lg:mb-0 flex-shrink-0 text-white mr-6" >
+                    <span className="font-bold text-4xl tracking-tight pl-10">
+                        Santos Motors
             </span>
-            </div>
+                </button>
+            </Link>
             {compo === "Principal"
                 ? <SearchBar mostrarConsulta={props.mostrarConsulta} sugerencias={props.dataSearchBar} />
                 : <></>

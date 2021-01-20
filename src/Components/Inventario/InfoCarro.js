@@ -4,10 +4,11 @@ import ComboBoxCambiarEstado from './ComboBoxCambiarEstado'
 import CarroSinFoto from "../../Imágenes/CarroSinFoto.jpg"
 import ShareCarro from './ShareCarro'
 import { db, storage } from '../../firebase'
-import Modificar from './Modifcar'
+import Modificar from './Modificar'
+import Checked from "./Checked"
 
 function InfoCarro(props) {
-    const { id, ano, marca, modelo, proveedor, fotos, estado } = props.carro;
+    const { id, marca, modelo, proveedor, fotos } = props.carro;
 
     let [modificar, setModificar] = useState(false)
     const [fotosCarro, setFotosCarro] = useState([])
@@ -90,21 +91,27 @@ function InfoCarro(props) {
                         }
                     }
                     Swal.fire(
-                        'Eliminado!',
-                        'El carro se ha eliminado con exito',
-                        'success'
+                        {
+                            title: 'Eliminado!',
+                            text: 'El carro se ha eliminado con exito',
+                            icon: 'success'
+                        }
                     )
                     handleEstadoModal(false)
                 }).catch(function (error) {
-                    console.error("Error removing document: ", error);
+                    Swal.fire(
+                        {
+                            icon: "error",
+                            title: "Error al Eliminar",
+                            text: "Error: " + error
+                        }
+                    )
                 });
             }
         })
     }
 
-    const clickShareCarro = () => (
-        Swal.fire({ title: "Oops!", icon: "warning", text: "Lo sentimos pero esta funcion sigue en desarrollo." })
-    )
+
 
     const handleComboBox = (estado) => {
         let arrayEstados = []
@@ -122,15 +129,28 @@ function InfoCarro(props) {
         return arrayEstados
     }
 
+
     const handleClickFoto = (index) => {
         let nuevoArray = [fotosCarro[index]]
-        let filtrados = fotosCarro.filter((valor, ind) => index !== ind )
-        setFotosCarro([...nuevoArray,...filtrados])
+        let filtrados = fotosCarro.filter((valor, ind) => index !== ind)
+        setFotosCarro([...nuevoArray, ...filtrados])
+    }
+
+    let tipoTitulo
+    if (typeof (props.carro.salvage) !== "undefined") {
+        if (props.carro.salvage !== false) {
+            tipoTitulo = "Salvage"
+        }
+    }
+    if (typeof (props.carro.clean) !== "undefined") {
+        if (props.carro.clean !== false) {
+            tipoTitulo = "Clean"
+        }
     }
 
     if (modificar) {
         return (
-            <Modificar carro={props.carro} estadoModi={clickModificarCarro} estadoModal={handleEstadoModal} />
+            <Modificar carro={props.carro} estadoModi={clickModificarCarro} estadoModal={handleEstadoModal} tipoTitulo={tipoTitulo} />
         );
     } else {
         return (
@@ -147,7 +167,7 @@ function InfoCarro(props) {
                         </button>
                         {/*Imagenes*/}
                         <div className="rounded-md transform -translate-x-24 w-69 h-74 bg-gray-800">
-                            
+
                             {loading
                                 ? <div key={0} className={`bg-gray-400 animate-pulse rounded-b-none h-64 w-full object-cover rounded-md shadow-md`}></div>
                                 : <div key={0}>
@@ -204,9 +224,8 @@ function InfoCarro(props) {
                             <div className="h-11 col-span-2">
                                 <div className="flex pb-5 ">
                                     <div>
-                                        <h3 className="text-5xl font-semibold text-gray-100">
+                                        <h3 className="text-5xl capitalize font-semibold text-gray-100">
                                             {props.carro.marca}
-
                                         </h3>
                                         <p className="text-md text-gray-300 ml-1 mt-2">
                                             VIN: {props.carro.id}
@@ -216,7 +235,7 @@ function InfoCarro(props) {
                                         -
                                     </h3>
                                     <div className="ml-4">
-                                        <h3 className="text-5xl font-semibold text-gray-100">
+                                        <h3 className="text-5xl capitalize font-semibold text-gray-100">
                                             {props.carro.modelo}
                                         </h3>
                                         <p className="text-md text-gray-300 ml-1 mt-2">
@@ -231,7 +250,7 @@ function InfoCarro(props) {
                                 </h2>
                                 <div className="ml-2">
                                     <p className="text-gray-300 px-2 text-md py-2 grid">
-                                        Color: {props.carro.color},{props.carro.estado}
+                                        Color: {props.carro.color}
                                     </p>
                                     <p className="text-gray-300 px-2 text-md py-2">
                                         Millaje: {props.carro.millaje}
@@ -239,26 +258,36 @@ function InfoCarro(props) {
                                     <p className="text-gray-300 px-2 text-md py-2">
                                         Año: {props.carro.ano}
                                     </p>
-
+                                    <p className="text-gray-300 px-2 text-md py-2 capitalize">
+                                        Proveedor: {props.carro.proveedor}
+                                    </p>
                                 </div>
-
                             </div>
                             <div className="pt-5">
                                 <h6 className="text-gray-100 px-2 font-semibold text-xl underline">
                                     Estado
                             </h6>
                                 <div className="ml-2">
-                                    <p className="text-gray-300 px-2  text-md py-2">
-                                        Inspeccionado: {props.carro.color}
+                                    <div className="flex ">
+                                        <p className="text-gray-300 px-2  text-md py-2">
+                                            Inspeccionado
+                                        </p>
+                                        <Checked valor={props.carro.inspeccionado} />
+                                    </div>
+                                    <div className="flex">
+                                        <p className="text-gray-300 px-2  text-md py-2">
+                                            Titulo en Mano
                                     </p>
-                                    <p className="text-gray-300 px-2  text-md py-2">
-                                        Titulo en Mano: {props.carro.millaje}
+                                        <Checked valor={props.carro.titulo} />
+                                    </div>
+                                    <div className="flex">
+                                        <p className="text-gray-300 px-2  text-md py-2">
+                                            Link Holder
                                     </p>
-                                    <p className="text-gray-300 px-2  text-md py-2">
-                                        Link Holder: {props.carro.ano}
-                                    </p>
+                                        <Checked valor={props.carro.linkHolder} />
+                                    </div>
                                     <p className="text-gray-300 px-2 text-md py-2">
-                                        Titulo: {props.carro.tipoTitulo}
+                                        Titulo: {tipoTitulo}
                                     </p>
                                 </div>
 
@@ -270,18 +299,24 @@ function InfoCarro(props) {
                                 <div className="ml-2">
                                     <div className="flex">
                                         <p className="text-gray-300 px-2  text-md py-2 col-span-2">
-                                            Compra: {props.carro.color}
+                                            Valor Compra: {props.carro.valorCompra}
                                         </p>
-                                        <p className="text-gray-300 px-2  text-md py-2 col-span-2 ml-12">
-                                            Venta: {props.carro.millaje}
+                                        <p className="text-gray-300 px-2  text-md py-2 col-span-2 ml-8">
+                                            Valor Invertido: {props.carro.valorInvertido}
                                         </p>
-                                        <p className="text-gray-300 px-2  text-md py-2 col-span-2 ml-12">
-                                            Total Cost: {props.carro.millaje}
+                                        <p className="text-gray-300 px-2  text-md py-2 col-span-2 ml-8">
+                                            Precio Final: {props.carro.precioFinal}
                                         </p>
                                     </div>
-                                    <p className="text-gray-300 px-2 text-md py-2">
-                                        Down Payment: {props.carro.ano}
-                                    </p>
+                                    <div className="flex">
+                                        <p className="text-gray-300 px-2 text-md py-2">
+                                            Down Payment: {props.carro.downPayment}
+                                        </p>
+                                        <p className="text-gray-300 px-2  text-md py-2 col-span-2 ml-8">
+                                            Total Cost: {props.carro.valorInvertido + props.carro.valorCompra}
+                                        </p>
+                                    </div>
+
                                 </div>
 
                             </div>
