@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react'
 import { storage } from "../../firebase"
 import Swal from 'sweetalert2';
 import ComboBoxCambiarEstado from './ComboBoxCambiarEstado';
+import CarroSinFoto from "../../Imágenes/CarroSinFoto.jpg"
 import ShareCarro from './ShareCarro'
 import { db } from '../../firebase'
-import CarroSinFoto from "../../Imágenes/CarroSinFoto.jpg"
 import Modificar from './Modifcar';
 
 function InfoCarro(props) {
-    const { id, ano, marca, modelo, proveedor, fotos, estado } = props.carro;
+    const { id, ano, marca, modelo, proveedor, fotos, estado} = props.carro;
     let [foto, setFoto] = useState(null)
     let [loading, setLoading] = useState(true)
     let [modificar, setModificar] = useState(false)
@@ -123,6 +123,21 @@ function InfoCarro(props) {
             </div>
         </>
     )
+    let handleComboBox = (estado) => {
+        let arrayEstados = []
+        if (estado === "Disponible") {
+            arrayEstados = ["Disponible", "Apartado", "Reparacion"]
+        } else if (estado === "Reparacion") {
+            arrayEstados = ["Reparacion", "Disponible"]
+        } else if (estado === "Repo") {
+            arrayEstados = ["Repo", "Disponible", "Reparacion", "Apartado"]
+        } else if (estado === "Apartado") {
+            arrayEstados = ["Apartado", "Disponible"]
+        } else if (estado === "Vendido") {
+            arrayEstados = ["Vendido", "Disponible", "Reparacion", "Repo"]
+        }
+        return arrayEstados
+    }
 
     if (modificar) {
         return (
@@ -134,7 +149,7 @@ function InfoCarro(props) {
                 <div className="absolute overflow-hidden animate__animated animate__zoomIn animate__faster fixed z-40 justify-center items-center flex inset-0 outline-none focus:outline-none bg-opacity-50">
 
                     {/*Container*/}
-                    <div className="pb-8 pr-3 absolute grid grid-cols-2 bg-gray-900 rounded-md h-80 w-7/12">
+                    <div className="pb-8 pr-3 absolute md:grid md:grid-cols-2 bg-gray-900 rounded-md h-80 w-7/12">
                         <button className="col-span-2 top-0 right-0 p-1 ml-auto bg-transparent border-0 text-black float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
                             onClick={() => handleEstadoModal(false)}>
                             <span className="mb-4 mr-2 text-white h-8 w-8 text-4xl block outline-none focus:outline-none">
@@ -145,7 +160,7 @@ function InfoCarro(props) {
                         <div className="rounded-md transform -translate-x-24 w-69 h-74 bg-gray-800">
                             {loading ? fotoCargando : fotoCargada}
                             <div className="bg-gray-900 h-10 w-3/4 transform -translate-y-5 rounded-md ml-10 flex flex-wrap content-center shadow-2xl">
-                                <ComboBoxCambiarEstado carro={props.carro} estados={["Disponible", "Apartado", "Reparacion"]} />
+                                <ComboBoxCambiarEstado carro={props.carro} estados={handleComboBox(props.carro.estado)} estadoModal={handleEstadoModal} />
                                 <button type="button" className="w-8 h-3/4 grid justify-items-center ml-3 mr-1 " onClick={() => clickModificarCarro(true)}>
                                     <svg className="mt-1 h-3/4 w-4 fill-current text-gray-200" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                                         <path d="M311.18 78.008L32.23 356.958.613 485.716a21.221 21.221 0 0025.671 25.671l128.759-31.617 278.95-278.95L311.18 78.008zM40.877 471.123l10.871-44.271 33.4 33.4-44.271 10.871zM502.598 86.818L425.182 9.402c-12.536-12.536-32.86-12.536-45.396 0l-30.825 30.825 122.812 122.812 30.825-30.825c12.536-12.535 12.536-32.86 0-45.396z" />
@@ -234,7 +249,7 @@ function InfoCarro(props) {
                                     <p className="text-gray-300 px-2 text-md py-2">
                                         Año: {props.carro.ano}
                                     </p>
-                                    
+
                                 </div>
 
                             </div>
