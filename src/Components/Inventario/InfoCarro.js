@@ -149,8 +149,27 @@ function InfoCarro(props) {
     }
 
     if (modificar) {
+        let colorSelected = ""
+        if (props.carro.color === "Azul") {
+            colorSelected = "#0047CB"
+        } else if (props.carro.color === "Amarillo") {
+            colorSelected = "#FBFF00"
+        } else if (props.carro.color === "Blanco") {
+            colorSelected = "#FFFFFF"
+        } else if (props.carro.color === "Negro") {
+            colorSelected = "#000000"
+        } else if (props.carro.color === "Gris") {
+            colorSelected = "#777777"
+        } else if (props.carro.color === "Plateado") {
+            colorSelected = "#C0C0C0"
+        } else if (props.carro.color === "Rojo") {
+            colorSelected = "#FF0000"
+        } else {
+            colorSelected = "#FF8A65"
+        }
+
         return (
-            <Modificar carro={props.carro} estadoModi={clickModificarCarro} estadoModal={handleEstadoModal} tipoTitulo={tipoTitulo} />
+            <Modificar carro={props.carro} estadoModi={clickModificarCarro} estadoModal={handleEstadoModal} tipoTitulo={tipoTitulo} color={colorSelected} imagenes={fotos} />
         );
     } else {
         return (
