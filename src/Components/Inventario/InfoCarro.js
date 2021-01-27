@@ -8,12 +8,12 @@ import Modificar from './Modificar'
 import Checked from "./Checked"
 
 function InfoCarro(props) {
-    const { id, marca, modelo, proveedor, fotos } = props.carro;
+    const { fotos } = props.carro;
 
     let [modificar, setModificar] = useState(false)
     const [fotosCarro, setFotosCarro] = useState([])
     const [loading, setLoading] = useState(true)
-
+    const [animacion, setAnimacion] = useState("animate__animated animate__zoomIn animate__faster")
     useEffect(() => {
         if (fotos === undefined) {
             setFotosCarro([CarroSinFoto, CarroSinFoto, CarroSinFoto, CarroSinFoto, CarroSinFoto])
@@ -40,13 +40,16 @@ function InfoCarro(props) {
         props.mostrarInfo(estadoModal)
     }
 
-    const clickVenderCarro = () => (
+    const clickVenderCarro = () => {
         Swal.fire({ title: "Oops!", icon: "warning", text: "Lo sentimos pero esta funcion sigue en desarrollo." })
-    )
+    }
 
-    const clickModificarCarro = (estadoModi) => (
+    const clickModificarCarro = (estadoModi) => {
+        if (animacion != "") {
+            setAnimacion("")
+        }
         setModificar(estadoModi)
-    )
+    }
 
     const clickEliminarCarro = () => {
         Swal.fire({
@@ -67,29 +70,23 @@ function InfoCarro(props) {
         }).then(async result => {
             const { dataSearchBar } = props
             if (result.isConfirmed) {
-                let carro = db.collection("carros").doc(id)
+
+                let carro = db.collection("carros").doc("p")
+                let storageRef = storage.ref();
+
+
                 await carro.delete().then(() => {
-                    //verificar si ya existen en el searchBar
-                    let existeMarca = dataSearchBar.filter(dato => dato.valor === marca)
-                    let existeProveedor = dataSearchBar.filter(dato => dato.valor === proveedor)
-                    let existeModelo = dataSearchBar.filter(dato => dato.valor === modelo)
-                    for (let i = 0; i < 3; i++) {
-                        let objeto = existeMarca[0]
-                        if (i === 1) {
-                            objeto = existeProveedor[0]
-                        }
-                        if (i === 2) {
-                            objeto = existeModelo[0]
-                        }
-                        let cant = objeto.cantidad
-                        if (cant === 1) {
-                            db.collection("searchBarCarros").doc(objeto.id).delete()
-                        } else {
-                            db.collection("searchBarCarros").doc(objeto.id).update({
-                                cantidad: --cant
-                            })
-                        }
+                    console.log("Aqui inicia a borrar el carro")
+                    console.log("Borro el carro")
+                }).then(() => {
+                    console.log(fotosCarro)
+                    console.log("Aqui inicia a borrar del storage")
+                    for (let i = 0; i < fotosCarro.length; i++) {
+                        let deleteRef = storageRef.child(fotosCarro[i]);
+                        console.log(fotosCarro[i])
+                        deleteRef.delete()
                     }
+                    console.log("Borro las fotos")
                     Swal.fire(
                         {
                             title: 'Eliminado!',
@@ -98,6 +95,7 @@ function InfoCarro(props) {
                         }
                     )
                     handleEstadoModal(false)
+
                 }).catch(function (error) {
                     Swal.fire(
                         {
@@ -137,14 +135,17 @@ function InfoCarro(props) {
     }
 
     let tipoTitulo
+    let tituloClean
     if (typeof (props.carro.salvage) !== "undefined") {
         if (props.carro.salvage !== false) {
             tipoTitulo = "Salvage"
+            tituloClean = false
         }
     }
     if (typeof (props.carro.clean) !== "undefined") {
         if (props.carro.clean !== false) {
             tipoTitulo = "Clean"
+            tituloClean = true
         }
     }
 
@@ -169,12 +170,12 @@ function InfoCarro(props) {
         }
 
         return (
-            <Modificar carro={props.carro} estadoModi={clickModificarCarro} estadoModal={handleEstadoModal} tipoTitulo={tipoTitulo} color={colorSelected} imagenes={fotos} />
+            <Modificar carro={props.carro} estadoModi={clickModificarCarro} estadoModal={handleEstadoModal} tituloClean={tituloClean} color={colorSelected} imagenes={fotosCarro} estadosCombo={handleComboBox} />
         );
     } else {
         return (
             <>
-                <div className="absolute overflow-hidden animate__animated animate__zoomIn animate__faster fixed z-40 justify-center items-center flex inset-0 outline-none focus:outline-none bg-opacity-50">
+                <div className={`overflow-hidden ${animacion} fixed z-40 justify-center items-center flex inset-0 outline-none focus:outline-none bg-opacity-50`}>
 
                     {/*Container*/}
                     <div className="pb-8 pr-3 absolute md:grid md:grid-cols-2 bg-gray-900 rounded-md h-80 w-7/12">
@@ -222,8 +223,9 @@ function InfoCarro(props) {
                                     : fotosCarro.map((foto, index) => {
                                         if (index !== 0) {
                                             return (
-                                                <div key={index} onClick={() => handleClickFoto(index)}>
+                                                <div key={index} >
                                                     <img
+                                                        onClick={() => handleClickFoto(index)}
                                                         className="rounded-md h-20 w-28 transition duration-300 ease-in-out transform hover:scale-105 object-cover shadow-md"
                                                         alt="Carro"
                                                         src={foto}

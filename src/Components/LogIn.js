@@ -9,6 +9,7 @@ const LogIn = ({ history }) => {
 
     const handleLogin = useCallback(
 
+
         async event => {
             event.preventDefault();
             const { email, password } = event.target.elements;
@@ -18,9 +19,7 @@ const LogIn = ({ history }) => {
             } catch (error) {
                 alert(error);
             }
-        },
-        [history]
-
+        }, [history]
     );
 
     const { currentUser } = useContext(AuthContext);

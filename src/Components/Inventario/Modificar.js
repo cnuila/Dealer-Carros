@@ -1,15 +1,13 @@
-import React, { useState, useEffect } from 'react'
-import { storage } from "../../firebase"
+import React, { useState } from 'react'
 import Swal from 'sweetalert2';
 import ComboBoxCambiarEstado from './ComboBoxCambiarEstado';
-import CarroSinFoto from "../../Imágenes/CarroSinFoto.jpg"
 import Checkbox from '../Utilidades/Checkbox'
 import ColorPicker from "../Utilidades/ColorPicker"
 import { db } from '../../firebase'
 
 export default function Modificar(props) {
-    const { id, fotos, marca, modelo, codigo, proveedor, ano, millaje, valorCompra, valorInvertido, precioFinal, downPayment, inspeccionado, titulo, linkHolder, } = props.carro;
-
+    const { estado, id, marca, modelo, codigo, proveedor, ano, millaje, valorCompra, valorInvertido, precioFinal, downPayment, inspeccionado, titulo, linkHolder, } = props.carro;
+    const fotos = props.imagenes
     const estadoInicial = {
         marca,
         modelo,
@@ -21,70 +19,33 @@ export default function Modificar(props) {
         inspeccionado,
         titulo,
         linkHolder,
-        tituloClean: props.tipoTitulo,
+        tituloClean: props.tituloClean,
         valorCompra,
         valorInvertido,
         precioFinal,
         downPayment,
+        fotos,
     }
-
-    const [foto, setFoto] = useState(null)
-    const [loading, setLoading] = useState(true)
+    const [fotosCarro, setFotosCarro] = useState(fotos)
     const [objeto, setObjeto] = useState(...[estadoInicial])
 
-    useEffect(() => {
-        //obtener foto del storage
-        if (fotos === undefined) {
-            function noHayFoto() {
-                setFoto(CarroSinFoto)
-                setLoading(false)
-            }
-            noHayFoto()
-        } else {
-            let gsReference = storage.refFromURL(fotos[0])
-            async function descargarFoto() {
-                gsReference.getDownloadURL().then(direc => {
-                    setFoto(direc)
-                    setLoading(false)
-                }).catch((err) => {
-                    console.log(err)
-                })
-            }
-            descargarFoto()
-        }
-    }, [fotos])
-
-
-    let fotoCargando = (
-        <>
-            <div className="animate-pulse col-span-8 rounded-b-none h-64 w-full object-cover rounded-md shadow-md bg-gray-100">
-            </div>
-        </>
-    )
-    let fotoCargada = (
-        <>
-            <div className="rounded-b-none rounded-md col-span-4 h-64 bg-black">
-                <img
-                    className="rounded-b-none rounded-md h-64 w-full object-cover shadow-md"
-                    alt="Carro"
-                    src={foto}
-                />
-            </div>
-        </>
-    )
+    const handleClickFoto = (index) => {
+        let nuevoArray = [fotosCarro[index]]
+        let filtrados = fotosCarro.filter((valor, ind) => index !== ind)
+        setFotosCarro([...nuevoArray, ...filtrados])
+    }
 
     const handleInputChange = ({ target }) => {
-
         const { name, type } = target
         let insertarObjeto = {}
         if (type === "checkbox") {
             insertarObjeto = { [name]: target.checked }
-        } else {
+        } else if (target.name === "marca" || target.name === "modelo" || target.name === "proveedor" || target.name === "codigo" || target.name === "color") {
             insertarObjeto = { [name]: target.value }
+        } else {
+            insertarObjeto = { [name]: parseInt(target.value, 10) }
         }
         setObjeto({ ...objeto, ...insertarObjeto })
-        console.log(insertarObjeto)
-        console.log(objeto)
     }
 
 
@@ -96,7 +57,7 @@ export default function Modificar(props) {
                 'warning'
             )
         } else {
-            let carro = { id, marca: objeto.marca.toLowerCase(), modelo: objeto.modelo.toLowerCase(), codigo: objeto.codigo, proveedor: objeto.proveedor.toLowerCase(), ano: objeto.ano, millaje: objeto.millaje, valorCompra: objeto.valorCompra, valorInvertido: objeto.valorInvertido, precioFinal: objeto.precioFinal, downPayment: (objeto.precioFinal) * 0.2, }
+            let carro = { estado, id, marca: objeto.marca.toLowerCase(), modelo: objeto.modelo.toLowerCase(), codigo: objeto.codigo, proveedor: objeto.proveedor.toLowerCase(), ano: objeto.ano, millaje: objeto.millaje, valorCompra: objeto.valorCompra, valorInvertido: objeto.valorInvertido, precioFinal: objeto.precioFinal, downPayment: objeto.downPayment, }
             let colorCarro = "Rojo"
             if (objeto.color === "#0047cb") {
                 colorCarro = "Azul"
@@ -134,29 +95,14 @@ export default function Modificar(props) {
             } else {
                 carro = { ...carro, salvage: true }
             }
-
-            if (props.imagenes.length !== 0) {
-                let dirFotos = []
-                let storageRef = storage.ref();
-                let i = 0
-                //guarda las fotos y guarda la direccion en un array
-                while (i <= 4) {
-                    try {
-                        let carroRef = storageRef.child(`${id}/${props.imagenes[i].name}`);
-                        carroRef.put(props.imagenes[i])
-                        dirFotos.push(carroRef.toString())
-                        i++
-                    } catch (err) {
-                        alert(err)
-                    }
-                }
-                carro = { ...carro, fotos: dirFotos }
+            console.log(fotos[0])
+            if (fotos[0] !== "/static/media/CarroSinFoto.552174a8.jpg") {
+                carro = { ...carro, fotos: fotos }
             }
-
             db.collection("carros").doc(id).set(carro).then(() => {
                 Swal.fire({
                     title: "Modificado!",
-                    icon: "Success",
+                    icon: "success",
                     text: "Se modifico el carro con exito."
                 })
                 props.estadoModi(false)
@@ -168,8 +114,7 @@ export default function Modificar(props) {
                     text: "No se pudo modificar el carro. Error: " + error
                 })
             });
-            console.log("PASOOO")
-            console.log(carro)
+
         }
 
 
@@ -178,7 +123,7 @@ export default function Modificar(props) {
 
     return (
         <>
-            <div className="absolute overflow-hidden fixed z-40 justify-center items-center flex inset-0 outline-none focus:outline-none bg-opacity-50">
+            <div className="overflow-hidden fixed z-40 justify-center items-center flex inset-0 outline-none focus:outline-none bg-opacity-50">
 
                 {/*Container*/}
                 <div className="pb-8 pr-3 absolute grid grid-cols-2 bg-gray-900 rounded-md h-80 w-7/12">
@@ -190,40 +135,39 @@ export default function Modificar(props) {
                     </button>
                     {/*Imagenes*/}
                     <div className="rounded-md transform -translate-x-24 w-69 h-74 bg-gray-800">
-                        {loading ? fotoCargando : fotoCargada}
+
+                        <div key={0}>
+                            <img
+                                className={`rounded-b-none rounded-md h-64 w-full object-cover shadow-md`}
+                                alt="Carro"
+                                src={fotosCarro[0]}
+                            />
+                        </div>
+
                         <div className="bg-gray-900 h-10 w-3/4 transform -translate-y-5 rounded-md ml-10 flex flex-wrap content-center shadow-2xl">
-                            <ComboBoxCambiarEstado carro={props.carro} estados={["Disponible", "Apartado", "Reparacion"]} />
+                            <ComboBoxCambiarEstado carro={props.carro} estados={props.estadosCombo(estado)} estadoModal={props.estadoModal} />
+                            <button type="button" className="w-8 h-3/4 grid justify-items-center ml-3 mr-1 " onClick={() => props.estadoModi(false)}>
+                                <svg className="mt-1 h-6 w-5 fill-current text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                    <path d="M492 236H68.442l70.164-69.824c7.829-7.792 7.859-20.455.067-28.284-7.792-7.83-20.456-7.859-28.285-.068l-104.504 104-.018.019c-7.809 7.792-7.834 20.496-.002 28.314l.018.019 104.504 104c7.828 7.79 20.492 7.763 28.285-.068 7.792-7.829 7.762-20.492-.067-28.284L68.442 276H492c11.046 0 20-8.954 20-20s-8.954-20-20-20z" />
+                                </svg>
+                            </button>
                         </div>
                         <div className="grid grid-cols-2 h-52 w-58 z-0 transform -translate-y-3 pl-11">
                             {/*Aqui ira el map para traer las 4 fotos*/}
-                            <div className="rounded-md h-20 w-28 object-cover bg-black transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105">
-                                <img
-                                    className="rounded-md object-cover h-20 w-28 shadow-md"
-                                    alt="Carro"
-                                    src={foto}
-                                />
-                            </div>
-                            <div className="rounded-md h-20 w-28 object-cover bg-black transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105">
-                                <img
-                                    className="rounded-md object-cover h-20 w-28 shadow-md"
-                                    alt="Carro"
-                                    src={foto}
-                                />
-                            </div>
-                            <div className="rounded-md h-20 w-28 object-cover bg-black transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105">
-                                <img
-                                    className="rounded-md object-cover h-20 w-28 shadow-md"
-                                    alt="Carro"
-                                    src={foto}
-                                />
-                            </div>
-                            <div className="rounded-md h-20 w-28 object-cover bg-black transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105">
-                                <img
-                                    className="rounded-md object-cover h-20 w-28 shadow-md"
-                                    alt="Carro"
-                                    src={foto}
-                                />
-                            </div>
+                            {fotosCarro.map((foto, index) => {
+                                if (index !== 0) {
+                                    return (
+                                        <div key={index} >
+                                            <img
+                                                onClick={() => handleClickFoto(index)}
+                                                className="rounded-md h-20 w-28 transition duration-300 ease-in-out transform hover:scale-105 object-cover shadow-md"
+                                                alt="Carro"
+                                                src={foto}
+                                            />
+                                        </div>)
+                                }
+                                return null
+                            })}
                         </div>
                     </div>
 

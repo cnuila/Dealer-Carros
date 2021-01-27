@@ -13,10 +13,10 @@ const App = () => {
     <AuthProvider>
       <Router>
         <Switch>
-          <Route path="/lp" exact component={LandingPage} />
-          <Route path="/inventario" exact component={Inventario} />
+          <PrivateRoute path="/lp" exact component={LandingPage} />
+          <PrivateRoute path="/inventario" exact component={Inventario} />
           <Route path="/" exact component={LogIn} />
-          <Route path="/agregar" exact component={Agregar} />
+          <PrivateRoute path="/agregar" exact component={Agregar} />
         </Switch>
       </Router>
     </AuthProvider>
