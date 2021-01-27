@@ -54,7 +54,7 @@ const LogIn = ({ history }) => {
                                 <p className="errorMsg text-red-600 font-bold"></p>
                             </div>
                             <div className="flex items-center justify-between my-3">
-                                <button type="submit" className="bg-gray-900 hover:bg-gray-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:rings" type="submit">
+                                <button type="submit" className="bg-gray-900 hover:bg-gray-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:rings">
                                     Iniciar sesión
                                     </button>
                             </div>

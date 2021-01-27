@@ -6,8 +6,7 @@ import ColorPicker from "../Utilidades/ColorPicker"
 import { db } from '../../firebase'
 
 export default function Modificar(props) {
-    const { estado, id, marca, modelo, codigo, proveedor, ano, millaje, valorCompra, valorInvertido, precioFinal, downPayment, inspeccionado, titulo, linkHolder, } = props.carro;
-    const fotos = props.imagenes
+    const { fotos, estado, id, marca, modelo, codigo, proveedor, ano, millaje, valorCompra, valorInvertido, precioFinal, downPayment, inspeccionado, titulo, linkHolder} = props.carro;
     const estadoInicial = {
         marca,
         modelo,
@@ -26,7 +25,7 @@ export default function Modificar(props) {
         downPayment,
         fotos,
     }
-    const [fotosCarro, setFotosCarro] = useState(fotos)
+    const [fotosCarro, setFotosCarro] = useState(props.imagenes)
     const [objeto, setObjeto] = useState(...[estadoInicial])
 
     const handleClickFoto = (index) => {
@@ -95,8 +94,8 @@ export default function Modificar(props) {
             } else {
                 carro = { ...carro, salvage: true }
             }
-            console.log(fotos[0])
-            if (fotos[0] !== "/static/media/CarroSinFoto.552174a8.jpg") {
+            console.log(fotos)
+            if (fotos !== undefined) {
                 carro = { ...carro, fotos: fotos }
             }
             db.collection("carros").doc(id).set(carro).then(() => {

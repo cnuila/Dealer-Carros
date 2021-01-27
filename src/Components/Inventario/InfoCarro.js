@@ -8,12 +8,13 @@ import Modificar from './Modificar'
 import Checked from "./Checked"
 
 function InfoCarro(props) {
-    const { fotos } = props.carro;
+    const { fotos, id } = props.carro;
 
     let [modificar, setModificar] = useState(false)
     const [fotosCarro, setFotosCarro] = useState([])
     const [loading, setLoading] = useState(true)
     const [animacion, setAnimacion] = useState("animate__animated animate__zoomIn animate__faster")
+
     useEffect(() => {
         if (fotos === undefined) {
             setFotosCarro([CarroSinFoto, CarroSinFoto, CarroSinFoto, CarroSinFoto, CarroSinFoto])
@@ -29,7 +30,9 @@ function InfoCarro(props) {
                         console.log(err)
                     })
                 }
+
                 setFotosCarro(arrayFotos)
+
                 setLoading(false)
             }
             descargarFoto()
@@ -45,7 +48,7 @@ function InfoCarro(props) {
     }
 
     const clickModificarCarro = (estadoModi) => {
-        if (animacion != "") {
+        if (animacion !== "") {
             setAnimacion("")
         }
         setModificar(estadoModi)
@@ -71,22 +74,19 @@ function InfoCarro(props) {
             const { dataSearchBar } = props
             if (result.isConfirmed) {
 
-                let carro = db.collection("carros").doc("p")
-                let storageRef = storage.ref();
-
+                let carro = db.collection("carros").doc(id)
 
                 await carro.delete().then(() => {
-                    console.log("Aqui inicia a borrar el carro")
-                    console.log("Borro el carro")
                 }).then(() => {
-                    console.log(fotosCarro)
+                    console.log(fotos)
                     console.log("Aqui inicia a borrar del storage")
-                    for (let i = 0; i < fotosCarro.length; i++) {
-                        let deleteRef = storageRef.child(fotosCarro[i]);
-                        console.log(fotosCarro[i])
-                        deleteRef.delete()
+                    if (fotos !== undefined) {
+                        let deleteRef
+                        for (let i = 0; i < fotos.length; i++) {
+                            deleteRef = storage.refFromURL(fotos[i]);
+                            deleteRef.delete()
+                        }
                     }
-                    console.log("Borro las fotos")
                     Swal.fire(
                         {
                             title: 'Eliminado!',

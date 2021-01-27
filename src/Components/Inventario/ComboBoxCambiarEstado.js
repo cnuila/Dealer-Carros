@@ -3,7 +3,7 @@ import Swal from 'sweetalert2';
 import { db } from '../../firebase'
 
 export default function ComboBox(props) {
-    let { estado, id, modelo, marca } = props.carro
+    let { id, modelo, marca } = props.carro
     const [selected, setSelected] = useState(props.estados[0])
 
     const cambiarEstadoCarro = ({ target }) => {

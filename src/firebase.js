@@ -6,6 +6,10 @@ import "firebase/auth"
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+//api santos AIzaSyDbnJ8EU3TFnjChkKjQWK3m9TsdBG1y60k | santos-motors-group-app | santos-motors-group-app.appspot.com
+//api developers AIzaSyDWqiXNaADIbmr9CfZ06gXSj08L7bnZR8E | santos-motors | santos-motors.appspot.com | santos-motors.firebaseapp.com | https://santos-motors.firebaseio.com
+
+
 var firebaseConfig = {
     apiKey: "AIzaSyDWqiXNaADIbmr9CfZ06gXSj08L7bnZR8E",
     authDomain: "santos-motors.firebaseapp.com",
