@@ -6,11 +6,19 @@ import "firebase/auth"
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-//api santos AIzaSyDbnJ8EU3TFnjChkKjQWK3m9TsdBG1y60k | santos-motors-group-app | santos-motors-group-app.appspot.com
-//api developers AIzaSyDWqiXNaADIbmr9CfZ06gXSj08L7bnZR8E | santos-motors | santos-motors.appspot.com | santos-motors.firebaseapp.com | https://santos-motors.firebaseio.com
 
+var firebaseSantosConfig = {
+    apiKey: "AIzaSyDbnJ8EU3TFnjChkKjQWK3m9TsdBG1y60k",
+    authDomain: "santos-motors-group-app.firebaseapp.com",
+    databaseURL: "https://santos-motors-group-app.firebaseio.com",
+    projectId: "santos-motors-group-app",
+    storageBucket: "santos-motors-group-app.appspot.com",
+    messagingSenderId: "1080816278380",
+    appId: "1:1080816278380:web:dc5b837f07028aa8703149",
+    measurementId: "G-DKK2EP3Y2G"
+};
 
-var firebaseConfig = {
+var firebaseDevelopersConfig = {
     apiKey: "AIzaSyDWqiXNaADIbmr9CfZ06gXSj08L7bnZR8E",
     authDomain: "santos-motors.firebaseapp.com",
     databaseURL: "https://santos-motors.firebaseio.com",
@@ -22,7 +30,7 @@ var firebaseConfig = {
 };
 
 // Initialize Firebase
-const fb = firebase.initializeApp(firebaseConfig);
+const fb = firebase.initializeApp(firebaseSantosConfig);
 firebase.analytics();
 
 export default fb;
