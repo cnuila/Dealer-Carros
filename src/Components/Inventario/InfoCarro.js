@@ -8,7 +8,7 @@ import Modificar from './Modificar'
 import Checked from "./Checked"
 
 function InfoCarro(props) {
-    const { fotos, id } = props.carro;
+    const { fotos, id, marca, modelo, proveedor } = props.carro;
 
     let [modificar, setModificar] = useState(false)
     const [fotosCarro, setFotosCarro] = useState([])
@@ -77,6 +77,27 @@ function InfoCarro(props) {
                 let carro = db.collection("carros").doc(id)
 
                 await carro.delete().then(() => {
+                    //verificar si ya existen en el searchBar
+                    let existeMarca = dataSearchBar.filter(dato => dato.valor === marca)
+                    let existeProveedor = dataSearchBar.filter(dato => dato.valor === proveedor)
+                    let existeModelo = dataSearchBar.filter(dato => dato.valor === modelo)
+                    for (let i = 0; i < 3; i++) {
+                        let objeto = existeMarca[0]
+                        if (i === 1) {
+                            objeto = existeProveedor[0]
+                        }
+                        if (i === 2) {
+                            objeto = existeModelo[0]
+                        }
+                        let cant = objeto.cantidad
+                        if (cant === 1) {
+                            db.collection("searchBarCarros").doc(objeto.id).delete()
+                        } else {
+                            db.collection("searchBarCarros").doc(objeto.id).update({
+                                cantidad: --cant
+                            })
+                        }
+                    }
                 }).then(() => {
                     console.log(fotos)
                     console.log("Aqui inicia a borrar del storage")

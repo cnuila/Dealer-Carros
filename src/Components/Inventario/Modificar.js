@@ -6,7 +6,8 @@ import ColorPicker from "../Utilidades/ColorPicker"
 import { db } from '../../firebase'
 
 export default function Modificar(props) {
-    const { fotos, estado, id, marca, modelo, codigo, proveedor, ano, millaje, valorCompra, valorInvertido, precioFinal, downPayment, inspeccionado, titulo, linkHolder} = props.carro;
+
+    const { fotos, estado, id, marca, modelo, codigo, proveedor, ano, millaje, valorCompra, valorInvertido, precioFinal, downPayment, inspeccionado, titulo, linkHolder } = props.carro;
     const estadoInicial = {
         marca,
         modelo,
@@ -47,8 +48,8 @@ export default function Modificar(props) {
         setObjeto({ ...objeto, ...insertarObjeto })
     }
 
-
     const clickGuardarCambios = async () => {
+
         if (objeto.color === "transparent") {
             Swal.fire(
                 '¡Ops!',
@@ -98,7 +99,83 @@ export default function Modificar(props) {
             if (fotos !== undefined) {
                 carro = { ...carro, fotos: fotos }
             }
+
             db.collection("carros").doc(id).set(carro).then(() => {
+                if (modelo !== objeto.modelo || marca !== objeto.marca || proveedor !== objeto.proveedor) {
+
+                    let datosSearchBar = []
+                    db.collection("searchBarCarros").get().then(querySnapshot => {
+                        querySnapshot.forEach(doc => {
+                            datosSearchBar.push({ ...doc.data(), id: doc.id })
+                        })
+                    });
+
+                    let existeModelo = datosSearchBar.filter(dato => dato.valor === objeto.modelo)
+                    let existeMarca = datosSearchBar.filter(dato => dato.valor === objeto.marca)
+                    let existeProveedor = datosSearchBar.filter(dato => dato.valor === objeto.proveedor)
+
+                    let existeMarcaAntigua = datosSearchBar.filter(dato => dato.valor === marca)
+                    let existeProveedorAntiguo = datosSearchBar.filter(dato => dato.valor === proveedor)
+                    let existeModeloAntiguo = datosSearchBar.filter(dato => dato.valor === modelo)
+
+                    let arreglo = []
+                    let tipo = ""
+                    let valor = ""
+                    let objeto = ""
+                    let flag = false
+
+                    for (let i = 0; i < 3; i++) {
+                        if (i == 0 && modelo !== objeto.modelo) {
+                            objeto = existeModeloAntiguo[0]
+                            arreglo = existeModelo
+                            tipo = "modelo"
+                            valor = carro.modelo
+                            flag = true
+                        } else if (i === 1 && marca !== objeto.marca) {
+                            objeto = existeMarcaAntigua[0]
+                            arreglo = existeMarca
+                            tipo = "marca"
+                            valor = carro.marca
+                            flag = true
+                        } else if (i === 2 && proveedor !== objeto.proveedor) {
+                            objeto = existeProveedorAntiguo[0]
+                            arreglo = existeProveedor
+                            tipo = "proveedor"
+                            valor = carro.proveedor
+                            flag = true
+                        }
+
+                        if (flag) {
+                            //si ya existe incrementa la cantidad si no crea uno nuevo 
+                            if (arreglo.length === 1) {
+                                let { id, cantidad } = arreglo[0]
+                                let cant = cantidad + 1
+                                db.collection("searchBarCarros").doc(id).update({
+                                    cantidad: cant
+                                })
+                            } else {
+                                db.collection("searchBarCarros").add({
+                                    tipo: tipo,
+                                    valor: valor,
+                                    cantidad: 1
+                                })
+                            }
+                            let cant = objeto.cantidad
+                            if (cant === 1) {
+                                db.collection("searchBarCarros").doc(objeto.id).delete()
+                            } else {
+                                db.collection("searchBarCarros").doc(objeto.id).update({
+                                    cantidad: --cant
+                                })
+                            }
+                            flag = false
+                        }
+
+                    }
+
+
+                }
+
                 Swal.fire({
                     title: "Modificado!",
                     icon: "success",
