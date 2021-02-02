@@ -44,7 +44,7 @@ export default function ComboBox(props) {
     }
 
     return (
-        <select className="px-3 bg-gray-200 ml-4 rounded-lg h-3/4" name="estadoCarro" value={selected} onChange={cambiarEstadoCarro}>
+        <select className="px-3 bg-gray-200 text-gray-900 ml-4 rounded-lg h-3/4 focus:outline-none cursor-pointer" name="estadoCarro" value={selected} onChange={cambiarEstadoCarro}>
             {props.estados.map((estado, index) => {
                 let valor = estado
                 if (index === 0) {
