@@ -98,7 +98,7 @@ class Agregar extends React.Component {
       })
     } else {
 
-      let carro = { marca:marca.toLowerCase(), modelo:modelo.toLowerCase(), codigo, proveedor:proveedor.toLowerCase(), ano, millaje, estado, valorCompra, valorInvertido, precioFinal, downPayment: (precioFinal) * 0.2, }
+      let carro = { marca: marca.toLowerCase(), modelo: modelo.toLowerCase(), codigo, proveedor: proveedor.toLowerCase(), ano, millaje, estado, valorCompra, valorInvertido, precioFinal, downPayment: (precioFinal) * 0.2, }
 
       let colorCarro = "Rojo"
       if (color === "#0047cb") {
@@ -250,12 +250,8 @@ class Agregar extends React.Component {
     return (
       <div className="bg-gray-200">
         <Navbar />
-
-        {/*Inicio Formulario*/}
         <div className="shadow-2xl py-7">
-
           <div className="grid grid-cols-4 relative mx-auto px-3 py-4 max-w-3xl place-items-center bg-gray-900 rounded-t-lg cursor-default border-b-2 border-gray-800">
-
             <div className="flex absolute z-0 w-9/12 -mt-7 align-center items-center">
               <div className="flex-1 w-full rounded-full bg-gray-200 py-0.5"></div>
             </div>
@@ -263,7 +259,9 @@ class Agregar extends React.Component {
             {mostrarPasos}
 
           </div>
+
           {pasoAmostrar}
+          
         </div>
       </div>
     );

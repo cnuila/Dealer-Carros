@@ -138,7 +138,7 @@ class Filtros extends Component {
         return (
             <div className="grid grid-cols-2 md:grid-cols-4 bg-gray-900 rounded-lg text-sm font-semibold mx-7 sm:mx-12 p-5 text-gray-200">
 
-                <div className="flex items-center space-x-1 mx-2 mb-2 sm:m-1 col-span-2 sm:col-span-1">
+                <div className="flex items-center space-x-1 mx-2 mb-0 sm:m-1 col-span-2 sm:col-span-1">
                     <div>
                         Año
                     </div>
@@ -194,7 +194,7 @@ class Filtros extends Component {
                     </div>
                 </div>
 
-                <div className="md:col-start-4 m-2 md:mb-1 place-self-center md:place-self-end col-span-2 md:col-span-1">
+                <div className="md:col-start-4 m-1 md:mb-1 place-self-center md:place-self-end col-span-2 md:col-span-1">
                     <button className="focus:outline-none mx-2 sm:mx-5 bg-gray-800 hover:bg-gray-700 text-gray-100 font-semibold py-2 px-4 rounded inline-flex items-center"
                         onClick={this.aplicarFiltros}>
                         <span className="flex-1">Aplicar</span>

@@ -20,7 +20,7 @@ class Principal extends React.Component {
         { estado: "Apartado", selected: false, color: "text-blue-600" },
         { estado: "Vendido", selected: false, color: "text-yellow-400" },
       ],
-      dataSearchBar:[],
+      dataSearchBar: [],
       loading: true,
       carros: [],
       mostrarFiltros: false,
@@ -65,7 +65,7 @@ class Principal extends React.Component {
 
   //funcion asíncrona que trae todos los carros
   getCarros = async () => {
-    let query = db.collection("carros").orderBy("marca")    
+    let query = db.collection("carros").orderBy("marca")
     this.mostrarConsulta(query)
   }
 
@@ -74,11 +74,11 @@ class Principal extends React.Component {
     //hacer disabled el search
     query.onSnapshot((querySnapshot) => {
       const datos = []
-      querySnapshot.forEach((doc) =>{
-        datos.push({...doc.data(), id:doc.id})
+      querySnapshot.forEach((doc) => {
+        datos.push({ ...doc.data(), id: doc.id })
       })
       this.setState({
-        dataSearchBar:datos,
+        dataSearchBar: datos,
       })
     })
   }
@@ -106,7 +106,7 @@ class Principal extends React.Component {
       loading: true,
     })
     setTimeout(() => {
-      this.setState({loading:false})
+      this.setState({ loading: false })
     }, 450)
   }
 
@@ -128,7 +128,7 @@ class Principal extends React.Component {
   render() {
     //renderizar los botones de estado
     let botonesEstados;
-    let { estados, carros, carroMostrar, dataSearchBar } = this.state;
+    let { estados, carros, carroMostrar, dataSearchBar, loading, mostrarInfo, mostrarFiltros } = this.state;
     botonesEstados = estados.map((boton) => {
       return (
         <>
@@ -140,7 +140,7 @@ class Principal extends React.Component {
     //cuanto se moverán los filtros en diferentes pantallas segun se desee
     let translateCarros
     let textoFiltro
-    if (this.state.mostrarFiltros) {
+    if (mostrarFiltros) {
       translateCarros = "0 sm:-translate-y-0"
       textoFiltro = "Esconder"
     } else {
@@ -162,11 +162,11 @@ class Principal extends React.Component {
         </div>)
     } else {
       cargandoCarros = cargandoCarros.map(carro => {
-        return (<Carro info={{...carro, ...carro.fotos,}} mostrarInfo={this.clickMostrarInfo} />)
+        return (<Carro info={{ ...carro, ...carro.fotos, }} mostrarInfo={this.clickMostrarInfo} />)
       })
     }
 
-    if (this.state.loading) {
+    if (loading) {
       let array = [1, 2, 3, 4, 5, 6, 7, 8]
       carrosMostrar = array.map(() => {
         return (<CarroCargando />)
@@ -178,7 +178,7 @@ class Principal extends React.Component {
     return (
       <div className="bg-gray-100">
         {/*Inicio del navbar*/}
-        <Navbar componente={"Principal"} mostrarConsulta={this.mostrarConsulta} dataSearchBar={dataSearchBar}/>
+        <Navbar componente={"Principal"} mostrarConsulta={this.mostrarConsulta} dataSearchBar={dataSearchBar} />
         {/*fin del navbar*/}
         <div>
           {/*Botones Estado y filtro*/}
@@ -198,12 +198,14 @@ class Principal extends React.Component {
           </>
           {/*Fin de filtros*/}
           {/*Carros*/}
-          <div className={`border-t-2 border-gray-400 pt-5 grid grid-cols-1 md:grid-cols-4 gap-6 bg-gray-100 place-items-center mb-10 mt-4 sm:mt-8 mx-6 sm:mx-8 transform transition duration-500 ease-in-out -translate-y-${translateCarros}`}>
-            {carrosMostrar}
+          <div className={`bg-gray-100 min-h-screen mt-4 sm:mt-8 transform transition duration-500 ease-in-out -translate-y-${translateCarros}`}>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 place-items-center mb-10 mx-6 sm:mx-8 pt-5 border-t-2 border-gray-400">
+              {carrosMostrar}
+            </div>
           </div>
           {/*Modal para mostrar Informacion del Carro*/}
           <div>
-            {this.state.mostrarInfo && (<InfoCarro carro={carroMostrar} mostrarInfo={this.clickMostrarInfo} dataSearchBar={dataSearchBar}/>)}
+            {mostrarInfo && (<InfoCarro carro={carroMostrar} mostrarInfo={this.clickMostrarInfo} dataSearchBar={dataSearchBar} />)}
           </div>
           {/*Fin del modal*/}
         </div>
