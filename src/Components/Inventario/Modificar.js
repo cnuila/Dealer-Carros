@@ -125,7 +125,7 @@ export default function Modificar(props) {
                     let flag = false
 
                     for (let i = 0; i < 3; i++) {
-                        if (i == 0 && modelo !== objeto.modelo) {
+                        if (i === 0 && modelo !== objeto.modelo) {
                             objeto = existeModeloAntiguo[0]
                             arreglo = existeModelo
                             tipo = "modelo"
@@ -146,6 +146,7 @@ export default function Modificar(props) {
                         }
 
                         if (flag) {
+                            console.log("Entra for: " + i)
                             //si ya existe incrementa la cantidad si no crea uno nuevo 
                             if (arreglo.length === 1) {
                                 let { id, cantidad } = arreglo[0]

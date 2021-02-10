@@ -38,4 +38,4 @@ export const db = fb.firestore();
 export const firestore = firebase.firestore;
 export const storage = fb.storage();
 export const auth = fb.auth();
-export const a = firebase.auth;
+export const fbAuth = firebase.auth;

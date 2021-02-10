@@ -8,7 +8,7 @@ export default function Navbar(props) {
 
     return (
         <nav className="flex items-center justify-between flex-wrap bg-gray-900 p-3">
-            <Link to='/inventario'>
+            <Link to="/inventario">
                 <button type="button" className="flex items-center ml-2 mb-3 lg:ml-0 lg:mb-0 flex-shrink-0 text-white mr-6 focus:outline-none" >
                     <span className="font-bold text-4xl tracking-tight pl-10">
                         Santos Motors
@@ -20,7 +20,7 @@ export default function Navbar(props) {
                 : <></>
             }
             <div className="flex items-center">
-                <Link to='/agregar'>
+                <Link to="/agregar">
                     <button className="ml-8 focus:outline-none bg-gray-900 hover:bg-gray-800 text-gray-100 font-bold py-1 px-4 rounded inline-flex items-center">
                         <svg className="w-8 h-8 mr-3 fill-current text-gray-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488.001 488.001">
                             <path
