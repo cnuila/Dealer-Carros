@@ -249,7 +249,7 @@ class Agregar extends React.Component {
 
     return (
       <div className="bg-gray-200">
-        <Navbar />
+        <Navbar componente={"agregar-carro"} />
         <div className="shadow-2xl py-7">
           <div className="grid grid-cols-4 relative mx-auto px-3 py-4 max-w-3xl place-items-center bg-gray-900 rounded-t-lg cursor-default border-b-2 border-gray-800">
             <div className="flex absolute z-0 w-9/12 -mt-7 align-center items-center">
@@ -261,7 +261,7 @@ class Agregar extends React.Component {
           </div>
 
           {pasoAmostrar}
-          
+
         </div>
       </div>
     );
