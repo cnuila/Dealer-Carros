@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import Swal from 'sweetalert2';
+import { db, storage } from '../../firebase'
+import { Link } from 'react-router-dom';
 import ComboBoxCambiarEstado from './ComboBoxCambiarEstado'
 import CarroSinFoto from "../../Imágenes/CarroSinFoto.jpg"
 import ShareCarro from './ShareCarro'
-import { db, storage } from '../../firebase'
 import Modificar from './Modificar'
 import Checked from "./Checked"
 
@@ -363,11 +364,25 @@ function InfoCarro(props) {
 
                             </div>
                         </div>
-
                         <div className="grid justify-items-center col-span-2 ml-60 transform -translate-y-4">
-                            <button className="bg-yellow-400 rounded-xl w-36 h-10 text-gray-900 font-semibold" onClick={clickVenderCarro}>
-                                Vender
-                        </button>
+                            <Link to={{
+                                pathname: `/ventas/${id}`,
+                                state: {
+                                    carro: {
+                                        id: props.carro.id,
+                                        ano: props.carro.ano,
+                                        marca: props.carro.marca,
+                                        modelo: props.carro.modelo,
+                                        precioFinal: props.carro.precioFinal,
+                                        downPayment: props.carro.downPayment,
+                                        millaje: props.carro.millaje,
+                                    }
+                                }
+                            }}>
+                                <button className="bg-yellow-400 rounded-xl w-36 h-10 text-gray-900 font-semibold">
+                                    Vender
+                            </button>
+                            </Link>
                         </div>
                     </div>
                 </div>
@@ -378,5 +393,8 @@ function InfoCarro(props) {
 
 }
 export default InfoCarro;
+
+
+/**/
 
 

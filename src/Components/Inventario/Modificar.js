@@ -48,7 +48,7 @@ export default function Modificar(props) {
         setObjeto({ ...objeto, ...insertarObjeto })
     }
 
-    const clickGuardarCambios = async () => {
+    const clickGuardarCambios = () => {
 
         if (objeto.color === "transparent") {
             Swal.fire(
@@ -95,95 +95,97 @@ export default function Modificar(props) {
             } else {
                 carro = { ...carro, salvage: true }
             }
-            console.log(fotos)
             if (fotos !== undefined) {
                 carro = { ...carro, fotos: fotos }
             }
 
-            db.collection("carros").doc(id).set(carro).then(() => {
-                if (modelo !== objeto.modelo || marca !== objeto.marca || proveedor !== objeto.proveedor) {
+            db.collection("carros").doc(id).set(carro).then(async () => {
 
+                if (carro.marca !== marca || carro.modelo !== modelo || carro.proveedor !== proveedor) {
                     let datosSearchBar = []
-                    db.collection("searchBarCarros").get().then(querySnapshot => {
+                    await db.collection("searchBarCarros").get().then(querySnapshot => {
                         querySnapshot.forEach(doc => {
                             datosSearchBar.push({ ...doc.data(), id: doc.id })
                         })
                     });
-
-                    let existeModelo = datosSearchBar.filter(dato => dato.valor === objeto.modelo)
-                    let existeMarca = datosSearchBar.filter(dato => dato.valor === objeto.marca)
-                    let existeProveedor = datosSearchBar.filter(dato => dato.valor === objeto.proveedor)
-
-                    let existeMarcaAntigua = datosSearchBar.filter(dato => dato.valor === marca)
-                    let existeProveedorAntiguo = datosSearchBar.filter(dato => dato.valor === proveedor)
-                    let existeModeloAntiguo = datosSearchBar.filter(dato => dato.valor === modelo)
-
-                    let arreglo = []
-                    let tipo = ""
-                    let valor = ""
-                    let objeto = ""
-                    let flag = false
+                    //comprobar si existe el nuevo
+                    let existeModelo = datosSearchBar.filter(dato => dato.valor === carro.modelo)
+                    let existeMarca = datosSearchBar.filter(dato => dato.valor === carro.marca)
+                    let existeProveedor = datosSearchBar.filter(dato => dato.valor === carro.proveedor)
+                    //identificar los anteriores
+                    let modeloAntiguo = datosSearchBar.filter(dato => dato.valor === modelo)
+                    let marcaAntigua = datosSearchBar.filter(dato => dato.valor === marca)
+                    let proveedorAntiguo = datosSearchBar.filter(dato => dato.valor === proveedor)
 
                     for (let i = 0; i < 3; i++) {
-                        if (i === 0 && modelo !== objeto.modelo) {
-                            objeto = existeModeloAntiguo[0]
+                        let agregarNueva = false
+                        let agregarCant = false
+                        let disminuirCant = false
+                        let eliminar = false
+                        let arreglo = existeMarca
+                        let antiguo = marcaAntigua[0]
+                        let tipo = "marca"
+                        let valor = carro.marca
+                        if (i === 0) {
                             arreglo = existeModelo
+                            antiguo = modeloAntiguo[0]
                             tipo = "modelo"
                             valor = carro.modelo
-                            flag = true
-                        } else if (i === 1 && marca !== objeto.marca) {
-                            objeto = existeMarcaAntigua[0]
-                            arreglo = existeMarca
-                            tipo = "marca"
-                            valor = carro.marca
-                            flag = true
-                        } else if (i === 2 && proveedor !== objeto.proveedor) {
-                            objeto = existeProveedorAntiguo[0]
+                        }
+                        if (i === 1) {
                             arreglo = existeProveedor
+                            antiguo = proveedorAntiguo[0]
                             tipo = "proveedor"
                             valor = carro.proveedor
-                            flag = true
+                        }
+                        //es diferente y ya existe
+                        if (antiguo.valor !== valor && arreglo.length === 1) {
+                            agregarCant = true                            
+                        }
+                        //es diferente y no existe
+                        if (antiguo.valor !== valor && arreglo.length === 0) {
+                            agregarNueva = true                            
+                        }
+                        //es diferente y ya no tiene elementos
+                        if (antiguo.valor !== valor && antiguo.cantidad === 1){
+                            eliminar = true
+                        }
+                        //es diferente y sigue tienen elementos
+                        if (antiguo.valor !== valor && antiguo.cantidad > 1){
+                            disminuirCant = true
                         }
 
-                        if (flag) {
-                            console.log("Entra for: " + i)
-                            //si ya existe incrementa la cantidad si no crea uno nuevo 
-                            if (arreglo.length === 1) {
-                                let { id, cantidad } = arreglo[0]
-                                let cant = cantidad + 1
-                                db.collection("searchBarCarros").doc(id).update({
-                                    cantidad: cant
-                                })
-                            } else {
-                                db.collection("searchBarCarros").add({
-                                    tipo: tipo,
-                                    valor: valor,
-                                    cantidad: 1
-                                })
-                            }
-                            let cant = objeto.cantidad
-                            if (cant === 1) {
-                                db.collection("searchBarCarros").doc(objeto.id).delete()
-                            } else {
-                                db.collection("searchBarCarros").doc(objeto.id).update({
-                                    cantidad: --cant
-                                })
-                            }
-                            flag = false
+                        if (agregarCant) {
+                            db.collection("searchBarCarros").doc(antiguo.id).update({
+                                cantidad: ++antiguo.cantidad
+                            })
                         }
-
+                        if (agregarNueva) {
+                            db.collection("searchBarCarros").add({
+                                tipo,
+                                valor,
+                                cantidad: 1
+                            })
+                        }
+                        if (eliminar){
+                            db.collection("searchBarCarros").doc(antiguo.id).delete()
+                        }
+                        if (disminuirCant) {
+                            db.collection("searchBarCarros").doc(antiguo.id).update({
+                                cantidad: --antiguo.cantidad
+                            })
+                        }
                     }
-
-
                 }
 
                 Swal.fire({
                     title: "Modificado!",
                     icon: "success",
                     text: "Se modifico el carro con exito."
+                }).then(() => {
+                    props.estadoModi(false)
+                    props.estadoModal(false)
                 })
-                props.estadoModi(false)
-                props.estadoModal(false)
             }).catch(function (error) {
                 Swal.fire({
                     title: "Error",
@@ -193,8 +195,6 @@ export default function Modificar(props) {
             });
 
         }
-
-
     }
 
 
@@ -247,14 +247,6 @@ export default function Modificar(props) {
                             })}
                         </div>
                     </div>
-
-
-
-
-
-
-
-
 
 
                     {/*Informacion*/}
@@ -358,13 +350,11 @@ export default function Modificar(props) {
                         </div>
                     </div>
 
-
-                    <div className="flex grid justify-items-center col-span-2 ml-60 transform -translate-y-4">
-                        <button type="button" className="bg-green-400 w-36 h-10" onClick={clickGuardarCambios}>
+                    <div className="grid justify-items-center col-span-2 ml-60 transform -translate-y-4">
+                        <button type="button" className="bg-green-400 rounded-xl w-36 h-10" onClick={clickGuardarCambios}>
                             Guardar
                         </button>
                     </div>
-
 
                 </div>
 

@@ -18,7 +18,7 @@ export default function Navbar(props) {
             </span>
                 </button>
             </Link>
-            {compo === "Inventario"
+            {compo === "inventario"
                 ? <SearchBar mostrarConsulta={props.mostrarConsulta} sugerencias={props.dataSearchBar} />
                 : <></>
             }
