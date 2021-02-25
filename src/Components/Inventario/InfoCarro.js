@@ -366,7 +366,7 @@ function InfoCarro(props) {
                         </div>
                         <div className="grid justify-items-center col-span-2 ml-60 transform -translate-y-4">
                             <Link to={{
-                                pathname: `/ventas/${id}`,
+                                pathname: `/nueva-ventas/${id}`,
                                 state: {
                                     carro: {
                                         id: props.carro.id,

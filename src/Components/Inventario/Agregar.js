@@ -1,6 +1,6 @@
 import React from "react";
 import Navbar from '../Navbar'
-import Pasos from "./Agregar Carro/Pasos"
+import Pasos from "../Utilidades/Pasos"
 import InfoGeneral from './Agregar Carro/InfoGeneral'
 import InfoEstado from './Agregar Carro/InfoEstado'
 import InfoCosto from './Agregar Carro/InfoCosto'
