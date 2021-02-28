@@ -5,7 +5,7 @@ import SantosLogo from "../../../Imágenes/SantosMotorsLogo.jpg"
 
 export default function InitialAgreement(props) {
 
-    const { millaje, costumer, address, phoneNumber, auto, year, socialNumber, vin, email, precio, nuevoPrecio, nuevoDown, down, saldo, payments, fee, frecuencia, taxes, stickers, title, inspection, fee2, tagTotal } = props.datosInitial
+    const { millaje, costumer, address, phoneNumber, auto, year, socialNumber, vin, email, precio, nuevoPrecio, nuevoDown, down, saldo, payments, fee, frecuencia, taxes, stickers, title, inspection, fee2, tagTotal, endDate } = props.datosInitial
 
     const handleInputChange = ({ target }) => {
         props.mandarPadre(target)
@@ -32,15 +32,17 @@ export default function InitialAgreement(props) {
         return cantidad.toString();
     }
 
+
+
     const imprimirInitial = () => {
+
         let doc = new jsPDF();
         doc.setProperties({
             title: 'Initial Agreement And Schedule Of Payments',
             author: 'Santos Motors Group',
         });
         let width = doc.internal.pageSize.getWidth()
-        let height = doc.internal.pageSize.getHeight()
-
+        
         //encabezado
         doc.addImage(SantosLogo, 'JPG', width / 2 - 45, 5, 90, 40)
         doc.setFontSize(20)
@@ -206,11 +208,54 @@ export default function InitialAgreement(props) {
         doc.setFont("times", "bold")
         doc.text(costumer, 170, 195, "center")
 
+        //pagos
+        doc.addPage()
+        let tamaño = width / 7
+        doc.setFont("times", "bold")
+        doc.setFontSize(12)
+        doc.text(10, 12, "# Pago")
+        doc.text("Saldo", tamaño + 10, 12, "center")
+        doc.text("Fee", tamaño * 2 + 10, 12, "center")
+        doc.text("Sub Total", tamaño * 3 + 10, 12, "center")
+        doc.text("Pay Date", tamaño * 4 + 10, 12, "center")
+        doc.text("Payments", tamaño * 5 + 10, 12, "center")
+        doc.text("Total", tamaño * 6 + 10, 12, "center")
+        doc.setFont("time", "normal")        
+        y = 19
+        const pagos = props.calcularPagos()
+        let cont = 0        
+        pagos.forEach((pago) => {
+            if (cont === 39) {
+                doc.addPage()
+                doc.setFont("times", "bold")
+                doc.setFontSize(12)
+                doc.text(10, 12, "# Pago")
+                doc.text("Saldo", tamaño + 10, 12, "center")
+                doc.text("Fee", tamaño * 2 + 10, 12, "center")
+                doc.text("Sub Total", tamaño * 3 + 10, 12, "center")
+                doc.text("Pay Date", tamaño * 4 + 10, 12, "center")
+                doc.text("Payments", tamaño * 5 + 10, 12, "center")
+                doc.text("Total", tamaño * 6 + 10, 12, "center")
+                y = 19
+                doc.setFont("time", "normal")
+                cont = 0
+            }
+            doc.text(10, y, pago.numPago + "")
+            doc.text("$" + coma(pago.saldo) + ".00", tamaño + 10, y, "center")
+            doc.text("$" + coma(pago.fee) + ".00", tamaño * 2 + 10, y, "center")
+            doc.text("$" + coma(pago.subTotal) + ".00", tamaño * 3 + 10, y, "center")
+            doc.text(moment(pago.fechaPago).format("MM/DD/YYYY"), tamaño * 4 + 10, y, "center")
+            doc.text("$" + coma(pago.payment) + ".00", tamaño * 5 + 10, y, "center")
+            doc.text("$" + coma(pago.total) + ".00", tamaño * 6 + 10, y, "center")
+            y += 7
+            cont++
+        })
 
-        doc.autoPrint();
+        //doc.autoPrint();
         doc.output('dataurlnewwindow');
         //guardar doc
         //doc.save('Test.pdf');
+
     }
 
     const handleOnSubmit = () => {
@@ -312,7 +357,12 @@ export default function InitialAgreement(props) {
                         </div>
                         <div className="block px-3 pt-3">
                             <h2 className="text-gray-200 px-2 font-semibold text-lg underline">End Date</h2>
-                            <h3 className="text-gray-200 ml-4 px-2 py-2 w-11/12 capitalize border-b-2 border-gray-800 focus:border-gray-700 ">end date</h3>
+                            <h3 className="text-gray-200 ml-4 px-2 py-2 w-11/12 capitalize border-b-2 border-gray-800 focus:border-gray-700 ">{endDate}</h3>
+                        </div>
+                        <div className="flex bg-gray-800 hover:bg-gray-700 rounded-3xl h-9 w-3/4 place-self-center mt-8 items-center shadow-lg cursor-pointer">
+                            <button type="button" className="mx-1 text-center w-full text-sm font-semibold focus:outline-none text-gray-200" onClick={() => props.calcularFechaFinal()}>
+                                Calcular Fecha Final de Pago
+                            </button>
                         </div>
                     </div>
                 </div>
