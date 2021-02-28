@@ -7,6 +7,7 @@ import CarroSinFoto from "../../Imágenes/CarroSinFoto.jpg"
 import ShareCarro from './ShareCarro'
 import Modificar from './Modificar'
 import Checked from "./Checked"
+import { Carousel } from 'react-responsive-carousel';
 
 function InfoCarro(props) {
     const { fotos, id, marca, modelo, proveedor } = props.carro;
@@ -199,8 +200,9 @@ function InfoCarro(props) {
             <>
                 <div className={`overflow-hidden ${animacion} fixed z-40 justify-center items-center flex inset-0 outline-none focus:outline-none bg-opacity-50`}>
 
-                    {/*Container*/}
+                    {/*Container Grande*/}
                     <div className="hidden md:block pb-8 pr-3 absolute md:grid md:grid-cols-2 bg-gray-900 rounded-md h-80 w-2/3">
+
                         <button className="col-span-2 top-0 right-0 p-1 ml-auto bg-transparent border-0 text-black float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
                             onClick={() => handleEstadoModal(false)}>
                             <span className="mb-4 mr-2 text-white h-8 w-8 text-4xl block outline-none focus:outline-none">
@@ -387,6 +389,17 @@ function InfoCarro(props) {
                             </div>
                         </>) : (<></>)}
 
+                    </div>
+                    {/*Container Movil*/}
+                    <div className="absolute bg-gray-900 rounded-md w-2/3 h-80 ">
+                        <button className="col-span-2 top-0 right-0 p-1 ml-auto bg-transparent border-0 text-black float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
+                            onClick={() => handleEstadoModal(false)}>
+                            <span className="mb-4 mr-2 text-white h-8 w-8 text-3xl block outline-none focus:outline-none">
+                                x
+                            </span>
+                        </button>
+                        <div className="h-64 w-64 object-cover bg-green-400">
+                        </div>
                     </div>
                 </div>
                 <div className="opacity-50 fixed inset-0 z-10 bg-black" ></div>

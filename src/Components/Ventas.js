@@ -1,6 +1,7 @@
 import React from 'react'
 import Navbar from './Navbar'
-
+import { Carousel } from 'react-responsive-carousel';
+import Foto from "../Imágenes/FotoInv.jpg"
 export default function Ventas() {
     return (
         <div className="bg-gray-100 h-screen" >
