@@ -42,7 +42,7 @@ export default function InitialAgreement(props) {
             author: 'Santos Motors Group',
         });
         let width = doc.internal.pageSize.getWidth()
-        
+
         //encabezado
         doc.addImage(SantosLogo, 'JPG', width / 2 - 45, 5, 90, 40)
         doc.setFontSize(20)
@@ -220,7 +220,7 @@ export default function InitialAgreement(props) {
         doc.text("Pay Date", tamaño * 4 + 10, 12, "center")
         doc.text("Payments", tamaño * 5 + 10, 12, "center")
         doc.text("Total", tamaño * 6 + 10, 12, "center")
-        doc.setFont("time", "normal")        
+        doc.setFont("times", "normal")        
         y = 19
         const pagos = props.calcularPagos()
         let cont = 0        
@@ -237,7 +237,7 @@ export default function InitialAgreement(props) {
                 doc.text("Payments", tamaño * 5 + 10, 12, "center")
                 doc.text("Total", tamaño * 6 + 10, 12, "center")
                 y = 19
-                doc.setFont("time", "normal")
+                doc.setFont("times", "normal")
                 cont = 0
             }
             doc.text(10, y, pago.numPago + "")
@@ -250,7 +250,6 @@ export default function InitialAgreement(props) {
             y += 7
             cont++
         })
-
         //doc.autoPrint();
         doc.output('dataurlnewwindow');
         //guardar doc

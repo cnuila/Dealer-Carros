@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import moment from 'moment'
 import InitialAgreement from './Agregar Venta/InitialAgreement'
 import Observaciones from './Agregar Venta/Observaciones'
@@ -174,7 +174,6 @@ export default function NuevaVenta(props) {
 
     let pasoAmostrar = (<></>)
     if (pasos[0].selected) {
-        console.log(objeto)
         const { millaje, costumer, address, phoneNumber, auto, year, socialNumber, vin, email, precio, nuevoPrecio, down, nuevoDown, saldo, payments, fee, frecuencia, taxes, stickers, title, inspection, fee2, tagTotal, endDate } = objeto
         let datosInitial = { millaje, costumer, address, phoneNumber, auto, year, socialNumber, vin, email, precio, nuevoPrecio, nuevoDown, down, saldo, payments, fee, frecuencia, taxes, stickers, title, inspection, fee2, tagTotal, endDate }
         pasoAmostrar = <InitialAgreement datosInitial={datosInitial} mandarPadre={traerDatos} siguienteStep={siguienteStep} calcularPagos={calcularPagos} calcularFechaFinal={calcularFechaFinal}/>
