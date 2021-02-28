@@ -140,18 +140,18 @@ export default function Modificar(props) {
                         }
                         //es diferente y ya existe
                         if (antiguo.valor !== valor && arreglo.length === 1) {
-                            agregarCant = true                            
+                            agregarCant = true
                         }
                         //es diferente y no existe
                         if (antiguo.valor !== valor && arreglo.length === 0) {
-                            agregarNueva = true                            
+                            agregarNueva = true
                         }
                         //es diferente y ya no tiene elementos
-                        if (antiguo.valor !== valor && antiguo.cantidad === 1){
+                        if (antiguo.valor !== valor && antiguo.cantidad === 1) {
                             eliminar = true
                         }
                         //es diferente y sigue tienen elementos
-                        if (antiguo.valor !== valor && antiguo.cantidad > 1){
+                        if (antiguo.valor !== valor && antiguo.cantidad > 1) {
                             disminuirCant = true
                         }
 
@@ -167,7 +167,7 @@ export default function Modificar(props) {
                                 cantidad: 1
                             })
                         }
-                        if (eliminar){
+                        if (eliminar) {
                             db.collection("searchBarCarros").doc(antiguo.id).delete()
                         }
                         if (disminuirCant) {
@@ -203,7 +203,7 @@ export default function Modificar(props) {
             <div className="overflow-hidden fixed z-40 justify-center items-center flex inset-0 outline-none focus:outline-none bg-opacity-50">
 
                 {/*Container*/}
-                <div className="pb-8 pr-3 absolute grid grid-cols-2 bg-gray-900 rounded-md h-80 w-7/12">
+                <div className="pb-8 pr-3 absolute grid grid-cols-2 bg-gray-900 rounded-md h-80 w-2/3">
                     <button type="button" className="col-span-2 top-0 right-0 p-1 ml-auto bg-transparent border-0 text-black float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
                         onClick={() => props.estadoModal(false)}>
                         <span className="mb-4 mr-2 text-white h-8 w-8 text-4xl block outline-none focus:outline-none">
@@ -250,7 +250,7 @@ export default function Modificar(props) {
 
 
                     {/*Informacion*/}
-                    <div className="h-74 w-80 transform -translate-x-32 grid grid-cols-2">
+                    <div className="h-74 w-80 transform -translate-x-28 grid grid-cols-2">
                         <div className="h-11 col-span-2">
                             <div className="flex pb-5 ">
                                 <div>
@@ -342,7 +342,7 @@ export default function Modificar(props) {
                                         Valor Invertido: <input type="text" value={objeto.valorInvertido} className="block text-md text-gray-300 bg-gray-900 ml-2 px-2 w-1/2 border-b-2 border-gray-800 focus:border-gray-700 placeholder-gray-500 focus:placeholder-gray-400 focus:outline-none" name="valorInvertido" placeholder={props.carro.valorInvertido} onChange={handleInputChange} required />
                                     </p>
                                     <p className="flex text-gray-300 px-2 text-md py-2">
-                                        Down Payment: <input type="text" value={objeto.downPayment} className="block text-md text-gray-300 bg-gray-900 ml-2 px-2 w-1/2 border-b-2 border-gray-800 focus:border-gray-700 placeholder-gray-500 focus:placeholder-gray-400 focus:outline-none" name="downPayment" placeholder={props.carro.downPayment} onChange={handleInputChange} required />
+                                        Down Payment: <input type="text" value={objeto.downPayment} className="block text-md text-gray-300 bg-gray-900 ml-2 px-2 w-1/3 border-b-2 border-gray-800 focus:border-gray-700 placeholder-gray-500 focus:placeholder-gray-400 focus:outline-none" name="downPayment" placeholder={props.carro.downPayment} onChange={handleInputChange} required />
                                     </p>
                                 </div>
                             </div>
