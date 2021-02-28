@@ -6,11 +6,9 @@ import Pasos from "../Utilidades/Pasos"
 
 export default function NuevaVenta(props) {
 
-    /*const estadoInicial = {
+    const estadoInicial = {
         pasos: [{ texto: "Initial Agreement", selected: true, terminado: false },
-        { texto: "Receipt", selected: false, terminado: false },
-        { texto: "Docs", selected: false, terminado: false },
-        { texto: "Observaciones", selected: false, terminado: false }],
+        { texto: "Docs y Observaciones", selected: false, terminado: false }],
         millaje: props.location.state.carro.millaje,
         costumer: "",
         address: "",
@@ -34,10 +32,11 @@ export default function NuevaVenta(props) {
         inspection: 120.00,
         fee2: 100.00,
         tagTotal: props.location.state.carro.precioFinal * 0.06 + 180.00 + 120.00 * 2 + 100.00,
-        endDate: "",
-    }*/
+        endDate: "MM/DD/YYYY",
+        observaciones:"",
+    }
 
-    const estadoInicial = {
+    /*const estadoInicial = {
         pasos: [{ texto: "Initial Agreement", selected: false, terminado: true },
         { texto: "Docs y Observaciones", selected: true, terminado: false }],
         millaje: props.location.state.carro.millaje,
@@ -64,17 +63,14 @@ export default function NuevaVenta(props) {
         fee2: 100.00,
         tagTotal: props.location.state.carro.precioFinal * 0.06 + 180.00 + 120.00 * 2 + 100.00,
         endDate: "MM/DD/YYYY",
-        observaciones:"",
-    }
+        observaciones: "",
+    }*/
 
     const [objeto, setObjeto] = useState({ ...estadoInicial })
 
     const calcularFechaFinal = () => {
         const pagos = calcularPagos()
-        setObjeto({
-            ...objeto,
-            endDate: moment(pagos[pagos.length - 1].fechaPago).format("MM/DD/YYYY")
-        })
+        return moment(pagos[pagos.length - 1].fechaPago).format("MM/DD/YYYY")
     }
 
     const calcularPagos = () => {
@@ -143,7 +139,11 @@ export default function NuevaVenta(props) {
     }
 
     const siguienteStep = indexActual => {
-        const { pasos } = objeto
+        const { pasos, endDate } = objeto
+        let endDateIngresar = endDate
+        if (indexActual === 0) {
+            endDateIngresar = calcularFechaFinal()
+        }
         let changeStep = [...pasos]
         changeStep[indexActual].terminado = true
         changeStep[indexActual].selected = false
@@ -151,6 +151,7 @@ export default function NuevaVenta(props) {
         setObjeto({
             ...objeto,
             pasos: changeStep,
+            endDate: endDateIngresar,
         })
     }
 
@@ -187,6 +188,11 @@ export default function NuevaVenta(props) {
         return cantidad.toString();
     }
 
+    const guardaVenta = () => {
+        const { millaje, costumer, address, phoneNumber, auto, year, vin, email, nuevoPrecio, nuevoDown, saldo, payments, fee, frecuencia, socialNumber, taxes, stickers, title, inspection, fee2, tagTotal, endDate, observaciones } = objeto
+
+    }
+
     const { pasos } = objeto
     const mostrarPasos = pasos.map((paso, index) => {
         return <Pasos key={index + 1} index={index + 1} selected={paso.selected} terminado={paso.terminado} texto={paso.texto} />
@@ -194,14 +200,14 @@ export default function NuevaVenta(props) {
 
     let pasoAmostrar = (<></>)
     if (pasos[0].selected) {
-        const { millaje, costumer, address, phoneNumber, auto, year, socialNumber, vin, email, precio, nuevoPrecio, down, nuevoDown, saldo, payments, fee, frecuencia, taxes, stickers, title, inspection, fee2, tagTotal, endDate } = objeto
-        let datosInitial = { millaje, costumer, address, phoneNumber, auto, year, socialNumber, vin, email, precio, nuevoPrecio, nuevoDown, down, saldo, payments, fee, frecuencia, taxes, stickers, title, inspection, fee2, tagTotal, endDate }
+        const { costumer, address, phoneNumber, auto, year, socialNumber, vin, email, precio, nuevoPrecio, down, nuevoDown, saldo, payments, fee, frecuencia, taxes, stickers, title, inspection, fee2, tagTotal, endDate } = objeto
+        let datosInitial = { costumer, address, phoneNumber, auto, year, socialNumber, vin, email, precio, nuevoPrecio, nuevoDown, down, saldo, payments, fee, frecuencia, taxes, stickers, title, inspection, fee2, tagTotal, endDate }
         pasoAmostrar = <InitialAgreement datosInitial={datosInitial} mandarPadre={traerDatos} siguienteStep={siguienteStep} calcularPagos={calcularPagos} calcularFechaFinal={calcularFechaFinal} coma={coma} />
     }
     if (pasos[1].selected) {
-        const { costumer, address, phoneNumber, saldo, payments, fee, endDate, year, vin, auto, observaciones } = objeto
-        let datosDoc = { costumer, address, phoneNumber, saldo, payments, fee, endDate, year, vin, auto, observaciones }
-        pasoAmostrar = <Docs datosDoc={datosDoc} previoStep={previoStep} calcularFechaFinal={calcularFechaFinal} coma={coma} mandarPadre={traerDatos}/>
+        const { millaje, costumer, address, phoneNumber, auto, year, socialNumber, vin, email, nuevoPrecio, nuevoDown, saldo, payments, fee, frecuencia, taxes, stickers, title, inspection, fee2, tagTotal, endDate, observaciones } = objeto
+        let datosDoc = { millaje, costumer, address, phoneNumber, auto, year, socialNumber, vin, email, nuevoPrecio, nuevoDown, saldo, payments, fee, frecuencia, taxes, stickers, title, inspection, fee2, tagTotal, endDate, observaciones }
+        pasoAmostrar = <Docs datosDoc={datosDoc} previoStep={previoStep} calcularFechaFinal={calcularFechaFinal} coma={coma} mandarPadre={traerDatos} calcularPagos={calcularPagos} />
     }
 
     return (
