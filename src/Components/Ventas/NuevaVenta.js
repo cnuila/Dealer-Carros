@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import moment from 'moment'
 import InitialAgreement from './Agregar Venta/InitialAgreement'
-import Observaciones from './Agregar Venta/Observaciones'
-import Pasos from "./Agregar Venta/PasosVenta"
+import Docs from './Agregar Venta/Docs'
+import Pasos from "../Utilidades/Pasos"
 
 export default function NuevaVenta(props) {
 
@@ -38,10 +38,8 @@ export default function NuevaVenta(props) {
     }*/
 
     const estadoInicial = {
-        pasos: [{ texto: "Initial Agreement", selected: true, terminado: false },
-        { texto: "Receipt", selected: false, terminado: false },
-        { texto: "Docs", selected: false, terminado: false },
-        { texto: "Observaciones", selected: false, terminado: false }],
+        pasos: [{ texto: "Initial Agreement", selected: false, terminado: true },
+        { texto: "Docs y Observaciones", selected: true, terminado: false }],
         millaje: props.location.state.carro.millaje,
         costumer: "DANIEL ENRIQUE HERNANDEZ HERNANDEZ",
         address: "2014 POWHATAN RD HYATTSVILLE MD 20782",
@@ -74,7 +72,7 @@ export default function NuevaVenta(props) {
         const pagos = calcularPagos()
         setObjeto({
             ...objeto,
-            endDate: moment(pagos[pagos.length-1].fechaPago).format("MM/DD/YYYY")
+            endDate: moment(pagos[pagos.length - 1].fechaPago).format("MM/DD/YYYY")
         })
     }
 
@@ -176,23 +174,19 @@ export default function NuevaVenta(props) {
     if (pasos[0].selected) {
         const { millaje, costumer, address, phoneNumber, auto, year, socialNumber, vin, email, precio, nuevoPrecio, down, nuevoDown, saldo, payments, fee, frecuencia, taxes, stickers, title, inspection, fee2, tagTotal, endDate } = objeto
         let datosInitial = { millaje, costumer, address, phoneNumber, auto, year, socialNumber, vin, email, precio, nuevoPrecio, nuevoDown, down, saldo, payments, fee, frecuencia, taxes, stickers, title, inspection, fee2, tagTotal, endDate }
-        pasoAmostrar = <InitialAgreement datosInitial={datosInitial} mandarPadre={traerDatos} siguienteStep={siguienteStep} calcularPagos={calcularPagos} calcularFechaFinal={calcularFechaFinal}/>
+        pasoAmostrar = <InitialAgreement datosInitial={datosInitial} mandarPadre={traerDatos} siguienteStep={siguienteStep} calcularPagos={calcularPagos} calcularFechaFinal={calcularFechaFinal} />
     }
     if (pasos[1].selected) {
-        pasoAmostrar = <div>hola</div>
-    }
-    if (pasos[2].selected) {
-        pasoAmostrar = <div>hola</div>
-    }
-    if (pasos[3].selected) {
-        pasoAmostrar = <Observaciones />
+        const { costumer, address, phoneNumber } = objeto
+        let datosDoc = { costumer, address, phoneNumber }
+        pasoAmostrar = <Docs datosDoc={datosDoc} previoStep={previoStep} calcularFechaFinal={calcularFechaFinal} />
     }
 
     return (
         <div className="bg-gray-200">
             <div className="shadow-2xl py-7">
-                <div className="grid grid-cols-4 relative mx-auto lg:mx-28 px-3 py-4 place-items-center bg-gray-900 rounded-t-lg cursor-default border-b-2 border-gray-800">
-                    <div className="flex absolute z-0 w-9/12 -mt-7 align-center items-center">
+                <div className="grid grid-cols-2 relative mx-auto lg:mx-28 px-3 py-4 place-items-center bg-gray-900 rounded-t-lg cursor-default border-b-2 border-gray-800">
+                    <div className="flex absolute z-0 w-1/2 -mt-7 align-center items-center">
                         <div className="flex-1 w-full rounded-full bg-gray-200 py-0.5"></div>
                     </div>
                     {mostrarPasos}
