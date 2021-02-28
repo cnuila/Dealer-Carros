@@ -10,13 +10,14 @@ export default function NuevaVenta(props) {
         { texto: "Receipt", selected: false, terminado: false },
         { texto: "Docs", selected: false, terminado: false },
         { texto: "Observaciones", selected: false, terminado: false }],
-        costumer: "",
-        address: "",
-        phoneNumber: "",
+        millaje: props.location.state.carro.millaje,
+        costumer: "DANIEL ENRIQUE HERNANDEZ HERNANDEZ",
+        address: "2014 POWHATAN RD HYATTSVILLE MD 20782",
+        phoneNumber: "(301) 404-8347",
         auto: props.location.state.carro.marca + " " + props.location.state.carro.modelo,
         year: props.location.state.carro.ano,
         vin: props.location.state.carro.id,
-        email: "",
+        email: "cnuila14@icloud.com",
         precio: props.location.state.carro.precioFinal,
         nuevoPrecio: props.location.state.carro.precioFinal,
         down: props.location.state.carro.downPayment,
@@ -25,8 +26,7 @@ export default function NuevaVenta(props) {
         payments: 250.00,
         fee: 75.00,
         frecuencia: "14 days",
-        socialNumber: "",
-        date: new Date().toDateString(),
+        socialNumber: "0801200023837",
         taxes: props.location.state.carro.precioFinal * 0.06,
         stickers: 180.00,
         title: 120.00,
@@ -89,8 +89,8 @@ export default function NuevaVenta(props) {
 
     let pasoAmostrar = (<></>)
     if (pasos[0].selected) {
-        const { costumer, address, phoneNumber, auto, year, socialNumber, vin, email, precio, nuevoPrecio, down, nuevoDown, saldo, payments, fee, frecuencia, date, taxes, stickers, title, inspection, fee2, tagTotal } = objeto
-        let datosInitial = { costumer, address, phoneNumber, auto, year, socialNumber, vin, email, precio, nuevoPrecio, nuevoDown, down, saldo, payments, fee, frecuencia, date, taxes, stickers, title, inspection, fee2, tagTotal }
+        const { millaje, costumer, address, phoneNumber, auto, year, socialNumber, vin, email, precio, nuevoPrecio, down, nuevoDown, saldo, payments, fee, frecuencia, taxes, stickers, title, inspection, fee2, tagTotal } = objeto
+        let datosInitial = { millaje, costumer, address, phoneNumber, auto, year, socialNumber, vin, email, precio, nuevoPrecio, nuevoDown, down, saldo, payments, fee, frecuencia, taxes, stickers, title, inspection, fee2, tagTotal }
         pasoAmostrar = <InitialAgreement datosInitial={datosInitial} mandarPadre={traerDatos} siguienteStep={siguienteStep} />
     }
     if (pasos[1].selected) {

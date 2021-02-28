@@ -1,11 +1,216 @@
 import React from 'react'
+import jsPDF from "jspdf";
+import moment from 'moment'
+import SantosLogo from "../../../Imágenes/SantosMotorsLogo.jpg"
 
 export default function InitialAgreement(props) {
 
-    const { costumer, address, phoneNumber, auto, year, socialNumber, vin, email, precio, nuevoPrecio, nuevoDown, down, saldo, payments, fee, frecuencia, date, taxes, stickers, title, inspection, fee2, tagTotal } = props.datosInitial
+    const { millaje, costumer, address, phoneNumber, auto, year, socialNumber, vin, email, precio, nuevoPrecio, nuevoDown, down, saldo, payments, fee, frecuencia, taxes, stickers, title, inspection, fee2, tagTotal } = props.datosInitial
 
     const handleInputChange = ({ target }) => {
         props.mandarPadre(target)
+    }
+
+    const coma = (cantidad) => {
+        let cantidadS = cantidad.toString();
+        let cont = 0;
+        let nuevoS = "";
+        if (cantidadS.length > 3) {
+            for (let i = cantidadS.length - 1; i >= 0; i--) {
+                cont++;
+                nuevoS = cantidadS.charAt(i).concat(nuevoS);
+                if (cont === 3) {
+                    nuevoS = ",".concat(nuevoS);
+                    cont = 0;
+                }
+            }
+            if (cantidadS.length % 3 === 0) {
+                return nuevoS.substring(1, nuevoS.length);
+            }
+            return nuevoS;
+        }
+        return cantidad.toString();
+    }
+
+    const imprimirInitial = () => {
+        let doc = new jsPDF();
+        doc.setProperties({
+            title: 'Initial Agreement And Schedule Of Payments',
+            author: 'Santos Motors Group',
+        });
+        let width = doc.internal.pageSize.getWidth()
+        let height = doc.internal.pageSize.getHeight()
+
+        //encabezado
+        doc.addImage(SantosLogo, 'JPG', width / 2 - 45, 5, 90, 40)
+        doc.setFontSize(20)
+        doc.setFont("times", "bold")
+        doc.text("S.M.G. SANTOS MOTOR GROUP", width / 2, 53, "center")
+        doc.setFontSize(10)
+        doc.text("EMAIL sandsllc8@gmail.com", width / 2, 58, "center")
+        doc.setFontSize(13)
+        doc.text("10412 GUILFORD RD", width / 2, 64, "center")
+        doc.setFontSize(13)
+        doc.text("MD 20794", width / 2, 70, "center")
+
+        //cuerpo
+        doc.setFontSize(17)
+        doc.text("INITIAL  AGREEMENT AND SCHEDULE OF PAYMENTS", width / 2, 85, "center")
+
+        //primer Columna
+        let y = 97
+        for (let i = 0; i < 7; i++) {
+            let campo = "Cell"
+            let text = phoneNumber
+            let fontSizeText = 12
+            if (i === 0) {
+                campo = "Costumer"
+                text = costumer
+                fontSizeText = 8
+            }
+            if (i === 2) {
+                campo = "Auto"
+                text = auto.toUpperCase()
+            }
+            if (i === 3) {
+                campo = "Year"
+                text = year + ""
+            }
+            if (i === 4) {
+                campo = "VIN"
+                text = vin
+            }
+            if (i === 5) {
+                campo = "Email"
+                text = email
+            }
+            if (i === 6) {
+                campo = "Address"
+                let addressFormat = ""
+                let cont = 0;
+                for (let j = 0; j < address.length; j++) {
+                    addressFormat += address[j]
+                    cont++
+                    if (cont > 15 && address[j] === " ") {
+                        addressFormat += "\r"
+                        cont = 0
+                    }
+                }
+                text = addressFormat
+            }
+            doc.setFontSize(12)
+            doc.setFont("times", "bold")
+            doc.text(12, y, campo)
+            doc.setFontSize(fontSizeText)
+            doc.setFont("times", "normal")
+            doc.text(32, y, text);
+            y += 7
+        }
+
+        //segunda Columna
+        y = 97
+        for (let i = 0; i < 8; i++) {
+            let campo = "Down"
+            let text = "$" + coma(nuevoDown) + ".00"
+            if (i === 0) {
+                campo = "Precio"
+                text = "$" + coma(nuevoPrecio) + ".00"
+            }
+            if (i === 2) {
+                campo = "Saldo"
+                text = "$" + coma(saldo) + ".00"
+            }
+            if (i === 3) {
+                campo = "Payments"
+                text = "$" + coma(payments) + ".00"
+            }
+            if (i === 4) {
+                campo = "Fee"
+                text = "$" + coma(fee) + ".00"
+            }
+            if (i === 5) {
+                campo = "Frequency"
+                text = frecuencia
+            }
+            if (i === 6) {
+                campo = "Date"
+                text = moment(new Date()).format("MM/DD/YYYY")
+            }
+            if (i === 7) {
+                campo = "SS #"
+                text = socialNumber
+            }
+            doc.setFontSize(12)
+            doc.setFont("times", "bold")
+            doc.text(100, y, campo)
+            doc.setFontSize(12)
+            doc.setFont("times", "normal")
+            doc.text(122, y, text);
+            y += 7
+        }
+
+        //tercera Columna
+        y = 97
+        for (let i = 0; i < 7; i++) {
+            let campo = "Stickers"
+            let text = "$" + coma(stickers) + ".00"
+            if (i === 0) {
+                campo = "Taxes"
+                text = "$" + coma(taxes) + ".00"
+            }
+            if (i === 2) {
+                campo = "Title"
+                text = "$" + coma(title) + ".00"
+            }
+            if (i === 3) {
+                campo = "Inspection"
+                text = "$" + coma(inspection) + ".00"
+            }
+            if (i === 4) {
+                campo = "Fee"
+                text = "$" + coma(fee2) + ".00"
+            }
+            if (i === 5) {
+                campo = "Tag Total"
+                text = "$" + coma(tagTotal) + ".00"
+            }
+            if (i === 6) {
+                campo = "End Date"
+                text = "End Date"
+            }
+            doc.setFontSize(12)
+            doc.setFont("times", "bold")
+            doc.text(158, y, campo)
+            doc.setFontSize(12)
+            doc.setFont("times", "normal")
+            doc.text(180, y, text);
+            y += 7
+        }
+
+        let texto = ("Deal  Description : PLACAS NO INCLUIDAS EN EL TRATO. DEBERAN SER\r" +
+            `CANCELADAS DENTRO DE  4 SEMANAS ${"$" + coma(tagTotal) + ".00"}\n\r` +
+            "GARANTIA : MOTOR Y TRANSMISION UNICAMENTE 1 MES A PARTIR\r" +
+            "DE LA VENTA.\n\r" +
+            `Millaje actual: ${millaje}`)
+
+        doc.setFontSize(10)
+        doc.setFont("times", "bold")
+        doc.text(12, 167, texto)
+
+        //firma
+
+        doc.setLineWidth(0.5)
+        doc.line(140, 190,200, 190)
+
+        doc.setFontSize(8)
+        doc.setFont("times", "bold")
+        doc.text(costumer, 170, 195, "center")
+
+
+        doc.autoPrint();
+        doc.output('dataurlnewwindow');
+        //guardar doc
+        //doc.save('Test.pdf');
     }
 
     const handleOnSubmit = () => {
@@ -73,7 +278,7 @@ export default function InitialAgreement(props) {
                         </div>
                         <div className="block px-3 pt-3">
                             <h2 className="text-gray-200 px-2 font-semibold text-lg underline">Date</h2>
-                            <h3 className="text-gray-200 ml-4 px-2 py-2 w-11/12 capitalize border-b-2 border-gray-800 focus:border-gray-700 ">{date}</h3>
+                            <h3 className="text-gray-200 ml-4 px-2 py-2 w-11/12 capitalize border-b-2 border-gray-800 focus:border-gray-700 ">{moment(new Date()).format("MM/DD/YYYY")}</h3>
                         </div>
                         <div className="block px-3 pt-3">
                             <h2 className="text-gray-200 px-2 font-semibold text-lg underline">SS#</h2>
@@ -113,7 +318,7 @@ export default function InitialAgreement(props) {
                 </div>
                 <div className="flex flex-row justify-end place-items-end space-x-4 py-4 px-7">
                     <div className="flex bg-gray-800 hover:bg-gray-700 rounded-3xl h-9 w-2/12 items-center shadow-lg cursor-pointer">
-                        <button type="submit" className="mx-1 text-center w-full text-sm font-semibold focus:outline-none text-gray-200">
+                        <button type="button" className="mx-1 text-center w-full text-sm font-semibold focus:outline-none text-gray-200" onClick={() => imprimirInitial()}>
                             Imprimir
                         </button>
                     </div>
