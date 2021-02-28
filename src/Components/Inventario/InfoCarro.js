@@ -379,7 +379,7 @@ function InfoCarro(props) {
                                     }
                                 }
                             }}>
-                                <button className="bg-yellow-400 rounded-xl w-36 h-10 text-gray-900 font-semibold">
+                                <button className="bg-yellow-400 hover:bg-yellow-500 rounded-xl w-36 h-10 text-gray-900 font-semibold focus:outline-none">
                                     Vender
                             </button>
                             </Link>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import InitialAgreement from './Agregar Venta/InitialAgreement'
 import Observaciones from './Agregar Venta/Observaciones'
-import Pasos from "../Utilidades/Pasos"
+import Pasos from "./Agregar Venta/PasosVenta"
 
 export default function NuevaVenta(props) {
 
@@ -9,7 +9,7 @@ export default function NuevaVenta(props) {
         pasos: [{ texto: "Initial Agreement", selected: true, terminado: false },
         { texto: "Receipt", selected: false, terminado: false },
         { texto: "Docs", selected: false, terminado: false },
-        { texto: "Observaciones", selected: true, terminado: false }],
+        { texto: "Observaciones", selected: false, terminado: false }],
         costumer: "",
         address: "",
         phoneNumber: "",
@@ -39,8 +39,12 @@ export default function NuevaVenta(props) {
 
     const traerDatos = ({ name, value }) => {
         let nuevoSaldo = objeto.saldo
+        let taxes = objeto.taxes
+        let tagTotal = objeto.tagTotal
         if (name === "nuevoPrecio") {
             nuevoSaldo = value - objeto.nuevoDown
+            taxes = value * 0.06
+            tagTotal = taxes + 180.00 + 120.00 * 2 + 100.00
         }
         if (name === "nuevoDown") {
             nuevoSaldo = objeto.nuevoPrecio - value
@@ -49,6 +53,8 @@ export default function NuevaVenta(props) {
             ...objeto,
             [name]: value,
             saldo: nuevoSaldo,
+            taxes,
+            tagTotal,
         })
     }
 
@@ -72,7 +78,7 @@ export default function NuevaVenta(props) {
         changeStep[indexActual - 1].selected = true
         setObjeto({
             ...objeto,
-            pasos:changeStep,
+            pasos: changeStep,
         })
     }
 
@@ -94,7 +100,7 @@ export default function NuevaVenta(props) {
         pasoAmostrar = <div>hola</div>
     }
     if (pasos[3].selected) {
-        pasoAmostrar = <Observaciones/>
+        pasoAmostrar = <Observaciones />
     }
 
     return (
