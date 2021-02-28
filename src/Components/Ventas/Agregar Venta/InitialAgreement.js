@@ -10,28 +10,7 @@ export default function InitialAgreement(props) {
 
     const handleInputChange = ({ target }) => {
         props.mandarPadre(target)
-    }
-
-    const coma = (cantidad) => {
-        let cantidadS = cantidad.toString();
-        let cont = 0;
-        let nuevoS = "";
-        if (cantidadS.length > 3) {
-            for (let i = cantidadS.length - 1; i >= 0; i--) {
-                cont++;
-                nuevoS = cantidadS.charAt(i).concat(nuevoS);
-                if (cont === 3) {
-                    nuevoS = ",".concat(nuevoS);
-                    cont = 0;
-                }
-            }
-            if (cantidadS.length % 3 === 0) {
-                return nuevoS.substring(1, nuevoS.length);
-            }
-            return nuevoS;
-        }
-        return cantidad.toString();
-    }
+    }    
 
     const validarCampos = () => {
         if (nuevoPrecio < precio) {
@@ -142,7 +121,7 @@ export default function InitialAgreement(props) {
                             cont = 0
                         }
                     }
-                    text = addressFormat
+                    text = addressFormat.toUpperCase()
                 }
                 doc.setFontSize(12)
                 doc.setFont("times", "bold")
@@ -157,22 +136,22 @@ export default function InitialAgreement(props) {
             y = 97
             for (let i = 0; i < 8; i++) {
                 let campo = "Down"
-                let text = "$" + coma(nuevoDown) + ".00"
+                let text = "$" + props.coma(nuevoDown) + ".00"
                 if (i === 0) {
                     campo = "Precio"
-                    text = "$" + coma(nuevoPrecio) + ".00"
+                    text = "$" + props.coma(nuevoPrecio) + ".00"
                 }
                 if (i === 2) {
                     campo = "Saldo"
-                    text = "$" + coma(saldo) + ".00"
+                    text = "$" + props.coma(saldo) + ".00"
                 }
                 if (i === 3) {
                     campo = "Payments"
-                    text = "$" + coma(payments) + ".00"
+                    text = "$" + props.coma(payments) + ".00"
                 }
                 if (i === 4) {
                     campo = "Fee"
-                    text = "$" + coma(fee) + ".00"
+                    text = "$" + props.coma(fee) + ".00"
                 }
                 if (i === 5) {
                     campo = "Frequency"
@@ -199,26 +178,26 @@ export default function InitialAgreement(props) {
             y = 97
             for (let i = 0; i < 7; i++) {
                 let campo = "Stickers"
-                let text = "$" + coma(stickers) + ".00"
+                let text = "$" + props.coma(stickers) + ".00"
                 if (i === 0) {
                     campo = "Taxes"
-                    text = "$" + coma(taxes) + ".00"
+                    text = "$" + props.coma(taxes) + ".00"
                 }
                 if (i === 2) {
                     campo = "Title"
-                    text = "$" + coma(title) + ".00"
+                    text = "$" + props.coma(title) + ".00"
                 }
                 if (i === 3) {
                     campo = "Inspection"
-                    text = "$" + coma(inspection) + ".00"
+                    text = "$" + props.coma(inspection) + ".00"
                 }
                 if (i === 4) {
                     campo = "Fee"
-                    text = "$" + coma(fee2) + ".00"
+                    text = "$" + props.coma(fee2) + ".00"
                 }
                 if (i === 5) {
                     campo = "Tag Total"
-                    text = "$" + coma(tagTotal) + ".00"
+                    text = "$" + props.coma(tagTotal) + ".00"
                 }
                 if (i === 6) {
                     campo = "End Date"                    
@@ -234,7 +213,7 @@ export default function InitialAgreement(props) {
             }
 
             let texto = ("Deal  Description : PLACAS NO INCLUIDAS EN EL TRATO. DEBERAN SER\r" +
-                `CANCELADAS DENTRO DE  4 SEMANAS ${"$" + coma(tagTotal) + ".00"}\n\r` +
+                `CANCELADAS DENTRO DE  4 SEMANAS ${"$" + props.coma(tagTotal) + ".00"}\n\r` +
                 "GARANTIA : MOTOR Y TRANSMISION UNICAMENTE 1 MES A PARTIR\r" +
                 "DE LA VENTA.\n\r" +
                 `Millaje actual: ${millaje}`)
@@ -285,12 +264,12 @@ export default function InitialAgreement(props) {
                     cont = 0
                 }
                 doc.text(10, y, pago.numPago + "")
-                doc.text("$" + coma(pago.saldo) + ".00", tamaño + 10, y, "center")
-                doc.text("$" + coma(pago.fee) + ".00", tamaño * 2 + 10, y, "center")
-                doc.text("$" + coma(pago.subTotal) + ".00", tamaño * 3 + 10, y, "center")
+                doc.text("$" + props.coma(pago.saldo) + ".00", tamaño + 10, y, "center")
+                doc.text("$" + props.coma(pago.fee) + ".00", tamaño * 2 + 10, y, "center")
+                doc.text("$" + props.coma(pago.subTotal) + ".00", tamaño * 3 + 10, y, "center")
                 doc.text(moment(pago.fechaPago).format("MM/DD/YYYY"), tamaño * 4 + 10, y, "center")
-                doc.text("$" + coma(pago.payment) + ".00", tamaño * 5 + 10, y, "center")
-                doc.text("$" + coma(pago.total) + ".00", tamaño * 6 + 10, y, "center")
+                doc.text("$" + props.coma(pago.payment) + ".00", tamaño * 5 + 10, y, "center")
+                doc.text("$" + props.coma(pago.total) + ".00", tamaño * 6 + 10, y, "center")
                 y += 7
                 cont++
             })

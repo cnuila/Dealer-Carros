@@ -64,6 +64,7 @@ export default function NuevaVenta(props) {
         fee2: 100.00,
         tagTotal: props.location.state.carro.precioFinal * 0.06 + 180.00 + 120.00 * 2 + 100.00,
         endDate: "MM/DD/YYYY",
+        observaciones:"",
     }
 
     const [objeto, setObjeto] = useState({ ...estadoInicial })
@@ -165,6 +166,27 @@ export default function NuevaVenta(props) {
         })
     }
 
+    const coma = (cantidad) => {
+        let cantidadS = cantidad.toString();
+        let cont = 0;
+        let nuevoS = "";
+        if (cantidadS.length > 3) {
+            for (let i = cantidadS.length - 1; i >= 0; i--) {
+                cont++;
+                nuevoS = cantidadS.charAt(i).concat(nuevoS);
+                if (cont === 3) {
+                    nuevoS = ",".concat(nuevoS);
+                    cont = 0;
+                }
+            }
+            if (cantidadS.length % 3 === 0) {
+                return nuevoS.substring(1, nuevoS.length);
+            }
+            return nuevoS;
+        }
+        return cantidad.toString();
+    }
+
     const { pasos } = objeto
     const mostrarPasos = pasos.map((paso, index) => {
         return <Pasos key={index + 1} index={index + 1} selected={paso.selected} terminado={paso.terminado} texto={paso.texto} />
@@ -174,17 +196,17 @@ export default function NuevaVenta(props) {
     if (pasos[0].selected) {
         const { millaje, costumer, address, phoneNumber, auto, year, socialNumber, vin, email, precio, nuevoPrecio, down, nuevoDown, saldo, payments, fee, frecuencia, taxes, stickers, title, inspection, fee2, tagTotal, endDate } = objeto
         let datosInitial = { millaje, costumer, address, phoneNumber, auto, year, socialNumber, vin, email, precio, nuevoPrecio, nuevoDown, down, saldo, payments, fee, frecuencia, taxes, stickers, title, inspection, fee2, tagTotal, endDate }
-        pasoAmostrar = <InitialAgreement datosInitial={datosInitial} mandarPadre={traerDatos} siguienteStep={siguienteStep} calcularPagos={calcularPagos} calcularFechaFinal={calcularFechaFinal} />
+        pasoAmostrar = <InitialAgreement datosInitial={datosInitial} mandarPadre={traerDatos} siguienteStep={siguienteStep} calcularPagos={calcularPagos} calcularFechaFinal={calcularFechaFinal} coma={coma} />
     }
     if (pasos[1].selected) {
-        const { costumer, address, phoneNumber } = objeto
-        let datosDoc = { costumer, address, phoneNumber }
-        pasoAmostrar = <Docs datosDoc={datosDoc} previoStep={previoStep} calcularFechaFinal={calcularFechaFinal} />
+        const { costumer, address, phoneNumber, saldo, payments, fee, endDate, year, vin, auto, observaciones } = objeto
+        let datosDoc = { costumer, address, phoneNumber, saldo, payments, fee, endDate, year, vin, auto, observaciones }
+        pasoAmostrar = <Docs datosDoc={datosDoc} previoStep={previoStep} calcularFechaFinal={calcularFechaFinal} coma={coma} mandarPadre={traerDatos}/>
     }
 
     return (
-        <div className="bg-gray-200">
-            <div className="shadow-2xl py-7">
+        <div className="bg-gray-20000">
+            <div className="shadow-2xl py-7 min-h-screen">
                 <div className="grid grid-cols-2 relative mx-auto lg:mx-28 px-3 py-4 place-items-center bg-gray-900 rounded-t-lg cursor-default border-b-2 border-gray-800">
                     <div className="flex absolute z-0 w-1/2 -mt-7 align-center items-center">
                         <div className="flex-1 w-full rounded-full bg-gray-200 py-0.5"></div>
