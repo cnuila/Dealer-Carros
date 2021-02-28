@@ -200,7 +200,7 @@ function InfoCarro(props) {
                 <div className={`overflow-hidden ${animacion} fixed z-40 justify-center items-center flex inset-0 outline-none focus:outline-none bg-opacity-50`}>
 
                     {/*Container*/}
-                    <div className="pb-8 pr-3 absolute md:grid md:grid-cols-2 bg-gray-900 rounded-md h-80 w-7/12">
+                    <div className="hidden md:block pb-8 pr-3 absolute md:grid md:grid-cols-2 bg-gray-900 rounded-md h-80 w-2/3">
                         <button className="col-span-2 top-0 right-0 p-1 ml-auto bg-transparent border-0 text-black float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
                             onClick={() => handleEstadoModal(false)}>
                             <span className="mb-4 mr-2 text-white h-8 w-8 text-4xl block outline-none focus:outline-none">
@@ -263,7 +263,7 @@ function InfoCarro(props) {
 
 
                         {/*Informacion*/}
-                        <div className="h-74 w-80 transform -translate-x-32 grid grid-cols-2">
+                        <div className="h-74 w-80 transform -translate-x-28 grid grid-cols-2">
                             <div className="h-11 col-span-2">
                                 <div className="flex pb-5 ">
                                     <div>
@@ -364,26 +364,29 @@ function InfoCarro(props) {
 
                             </div>
                         </div>
-                        <div className="grid justify-items-center col-span-2 ml-60 transform -translate-y-4">
-                            <Link to={{
-                                pathname: `/nueva-ventas/${id}`,
-                                state: {
-                                    carro: {
-                                        id: props.carro.id,
-                                        ano: props.carro.ano,
-                                        marca: props.carro.marca,
-                                        modelo: props.carro.modelo,
-                                        precioFinal: props.carro.precioFinal,
-                                        downPayment: props.carro.downPayment,
-                                        millaje: props.carro.millaje,
+                        {props.carro.estado === "Disponible" ? (<>
+                            <div className="grid justify-items-center col-span-2 ml-60 transform -translate-y-4">
+                                <Link to={{
+                                    pathname: `/nueva-ventas/${id}`,
+                                    state: {
+                                        carro: {
+                                            id: props.carro.id,
+                                            ano: props.carro.ano,
+                                            marca: props.carro.marca,
+                                            modelo: props.carro.modelo,
+                                            precioFinal: props.carro.precioFinal,
+                                            downPayment: props.carro.downPayment,
+                                            millaje: props.carro.millaje,
+                                        }
                                     }
-                                }
-                            }}>
-                                <button className="bg-yellow-400 hover:bg-yellow-500 rounded-xl w-36 h-10 text-gray-900 font-semibold focus:outline-none">
-                                    Vender
-                            </button>
-                            </Link>
-                        </div>
+                                }}>
+                                    <button className="bg-yellow-400 hover:bg-yellow-500 rounded-xl w-36 h-10 text-gray-900 font-semibold focus:outline-none">
+                                        Vender
+                                    </button>
+                                </Link>
+                            </div>
+                        </>) : (<></>)}
+
                     </div>
                 </div>
                 <div className="opacity-50 fixed inset-0 z-10 bg-black" ></div>
