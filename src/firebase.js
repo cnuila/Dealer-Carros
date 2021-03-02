@@ -30,7 +30,7 @@ var firebaseDevelopersConfig = {
 };
 
 // Initialize Firebase
-const fb = firebase.initializeApp(firebaseDevelopersConfig);
+const fb = firebase.initializeApp(firebaseSantosConfig);
 firebase.analytics();
 
 export default fb;
