@@ -6,7 +6,7 @@ import Pasos from "../Utilidades/Pasos"
 
 export default function NuevaVenta(props) {
 
-    const estadoInicial = {
+    /*const estadoInicial = {
         pasos: [{ texto: "Initial Agreement", selected: true, terminado: false },
         { texto: "Docs y Observaciones", selected: false, terminado: false }],
         millaje: props.location.state.carro.millaje,
@@ -34,9 +34,9 @@ export default function NuevaVenta(props) {
         tagTotal: props.location.state.carro.precioFinal * 0.06 + 180.00 + 120.00 * 2 + 100.00,
         endDate: "MM/DD/YYYY",
         observaciones:"",
-    }
+    }*/
 
-    /*const estadoInicial = {
+    const estadoInicial = {
         pasos: [{ texto: "Initial Agreement", selected: false, terminado: true },
         { texto: "Docs y Observaciones", selected: true, terminado: false }],
         millaje: props.location.state.carro.millaje,
@@ -64,7 +64,7 @@ export default function NuevaVenta(props) {
         tagTotal: props.location.state.carro.precioFinal * 0.06 + 180.00 + 120.00 * 2 + 100.00,
         endDate: "MM/DD/YYYY",
         observaciones: "",
-    }*/
+    }
 
     const [objeto, setObjeto] = useState({ ...estadoInicial })
 
@@ -74,6 +74,7 @@ export default function NuevaVenta(props) {
     }
 
     const calcularPagos = () => {
+        //revisar con fee 65 qué pasa
         const { saldo, payments, fee } = objeto
         let saldoActual = saldo
         let subTotal = saldoActual + fee
@@ -121,13 +122,16 @@ export default function NuevaVenta(props) {
         let nuevoSaldo = objeto.saldo
         let taxes = objeto.taxes
         let tagTotal = objeto.tagTotal
+        let nuevoDown = objeto.nuevoDown
         if (name === "nuevoPrecio") {
             nuevoSaldo = value - objeto.nuevoDown
             taxes = value * 0.06
             tagTotal = taxes + 180.00 + 120.00 * 2 + 100.00
+            nuevoDown = value * 0.2
         }
         if (name === "nuevoDown") {
             nuevoSaldo = objeto.nuevoPrecio - value
+            nuevoDown = value
         }
         setObjeto({
             ...objeto,
@@ -135,6 +139,7 @@ export default function NuevaVenta(props) {
             saldo: nuevoSaldo,
             taxes,
             tagTotal,
+            nuevoDown,
         })
     }
 
@@ -190,6 +195,7 @@ export default function NuevaVenta(props) {
 
     const guardaVenta = () => {
         const { millaje, costumer, address, phoneNumber, auto, year, vin, email, nuevoPrecio, nuevoDown, saldo, payments, fee, frecuencia, socialNumber, taxes, stickers, title, inspection, fee2, tagTotal, endDate, observaciones } = objeto
+
 
     }
 
