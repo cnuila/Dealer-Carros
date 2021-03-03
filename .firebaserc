@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "santos-motors"
+    "default": "santos-motors",
+    "production": "santos-motors-group-app"
   }
 }
