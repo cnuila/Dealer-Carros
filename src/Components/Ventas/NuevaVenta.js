@@ -54,7 +54,7 @@ export default function NuevaVenta(props) {
         saldo: 17500 - 2000,
         payments: 250.00,
         fee: 75.00,
-        frecuencia: "14 days",
+        frecuencia14: true,
         socialNumber: "0801200023837",
         taxes: props.location.state.carro.precioFinal * 0.06,
         stickers: 180.00,
@@ -206,13 +206,13 @@ export default function NuevaVenta(props) {
 
     let pasoAmostrar = (<></>)
     if (pasos[0].selected) {
-        const { costumer, address, phoneNumber, auto, year, socialNumber, vin, email, precio, nuevoPrecio, down, nuevoDown, saldo, payments, fee, frecuencia, taxes, stickers, title, inspection, fee2, tagTotal, endDate } = objeto
-        let datosInitial = { costumer, address, phoneNumber, auto, year, socialNumber, vin, email, precio, nuevoPrecio, nuevoDown, down, saldo, payments, fee, frecuencia, taxes, stickers, title, inspection, fee2, tagTotal, endDate }
+        const { costumer, address, phoneNumber, auto, year, socialNumber, vin, email, precio, nuevoPrecio, down, nuevoDown, saldo, payments, fee, frecuencia14, taxes, stickers, title, inspection, fee2, tagTotal, endDate } = objeto
+        let datosInitial = { costumer, address, phoneNumber, auto, year, socialNumber, vin, email, precio, nuevoPrecio, nuevoDown, down, saldo, payments, fee, frecuencia14, taxes, stickers, title, inspection, fee2, tagTotal, endDate }
         pasoAmostrar = <InitialAgreement datosInitial={datosInitial} mandarPadre={traerDatos} siguienteStep={siguienteStep} calcularPagos={calcularPagos} calcularFechaFinal={calcularFechaFinal} coma={coma} />
     }
     if (pasos[1].selected) {
-        const { millaje, costumer, address, phoneNumber, auto, year, socialNumber, vin, email, nuevoPrecio, nuevoDown, saldo, payments, fee, frecuencia, taxes, stickers, title, inspection, fee2, tagTotal, endDate, observaciones } = objeto
-        let datosDoc = { millaje, costumer, address, phoneNumber, auto, year, socialNumber, vin, email, nuevoPrecio, nuevoDown, saldo, payments, fee, frecuencia, taxes, stickers, title, inspection, fee2, tagTotal, endDate, observaciones }
+        const { millaje, costumer, address, phoneNumber, auto, year, socialNumber, vin, email, nuevoPrecio, nuevoDown, saldo, payments, fee, frecuencia14, taxes, stickers, title, inspection, fee2, tagTotal, endDate, observaciones } = objeto
+        let datosDoc = { millaje, costumer, address, phoneNumber, auto, year, socialNumber, vin, email, nuevoPrecio, nuevoDown, saldo, payments, fee, frecuencia14, taxes, stickers, title, inspection, fee2, tagTotal, endDate, observaciones }
         pasoAmostrar = <Docs datosDoc={datosDoc} previoStep={previoStep} calcularFechaFinal={calcularFechaFinal} coma={coma} mandarPadre={traerDatos} calcularPagos={calcularPagos} />
     }
 

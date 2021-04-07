@@ -5,11 +5,11 @@ import Swal from 'sweetalert2'
 
 export default function InitialAgreement(props) {
 
-    const { costumer, address, phoneNumber, auto, year, socialNumber, vin, email, precio, nuevoPrecio, nuevoDown, down, saldo, payments, fee, frecuencia, taxes, stickers, title, inspection, fee2, tagTotal, endDate } = props.datosInitial
+    const { costumer, address, phoneNumber, auto, year, socialNumber, vin, email, precio, nuevoPrecio, nuevoDown, down, saldo, payments, fee, frecuencia14, taxes, stickers, title, inspection, fee2, tagTotal, endDate } = props.datosInitial
 
     const handleInputChange = ({ target }) => {
         props.mandarPadre(target)
-    }    
+    }
 
     const validarCampos = () => {
         if (nuevoPrecio < precio) {
@@ -45,7 +45,7 @@ export default function InitialAgreement(props) {
         if (validarCampos()) {
             props.siguienteStep(0)
         }
-    }    
+    }
 
 
     return (
@@ -101,11 +101,14 @@ export default function InitialAgreement(props) {
                         </div>
                         <div className="block px-3 pt-3">
                             <h2 className="text-gray-200 px-2 font-semibold text-lg underline">Fee</h2>
-                            <input type="number" min={65} value={fee} className="block bg-gray-900 text-gray-200 ml-4 px-2 py-2 w-11/12 border-b-2 border-gray-800 focus:border-gray-700 placeholder-gray-500 focus:placeholder-gray-400 focus:outline-none" name="fee" required onChange={handleInputChange} />                            
+                            <input type="number" min={65} value={fee} className="block bg-gray-900 text-gray-200 ml-4 px-2 py-2 w-11/12 border-b-2 border-gray-800 focus:border-gray-700 placeholder-gray-500 focus:placeholder-gray-400 focus:outline-none" name="fee" required onChange={handleInputChange} />
                         </div>
                         <div className="block px-3 pt-3">
                             <h2 className="text-gray-200 px-2 font-semibold text-lg underline">Frecuency</h2>
-                            <h3 className="text-gray-200 ml-4 px-2 py-2 w-11/12 capitalize border-b-2 border-gray-800 focus:border-gray-700 ">{frecuencia}</h3>
+                            <input type="radio" id="14dias" name="frecuency" value="14" checked={frecuencia14} className="ml-4 my-2" onChange={handleInputChange}/>
+                            <label for="14dias" className="bg-gray-900 text-gray-200 ml-4 px-2 py-2">14 days</label>
+                            <input type="radio" id="30dias" name="frecuency" value="30" checked={!frecuencia14} onChange={handleInputChange}/>
+                            <label for="30dias">30 days</label>                            
                         </div>
                         <div className="block px-3 pt-3">
                             <h2 className="text-gray-200 px-2 font-semibold text-lg underline">Date</h2>
