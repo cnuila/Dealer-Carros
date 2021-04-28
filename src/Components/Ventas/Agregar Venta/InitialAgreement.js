@@ -106,9 +106,9 @@ export default function InitialAgreement(props) {
                         <div className="block px-3 pt-3">
                             <h2 className="text-gray-200 px-2 font-semibold text-lg underline">Frecuency</h2>
                             <input type="radio" id="14dias" name="frecuency" value="14" checked={frecuencia14} className="ml-4 my-2" onChange={handleInputChange}/>
-                            <label for="14dias" className="bg-gray-900 text-gray-200 ml-4 px-2 py-2">14 days</label>
-                            <input type="radio" id="30dias" name="frecuency" value="30" checked={!frecuencia14} onChange={handleInputChange}/>
-                            <label for="30dias">30 days</label>                            
+                            <label for="14dias" className="bg-gray-900 text-gray-200 ml-3">14 days</label>
+                            <input type="radio" id="30dias" name="frecuency" value="30" checked={!frecuencia14} className="ml-4 my-2" onChange={handleInputChange}/>
+                            <label for="30dias" className="bg-gray-900 text-gray-200 ml-3">30 days</label>                            
                         </div>
                         <div className="block px-3 pt-3">
                             <h2 className="text-gray-200 px-2 font-semibold text-lg underline">Date</h2>

@@ -123,6 +123,8 @@ export default function NuevaVenta(props) {
         let taxes = objeto.taxes
         let tagTotal = objeto.tagTotal
         let nuevoDown = objeto.nuevoDown
+        let frecuencia14 = objeto.frecuencia14
+
         if (name === "nuevoPrecio") {
             nuevoSaldo = value - objeto.nuevoDown
             taxes = value * 0.06
@@ -133,6 +135,13 @@ export default function NuevaVenta(props) {
             nuevoSaldo = objeto.nuevoPrecio - value
             nuevoDown = value
         }
+        if (name === "frecuency") {
+            if (value === "30"){
+                frecuencia14 = false
+            } else {
+                frecuencia14 = true
+            }
+        }
         setObjeto({
             ...objeto,
             [name]: value,
@@ -140,6 +149,7 @@ export default function NuevaVenta(props) {
             taxes,
             tagTotal,
             nuevoDown,
+            frecuencia14,
         })
     }
 
