@@ -278,6 +278,8 @@ export default function Docs(props) {
                 campo = "SS #"
                 text = socialNumber
             }
+            console.log(i)
+            console.log(text)
             doc.setFontSize(12)
             doc.setFont("times", "bold")
             doc.text(100, y, campo)

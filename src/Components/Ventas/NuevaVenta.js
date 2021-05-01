@@ -48,7 +48,7 @@ export default function NuevaVenta(props) {
         vin: props.location.state.carro.id,
         email: "cnuila14@icloud.com",
         precio: props.location.state.carro.precioFinal,
-        nuevoPrecio: 17500,
+        nuevoPrecio: 17000,
         down: props.location.state.carro.downPayment,
         nuevoDown: 2000,
         saldo: 17500 - 2000,
@@ -124,16 +124,28 @@ export default function NuevaVenta(props) {
         let tagTotal = objeto.tagTotal
         let nuevoDown = objeto.nuevoDown
         let frecuencia14 = objeto.frecuencia14
+        let fee = objeto.fee
+        let payments = objeto.payments
+        let down = objeto.down
+        let nuevoPrecio = objeto.nuevoPrecio
 
         if (name === "nuevoPrecio") {
+            nuevoPrecio = parseInt(value)
             nuevoSaldo = value - objeto.nuevoDown
             taxes = value * 0.06
             tagTotal = taxes + 180.00 + 120.00 * 2 + 100.00
             nuevoDown = value * 0.2
+            down = value * 0.2
+        }
+        if (name === "fee"){
+            fee = parseInt(value)
         }
         if (name === "nuevoDown") {
             nuevoSaldo = objeto.nuevoPrecio - value
             nuevoDown = value
+        }
+        if (name === "payments") {
+            payments = parseInt(value)
         }
         if (name === "frecuency") {
             if (value === "30"){
@@ -150,6 +162,10 @@ export default function NuevaVenta(props) {
             tagTotal,
             nuevoDown,
             frecuencia14,
+            fee,
+            payments,
+            down,
+            nuevoPrecio,
         })
     }
 
@@ -222,7 +238,11 @@ export default function NuevaVenta(props) {
     }
     if (pasos[1].selected) {
         const { millaje, costumer, address, phoneNumber, auto, year, socialNumber, vin, email, nuevoPrecio, nuevoDown, saldo, payments, fee, frecuencia14, taxes, stickers, title, inspection, fee2, tagTotal, endDate, observaciones } = objeto
-        let datosDoc = { millaje, costumer, address, phoneNumber, auto, year, socialNumber, vin, email, nuevoPrecio, nuevoDown, saldo, payments, fee, frecuencia14, taxes, stickers, title, inspection, fee2, tagTotal, endDate, observaciones }
+        let frecuencia = "30 days"
+        if (frecuencia14){
+            frecuencia = "14 days"
+        }
+        let datosDoc = { millaje, costumer, address, phoneNumber, auto, year, socialNumber, vin, email, nuevoPrecio, nuevoDown, saldo, payments, fee, frecuencia, taxes, stickers, title, inspection, fee2, tagTotal, endDate, observaciones }
         pasoAmostrar = <Docs datosDoc={datosDoc} previoStep={previoStep} calcularFechaFinal={calcularFechaFinal} coma={coma} mandarPadre={traerDatos} calcularPagos={calcularPagos} />
     }
 
