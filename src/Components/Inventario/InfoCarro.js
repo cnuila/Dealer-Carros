@@ -7,7 +7,9 @@ import CarroSinFoto from "../../Imágenes/CarroSinFoto.jpg"
 import ShareCarro from './ShareCarro'
 import Modificar from './Modificar'
 import Checked from "./Checked"
+import 'react-responsive-carousel/lib/styles/carousel.min.css'
 import { Carousel } from 'react-responsive-carousel';
+import { map } from 'jquery';
 
 function InfoCarro(props) {
     const { fotos, id, marca, modelo, proveedor } = props.carro;
@@ -261,9 +263,6 @@ function InfoCarro(props) {
                             </div>
 
                         </div>
-
-
-
                         {/*Informacion*/}
                         <div className="h-74 w-80 transform -translate-x-28 grid grid-cols-2">
                             <div className="h-11 col-span-2">
@@ -387,20 +386,41 @@ function InfoCarro(props) {
                                     </button>
                                 </Link>
                             </div>
-                            </>) : (<></>)}
+
+                        </>) : (<></>)}
 
                     </div>
                     {/*Container Movil*/}
-                    {/*<div className="md:hidden absolute bg-gray-900 rounded-md w-2/3 h-80 ">
+                    <div className="md:hidden bg-red-900 rounded-md w-5/6 h-80">
                         <button className="col-span-2 top-0 right-0 p-1 ml-auto bg-transparent border-0 text-black float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
                             onClick={() => handleEstadoModal(false)}>
-                            <span className="mb-4 mr-2 text-white h-8 w-8 text-3xl block outline-none focus:outline-none">
+                            <span className="mb-4 mr-2 text-white h-8 w-8 text-3xl block outline-none focus:outline-none transform translate-x-3">
                                 x
                             </span>
                         </button>
-                        <div className="h-64 w-64 object-cover bg-green-400">
-                        </div>
-                            </div>*/}
+                        {/*Fin Imagenes Movil*/}
+                        <Carousel className="rounded-md bg-black shadow-md h-52 w-64 transform translate-x-7 -translate-y-12" autoPlay infiniteLoop swipeable showThumbs={false} dynamicHeight={true} showStatus={false}>
+                            {
+                                fotosCarro.map((foto, index) => {
+                                    return (
+                                        <div key={index} >
+                                            <img
+                                                className="rounded-md h-52 w-48 transition duration-300 ease-in-out transform hover:scale-105 object-cover shadow-md"
+                                                alt="Carro"
+                                                src={foto}
+                                            />
+                                        </div>)
+                                })
+                            }
+                        </Carousel>
+                        {/*Fin Imagenes Movil*/}
+                    </div>
+                    {/*Informacion Movil*/}
+                    <div>
+
+                    </div>
+                    {/*Fin Informacion Movil*/}
+                    {/*Fin Cointainer Movil*/}
                 </div>
                 <div className="opacity-50 fixed inset-0 z-10 bg-black" ></div>
             </>

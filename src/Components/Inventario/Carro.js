@@ -96,7 +96,7 @@ function Carro(props) {
     </div>)
 
   return (
-    <div className=" w-full px-4 transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105" onClick={() => handleClick(id, true)}>
+    <div className=" w-full px-4 transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105 cursor-pointer" onClick={() => handleClick(id, true)}>
       {loading ? fotoCargando : fotoCargada}
       <div className="relative px-4 -mt-10">
         <div className="px-6 py-4 bg-gray-900 rounded-lg shadow-xl">

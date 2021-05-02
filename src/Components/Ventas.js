@@ -32,11 +32,11 @@ export default function Ventas() {
                     <h2 className="text-sm   md:text-lg md:text-right md:pr-4   ml-1 font-semibold md:font-normal pl-3 w-full text-gray-800 md:w-64">17/Aug/2021</h2>
                 </div>
                 <div className="md:flex md:flex-row border-l-8 border-gray-800 p-2 cursor-default my-4 mx-8 rounded-md md:rounded-lg bg-white shadow-lg hover:bg-gray-200 cursor-pointer">
-                    <h2 className="text-xs   md:text-lg   ml-1 pl-3 w-full text-gray-800 md:w-80">SM-2407</h2>
-                    <h2 className="md:hidden text-base md:text-lg   ml-1 font-bold md:font-medium pl-3 w-full text-gray-800">Tesla Model X - Andrea Munguia</h2>
-                    <h2 className="hidden md:block text-base text-lg   ml-1 font-semibold pl-3 w-full text-gray-800 text-left">Tesla Model X 2018</h2>
-                    <h2 className="hidden md:block text-base text-lg   ml-1 font-semibold pl-3 w-full text-gray-800 text-left">Andrea Daniela Munguia Alvarado</h2>
-                    <h2 className="text-sm   md:text-lg md:text-right md:pr-4   ml-1 font-semibold md:font-normal pl-3 w-full text-gray-800 md:w-64">01/Apr/2021</h2>
+                    <h2 className="text-xs md:text-lg ml-1 pl-3 w-full text-gray-800 md:w-80">SM-2407</h2>
+                    <h2 className="md:hidden text-base md:text-lg ml-1 font-bold md:font-medium pl-3 w-full text-gray-800">Tesla Model X - Valentina Hernandez</h2>
+                    <h2 className="hidden md:block text-base text-lg ml-1 font-semibold pl-3 w-full text-gray-800 text-left">Tesla Model X 2018</h2>
+                    <h2 className="hidden md:block text-base text-lg ml-1 font-semibold pl-3 w-full text-gray-800 text-left">Valentina Emperatriz Hernandez Carbajal</h2>
+                    <h2 className="text-sm md:text-lg md:text-right md:pr-4 ml-1 font-semibold md:font-normal pl-3 w-full text-gray-800 md:w-64">07/Apr/2021</h2>
                 </div>
             </div>
         </div>
