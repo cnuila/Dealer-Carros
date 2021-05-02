@@ -85,11 +85,11 @@ export default function InitialAgreement(props) {
                     <div className="flex flex-col">
                         <div className="block px-3 pt-3">
                             <h2 className="text-gray-200 px-2 font-semibold text-lg underline">Precio</h2>
-                            <input type="number" min={precio} value={nuevoPrecio} className="block bg-gray-900 text-gray-200 ml-4 px-2 py-2 w-11/12 border-b-2 border-gray-800 focus:border-gray-700 placeholder-gray-500 focus:placeholder-gray-400 focus:outline-none" name="nuevoPrecio" required onChange={handleInputChange} />
+                            <input type="number" min={precio} value={nuevoPrecio} step={50} className="block bg-gray-900 text-gray-200 ml-4 px-2 py-2 w-11/12 border-b-2 border-gray-800 focus:border-gray-700 placeholder-gray-500 focus:placeholder-gray-400 focus:outline-none" name="nuevoPrecio" required onChange={handleInputChange} />
                         </div>
                         <div className="block px-3 pt-3">
                             <h2 className="text-gray-200 px-2 font-semibold text-lg underline">Down</h2>
-                            <input type="number" min={down - 500} value={nuevoDown} className="block bg-gray-900 text-gray-200 ml-4 px-2 py-2 w-11/12 border-b-2 border-gray-800 focus:border-gray-700 placeholder-gray-500 focus:placeholder-gray-400 focus:outline-none" name="nuevoDown" required onChange={handleInputChange} />
+                            <input type="number" min={down - down*0.15} value={nuevoDown} step={10} className="block bg-gray-900 text-gray-200 ml-4 px-2 py-2 w-11/12 border-b-2 border-gray-800 focus:border-gray-700 placeholder-gray-500 focus:placeholder-gray-400 focus:outline-none" name="nuevoDown" required onChange={handleInputChange} />
                         </div>
                         <div className="block px-3 pt-3">
                             <h2 className="text-gray-200 px-2 font-semibold text-lg underline">Saldo</h2>
@@ -97,18 +97,18 @@ export default function InitialAgreement(props) {
                         </div>
                         <div className="block px-3 pt-3">
                             <h2 className="text-gray-200 px-2 font-semibold text-lg underline">Payments</h2>
-                            <input type="number" min={250} value={payments} className="block bg-gray-900 text-gray-200 ml-4 px-2 py-2 w-11/12 border-b-2 border-gray-800 focus:border-gray-700 placeholder-gray-500 focus:placeholder-gray-400 focus:outline-none" name="payments" required onChange={handleInputChange} />
+                            <input type="number" min={250} value={payments} step={10} className="block bg-gray-900 text-gray-200 ml-4 px-2 py-2 w-11/12 border-b-2 border-gray-800 focus:border-gray-700 placeholder-gray-500 focus:placeholder-gray-400 focus:outline-none" name="payments" required onChange={handleInputChange} />
                         </div>
                         <div className="block px-3 pt-3">
                             <h2 className="text-gray-200 px-2 font-semibold text-lg underline">Fee</h2>
-                            <input type="number" min={65} value={fee} className="block bg-gray-900 text-gray-200 ml-4 px-2 py-2 w-11/12 border-b-2 border-gray-800 focus:border-gray-700 placeholder-gray-500 focus:placeholder-gray-400 focus:outline-none" name="fee" required onChange={handleInputChange} />
+                            <input type="number" min={65} value={fee} step={5} className="block bg-gray-900 text-gray-200 ml-4 px-2 py-2 w-11/12 border-b-2 border-gray-800 focus:border-gray-700 placeholder-gray-500 focus:placeholder-gray-400 focus:outline-none" name="fee" required onChange={handleInputChange} />
                         </div>
                         <div className="block px-3 pt-3">
                             <h2 className="text-gray-200 px-2 font-semibold text-lg underline">Frecuency</h2>
                             <input type="radio" id="14dias" name="frecuency" value="14" checked={frecuencia14} className="ml-4 my-2" onChange={handleInputChange}/>
-                            <label for="14dias" className="bg-gray-900 text-gray-200 ml-4 px-2 py-2">14 days</label>
-                            <input type="radio" id="30dias" name="frecuency" value="30" checked={!frecuencia14} onChange={handleInputChange}/>
-                            <label for="30dias">30 days</label>                            
+                            <label for="14dias" className="bg-gray-900 text-gray-200 ml-3">14 days</label>
+                            <input type="radio" id="30dias" name="frecuency" value="30" checked={!frecuencia14} className="ml-4 my-2" onChange={handleInputChange}/>
+                            <label for="30dias" className="bg-gray-900 text-gray-200 ml-3">30 days</label>                            
                         </div>
                         <div className="block px-3 pt-3">
                             <h2 className="text-gray-200 px-2 font-semibold text-lg underline">Date</h2>
