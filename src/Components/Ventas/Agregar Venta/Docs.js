@@ -392,7 +392,7 @@ export default function Docs(props) {
     const imprimirInitialTags = () => {
         let doc = new jsPDF();
         doc.setProperties({
-            title: 'Initial Agreement And Schedule Of Payments',
+            title: 'Initial Agreement Of Tags',
             author: 'Santos Motors Group',
         });
         let width = doc.internal.pageSize.getWidth()
@@ -479,7 +479,7 @@ export default function Docs(props) {
             doc.text(130, y, campo)
             doc.setFontSize(12)
             doc.setFont("times", "normal")
-            doc.text(155, y, text);
+            doc.text(155, y, text)
             y += 7
         }
 
@@ -508,6 +508,256 @@ export default function Docs(props) {
         doc.setFontSize(8)
         doc.setFont("times", "bold")
         doc.text(costumer, 170, 190, "center")
+
+        doc.output('dataurlnewwindow');
+    }
+
+    const imprimirAditionalInformation = () => {
+        let doc = new jsPDF();
+        doc.setProperties({
+            title: 'Aditional Information',
+            author: 'Santos Motors Group',
+        });
+        let width = doc.internal.pageSize.getWidth()
+
+        //encabezado
+        doc.setFontSize(20)
+        doc.setFont("times", "bold")
+        doc.text("S.M.G. SANTOS MOTOR GROUP", width / 2, 15, "center")
+        doc.setFontSize(10)
+        doc.text("9571 WASHIGTON BLV N LAUREL MD  20723", width / 2, 23, "center")
+        doc.text("Phone (410) 921-9155 / (240) 490-6191 / (240) 636-5144", width / 2, 29, "center")
+        doc.text("ADITIONAL INFORMATION", width / 2, 40, "center")
+
+        doc.setLineWidth(0.5)
+        doc.line(7, 50, 203, 50)
+
+        doc.line(7, 50, 7, 259)
+
+        doc.line(203, 50, 203, 259)
+
+        doc.line(7, 58, 203, 58)
+
+        //applicant information
+
+        doc.setDrawColor(0);
+        doc.setFillColor(210, 210, 210);
+        doc.rect(7, 50, 196, 8, 'FD');
+
+        doc.text("Applicant Information", width / 2, 55, "center")
+
+        doc.line(40, 58, 40, 95)
+
+        let y = 63
+        for (let i = 0; i < 4; i++) {
+            let campo = "Name:"
+            let text = costumer
+
+            if (i === 1) {
+                campo = "Phone:"
+                text = phoneNumber
+            }
+            if (i === 2) {
+                campo = "Email:"
+                text = email
+            }
+            if (i === 3) {
+                campo = "Current address:"
+                text = address
+            }
+
+            doc.line(7, y + 2, 203, y + 2)
+            doc.setFontSize(11)
+            doc.setFont("times", "bold")
+            doc.text(9, y, campo)
+            doc.setFont("times", "normal")
+            doc.text(42, y, text)
+            y += 7
+        }
+
+        doc.setFont("times", "bold")
+
+        doc.line(7, 95, 203, 95)
+        doc.text(9, 92, "Own / Rent")
+
+        doc.line(72, 86, 72, 95)
+
+        doc.text(74, 92, "Monthly Payment: $")
+        doc.setLineWidth(0.5)
+        doc.line(110, 86, 110, 95)
+
+        doc.line(150, 86, 150, 95)
+        doc.text(152, 92, "How long?")
+        doc.line(171, 86, 171, 95)
+
+        //employment information
+        doc.setDrawColor(0);
+        doc.setFillColor(210, 210, 210);
+        doc.rect(7, 94, 196, 8, 'FD');
+
+        doc.setFontSize(10)
+        doc.text("Employment Information", width / 2, 99, "center")
+
+        doc.line(40, 102, 40, 149)
+
+        doc.text(9, 108, "Current employer:")
+        doc.line(7, 112, 203, 112)
+
+        doc.text(9, 118, "Employer address:")
+        doc.line(7, 122, 203, 122)
+
+        doc.setFontSize(11)
+        doc.line(150, 112, 150, 122)
+        doc.text(152, 118, "How long?")
+        doc.line(171, 112, 171, 122)
+
+        doc.text(9, 128, "Phone:")
+        doc.setLineWidth(0.5)
+        doc.line(7, 131, 203, 131)
+
+        doc.setLineWidth(0.5)
+        doc.line(72, 122, 72, 131)
+
+        doc.text(74, 128, "E-mail:")
+        doc.setLineWidth(0.5)
+        doc.line(90, 122, 90, 131)
+
+        doc.setFontSize(11)
+        doc.line(150, 122, 150, 131)
+        doc.text(152, 128, "Fax:")
+        doc.line(171, 122, 171, 131)
+
+        doc.text(9, 137, "City:")
+        doc.line(7, 140, 203, 140)
+
+        doc.line(72, 131, 72, 140)
+        doc.text(74, 137, "State:")
+        doc.line(90, 131, 90, 140)
+
+        doc.line(130, 131, 130, 140)
+        doc.text(131, 137, "ZIP Code:")
+        doc.line(150, 131, 150, 140)
+
+        doc.text(9, 146, "Position:")
+        doc.line(7, 149, 203, 149)
+
+        doc.line(90, 140, 90, 149)
+        doc.text(92, 146, "Hourly Salary:")
+        doc.line(118, 140, 118, 149)
+
+        //co-applicant information
+        doc.setDrawColor(0);
+        doc.setFillColor(210, 210, 210);
+        doc.rect(7, 149, 196, 8, 'FD');
+
+        doc.setFontSize(10)
+        doc.text("Co-Applicant Information, if joint account", width / 2, 154, "center")
+
+        doc.setLineWidth(0.5)
+        doc.line(40, 157, 40, 213)
+
+        doc.setFontSize(11)
+        doc.text(9, 163, "Name:")
+        doc.line(7, 166, 203, 166)
+
+        doc.text(9, 172, "Date of Birth:")
+        doc.line(7, 175, 203, 175)
+
+        doc.line(72, 166, 72, 175)
+        doc.text(74, 172, "SSN:")
+        doc.line(90, 166, 90, 175)
+
+        doc.line(150, 166, 150, 175)
+        doc.text(152, 172, "Phone:")
+        doc.line(167, 166, 167, 175)
+
+        doc.text(9, 181, "Email:")
+        doc.line(7, 184, 203, 184)
+
+        doc.text(9, 190, "Current address:")
+        doc.line(7, 193, 203, 193)
+
+        doc.text(9, 200, "City:")
+        doc.line(7, 204, 203, 204)
+
+        doc.line(72, 193, 72, 204)
+        doc.text(74, 200, "State:")
+        doc.line(90, 193, 90, 204)
+
+        doc.line(130, 193, 130, 204)
+        doc.text(131, 200, "ZIP Code:")
+        doc.line(150, 193, 150, 204)
+
+        doc.text(9, 210, "Own / Rent:")
+        doc.line(7, 213, 203, 213)
+
+        doc.line(72, 204, 72, 213)
+        doc.text(74, 210, "Monthly Payment: $")
+        doc.line(110, 204, 110, 213)
+
+        doc.line(150, 204, 150, 213)
+        doc.text(152, 210, "How long?")
+        doc.line(171, 204, 171, 213)
+
+        //co employment information
+        doc.setDrawColor(0);
+        doc.setFillColor(210, 210, 210);
+        doc.rect(7, 213, 196, 8, 'FD');
+
+        doc.setFontSize(10)
+        doc.text("Employment Information", width / 2, 218, "center")
+
+        doc.line(40, 221, 40, 259)
+
+        doc.text(9, 227, "Current employer:")
+        doc.line(7, 231, 203, 231)
+
+        doc.text(9, 237, "Employer address:")
+        doc.line(7, 241, 203, 241)
+
+        doc.setFontSize(11)
+        doc.line(150, 231, 150, 241)
+        doc.text(152, 237, "How long?")
+        doc.line(171, 231, 171, 241)
+
+        doc.text(9, 247, "Phone:")
+        doc.line(7, 250, 203, 250)
+
+        doc.line(72, 241, 72, 250)
+        doc.text(74, 247, "E-mail:")
+        doc.line(90, 241, 90, 250)
+
+        doc.line(150, 241, 150, 250)
+        doc.text(152, 247, "Fax:")
+        doc.line(171, 241, 171, 250)
+
+        doc.text(9, 256, "City:")
+        doc.line(7, 259, 203, 259)
+
+        doc.line(72, 250, 72, 259)
+        doc.text(74, 256, "State:")
+        doc.line(90, 250, 90, 259)
+
+        doc.line(130, 250, 130, 259)
+        doc.text(131, 256, "ZIP Code:")
+        doc.line(150, 250, 150, 259)
+
+        //pagina 2
+        doc.addPage()
+        doc.setLineWidth(0.5)
+        doc.line(7, 10, 203, 10)
+
+        doc.line(7, 10, 7, 259)
+
+        doc.line(203, 10, 203, 259)
+
+        //applicant information
+
+        doc.setDrawColor(0);
+        doc.setFillColor(210, 210, 210);
+        doc.rect(7, 10, 196, 8, 'FD');
+
+        doc.text("References", width / 2, 15, "center")
 
         doc.output('dataurlnewwindow');
     }
@@ -545,7 +795,7 @@ export default function Docs(props) {
                         </button>
                     </div>
                     <div className="flex bg-gray-800 hover:bg-gray-700 rounded-3xl h-9 w-11/12 place-self-center items-center shadow-lg cursor-pointer mt-4">
-                        <button type="button" className="mx-1 text-center w-full text-sm font-semibold focus:outline-none text-gray-200" >
+                        <button type="button" className="mx-1 text-center w-full text-sm font-semibold focus:outline-none text-gray-200" onClick={() => imprimirAditionalInformation()}>
                             Imprimir Credit Application
                         </button>
                     </div>
