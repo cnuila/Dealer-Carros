@@ -751,13 +751,44 @@ export default function Docs(props) {
 
         doc.line(203, 10, 203, 259)
 
-        //applicant information
+        //references
 
         doc.setDrawColor(0);
         doc.setFillColor(210, 210, 210);
         doc.rect(7, 10, 196, 8, 'FD');
 
         doc.text("References", width / 2, 15, "center")
+
+        doc.text(9, 24, "Name of a relative not residing with you:")
+        doc.line(85, 27, 85, 18)
+        doc.line(7, 27, 203, 27)
+
+        doc.line(40, 27, 40, 54)
+
+        doc.text(9, 33, "Address:")
+        doc.line(7, 36, 203, 36)
+
+        doc.line(150, 27, 150, 36)
+        doc.text(152, 33, "Phone:")
+        doc.line(171, 27, 171, 36)
+
+        doc.text(9, 42, "City:")
+        doc.line(7, 45, 203, 45)
+
+        doc.line(72, 36, 72, 45)
+        doc.text(74, 42, "State:")
+        doc.line(85, 36, 85, 45)
+
+        doc.line(150, 36, 150, 45)
+        doc.text(152, 42, "Zip:")
+        doc.line(171, 36, 171, 45)
+
+        doc.text(9, 51, "Relationship:")
+        doc.line(7, 54, 203, 54)
+
+        doc.line(120, 45, 120, 54)
+        doc.text(122, 51, "Email:")
+        doc.line(135, 45, 135, 54)
 
         doc.output('dataurlnewwindow');
     }
