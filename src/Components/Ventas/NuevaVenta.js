@@ -227,7 +227,6 @@ export default function NuevaVenta(props) {
     const guardaVenta = () => {
         const { millaje, costumer, address, phoneNumber, auto, year, vin, email, nuevoPrecio, nuevoDown, saldo, payments, fee, frecuencia, socialNumber, taxes, stickers, title, inspection, fee2, tagTotal, endDate, observaciones } = info
 
-
     }
 
     const { pasos } = info
