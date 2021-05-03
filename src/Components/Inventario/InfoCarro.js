@@ -527,7 +527,6 @@ function InfoCarro(props) {
                         </div>
                         {/*Fin Informacion Movil*/}
                     </div>
-
                     {/*Fin Cointainer Movil*/}
                 </div>
                 <div className="opacity-50 fixed inset-0 z-10 bg-black" ></div>
