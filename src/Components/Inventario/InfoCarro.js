@@ -378,6 +378,8 @@ function InfoCarro(props) {
                                             precioFinal: props.carro.precioFinal,
                                             downPayment: props.carro.downPayment,
                                             millaje: props.carro.millaje,
+                                            codigo:props.carro.codigo,
+                                            clean:props.carro.clean,
                                         }
                                     }
                                 }}>

@@ -5,7 +5,7 @@ import SantosLogo from "../../../Imágenes/SantosMotorsLogo.jpg"
 
 export default function Docs(props) {
 
-    const { millaje, costumer, address, phoneNumber, auto, year, socialNumber, vin, email, nuevoPrecio, nuevoDown, saldo, payments, fee, frecuencia, taxes, stickers, title, inspection, fee2, tagTotal, endDate, observaciones } = props.datosDoc
+    const { millaje, costumer, address, phoneNumber, auto, year, vin, email, nuevoPrecio, nuevoDown, saldo, payments, fee, frecuencia, taxes, stickers, title, inspection, fee2, tagTotal, endDate, observaciones, dealDescriptionPayments, dealDescriptionTags, codigo, clean } = props.datosDoc
 
     const imprimirFinancial = () => {
         let doc = new jsPDF();
@@ -20,9 +20,7 @@ export default function Docs(props) {
         doc.setFont("Times", "bold")
         doc.text("S.M.G. SANTOS MOTOR GROUP", width / 2, 20, "center")
         doc.setFontSize(13)
-        doc.text("10412 GUILFORD RD", width / 2, 30, "center")
-        doc.setFontSize(13)
-        doc.text("MD 20794", width / 2, 37, "center")
+        doc.text("9571 WASHIGTON BLV N LAUREL MD  20723", width / 2, 30, "center")
         doc.setFontSize(19)
         doc.text("FINANCIAL AGREEMENT", width / 2, 50, "center")
         doc.setFontSize(13)
@@ -59,19 +57,27 @@ export default function Docs(props) {
 
         doc.text(15, 160, text)
 
+        text = "Notes:\r"
+            + "In this deal will not be made refunds of down payment for non-conformities arising after having signed\r"
+            + "the deal, physical or mechanical of the vehicle.\r"
+            + "There is a surcharge (late fee) that will have to pay $ 50 per payment which is cumulative in case of late\r"
+            + "payment of 10 days onwards."
+
+        doc.text(15, 190, text)
+
         //firmaa
 
         doc.setLineWidth(0.5)
-        doc.line(30, 220, 90, 220)
+        doc.line(30, 250, 90, 250)
         doc.setFontSize(8)
         doc.setFont("times", "bold")
-        doc.text(costumer.toUpperCase(), 60, 225, "center")
+        doc.text(costumer.toUpperCase(), 60, 255, "center")
 
         doc.setLineWidth(0.5)
-        doc.line(115, 220, 175, 220)
+        doc.line(115, 250, 175, 250)
         doc.setFontSize(8)
         doc.setFont("times", "bold")
-        doc.text("S.M.G. SANTOS MOTOR GROUP", 145, 225, "center")
+        doc.text("S.M.G. SANTOS MOTOR GROUP", 145, 255, "center")
 
         doc.output('dataurlnewwindow');
     }
@@ -171,7 +177,7 @@ export default function Docs(props) {
         doc.output('dataurlnewwindow');
     }
 
-    const imprimirInitial = () => {
+    const imprimirInitialPayments = () => {
         let doc = new jsPDF();
         doc.setProperties({
             title: 'Initial Agreement And Schedule Of Payments',
@@ -185,11 +191,10 @@ export default function Docs(props) {
         doc.setFont("times", "bold")
         doc.text("S.M.G. SANTOS MOTOR GROUP", width / 2, 53, "center")
         doc.setFontSize(10)
-        doc.text("EMAIL sandsllc8@gmail.com", width / 2, 58, "center")
+        doc.text("EMAIL info@santosmotorg.com", width / 2, 58, "center")
         doc.setFontSize(13)
-        doc.text("10412 GUILFORD RD", width / 2, 64, "center")
+        doc.text("9571 WASHIGTON BLV N LAUREL MD  20723", width / 2, 64, "center")
         doc.setFontSize(13)
-        doc.text("MD 20794", width / 2, 70, "center")
 
         //cuerpo
         doc.setFontSize(17)
@@ -197,7 +202,7 @@ export default function Docs(props) {
 
         //primer Columna
         let y = 97
-        for (let i = 0; i < 7; i++) {
+        for (let i = 0; i < 9; i++) {
             let campo = "Cell"
             let text = phoneNumber
             let fontSizeText = 12
@@ -209,20 +214,34 @@ export default function Docs(props) {
             if (i === 2) {
                 campo = "Auto"
                 text = auto.toUpperCase()
+                fontSizeText = 11
             }
             if (i === 3) {
                 campo = "Year"
                 text = year + ""
             }
             if (i === 4) {
+                campo = "Cod"
+                text = codigo
+            }
+            if (i === 5) {
                 campo = "VIN"
                 text = vin
             }
-            if (i === 5) {
+            if (i === 6) {
+                campo = "Title"
+                let tipoTitulo = "Clean"
+                if (!clean) {
+                    tipoTitulo = "Salvage"
+                }
+                text = tipoTitulo.toUpperCase()
+            }
+            if (i === 7) {
                 campo = "Email"
                 text = email
+                fontSizeText = 11
             }
-            if (i === 6) {
+            if (i === 8) {
                 campo = "Address"
                 let addressFormat = ""
                 let cont = 0;
@@ -275,11 +294,9 @@ export default function Docs(props) {
                 text = moment(new Date()).format("MM/DD/YYYY")
             }
             if (i === 7) {
-                campo = "SS #"
-                text = socialNumber
+                campo = "Millaje"
+                text = props.coma(millaje)
             }
-            console.log(i)
-            console.log(text)
             doc.setFontSize(12)
             doc.setFont("times", "bold")
             doc.text(100, y, campo)
@@ -290,61 +307,39 @@ export default function Docs(props) {
         }
 
         //tercera Columna
-        y = 97
-        for (let i = 0; i < 7; i++) {
-            let campo = "Stickers"
-            let text = "$" + props.coma(stickers) + ".00"
-            if (i === 0) {
-                campo = "Taxes"
-                text = "$" + props.coma(taxes) + ".00"
+        y = 139
+        doc.setFontSize(12)
+        doc.setFont("times", "bold")
+        doc.text(152, y, "End Date")
+        doc.setFontSize(12)
+        doc.setFont("times", "normal")
+        doc.text(174, y, endDate);
+
+        let dealDescription = "Deal Description:\r"
+        let contDeal = 0;
+        for (let i = 0; i < dealDescriptionPayments.length; i++) {
+            dealDescription += dealDescriptionPayments[i]
+            contDeal++
+            if (contDeal > 50 && dealDescriptionPayments[i] === " ") {
+                dealDescription += "\r"
+                contDeal = 0
             }
-            if (i === 2) {
-                campo = "Title"
-                text = "$" + props.coma(title) + ".00"
-            }
-            if (i === 3) {
-                campo = "Inspection"
-                text = "$" + props.coma(inspection) + ".00"
-            }
-            if (i === 4) {
-                campo = "Fee"
-                text = "$" + props.coma(fee2) + ".00"
-            }
-            if (i === 5) {
-                campo = "Tag Total"
-                text = "$" + props.coma(tagTotal) + ".00"
-            }
-            if (i === 6) {
-                campo = "End Date"
-                text = endDate
-            }
-            doc.setFontSize(12)
-            doc.setFont("times", "bold")
-            doc.text(158, y, campo)
-            doc.setFontSize(12)
-            doc.setFont("times", "normal")
-            doc.text(180, y, text);
-            y += 7
         }
 
-        let texto = ("Deal  Description : PLACAS NO INCLUIDAS EN EL TRATO. DEBERAN SER\r" +
-            `CANCELADAS DENTRO DE  4 SEMANAS ${"$" + props.coma(tagTotal) + ".00"}\n\r` +
-            "GARANTIA : MOTOR Y TRANSMISION UNICAMENTE 1 MES A PARTIR\r" +
-            "DE LA VENTA.\n\r" +
-            `Millaje actual: ${millaje}`)
+        let texto = dealDescription.toUpperCase()
 
-        doc.setFontSize(10)
+        doc.setFontSize(9)
         doc.setFont("times", "bold")
-        doc.text(12, 167, texto)
+        doc.text(12, 180, texto)
 
         //firma
 
         doc.setLineWidth(0.5)
-        doc.line(140, 190, 200, 190)
+        doc.line(135, 200, 195, 200)
 
         doc.setFontSize(8)
         doc.setFont("times", "bold")
-        doc.text(costumer, 170, 195, "center")
+        doc.text(costumer, 165, 205, "center")
 
         //pagos
         doc.addPage()
@@ -394,6 +389,129 @@ export default function Docs(props) {
         //doc.save('Test.pdf');
     }
 
+    const imprimirInitialTags = () => {
+        let doc = new jsPDF();
+        doc.setProperties({
+            title: 'Initial Agreement And Schedule Of Payments',
+            author: 'Santos Motors Group',
+        });
+        let width = doc.internal.pageSize.getWidth()
+
+        //encabezado
+        doc.addImage(SantosLogo, 'JPG', width / 2 - 45, 5, 90, 40)
+        doc.setFontSize(20)
+        doc.setFont("times", "bold")
+        doc.text("S.M.G. SANTOS MOTOR GROUP", width / 2, 53, "center")
+        doc.setFontSize(10)
+        doc.text("EMAIL info@santosmotorg.com", width / 2, 58, "center")
+        doc.setFontSize(13)
+        doc.text("9571 WASHIGTON BLV N LAUREL MD  20723", width / 2, 64, "center")
+        doc.setFontSize(13)
+
+        //cuerpo
+        doc.setFontSize(17)
+        doc.text("INITIAL  AGREEMENT OF TAGS", width / 2, 85, "center")
+
+        //primer Columna
+        let y = 97
+        for (let i = 0; i < 6; i++) {
+            let campo = "Cell"
+            let text = phoneNumber
+            let fontSizeText = 12
+            if (i === 0) {
+                campo = "Costumer"
+                text = costumer
+                fontSizeText = 10
+            }
+            if (i === 2) {
+                campo = "Auto"
+                text = auto.toUpperCase()
+            }
+            if (i === 3) {
+                campo = "Year"
+                text = year + ""
+            }
+            if (i === 4) {
+                campo = "Cod"
+                text = codigo
+            }
+            if (i === 5) {
+                campo = "VIN"
+                text = vin
+            }
+
+            doc.setFontSize(12)
+            doc.setFont("times", "bold")
+            doc.text(20, y, campo)
+            doc.setFontSize(fontSizeText)
+            doc.setFont("times", "normal")
+            doc.text(42, y, text);
+            y += 7
+        }
+
+        //segunda columna
+        y = 97
+        for (let i = 0; i < 6; i++) {
+            let campo = "Stickers"
+            let text = "$" + props.coma(stickers) + ".00"
+            if (i === 0) {
+                campo = "Taxes"
+                text = "$" + props.coma(taxes) + ".00"
+            }
+            if (i === 2) {
+                campo = "Title"
+                text = "$" + props.coma(title) + ".00"
+            }
+            if (i === 3) {
+                campo = "Inspection"
+                text = "$" + props.coma(inspection) + ".00"
+            }
+            if (i === 4) {
+                campo = "Fee"
+                text = "$" + props.coma(fee2) + ".00"
+            }
+            if (i === 5) {
+                campo = "Tag Total"
+                text = "$" + props.coma(tagTotal) + ".00"
+            }
+            doc.setFontSize(12)
+            doc.setFont("times", "bold")
+            doc.text(130, y, campo)
+            doc.setFontSize(12)
+            doc.setFont("times", "normal")
+            doc.text(155, y, text);
+            y += 7
+        }
+
+        let dealDescription = "Deal Description:\r"
+        let contDeal = 0;
+        for (let i = 0; i < dealDescriptionTags.length; i++) {
+            dealDescription += dealDescriptionTags[i]
+            contDeal++
+            if (contDeal > 50 && dealDescriptionTags[i] === " ") {
+                dealDescription += "\r"
+                contDeal = 0
+            }
+        }
+
+        let texto = dealDescription.toUpperCase()
+
+        doc.setFontSize(9)
+        doc.setFont("times", "bold")
+        doc.text(15, 155, texto)
+
+        //firma
+
+        doc.setLineWidth(0.5)
+        doc.line(140, 185, 200, 185)
+
+        doc.setFontSize(8)
+        doc.setFont("times", "bold")
+        doc.text(costumer, 170, 190, "center")
+
+        doc.output('dataurlnewwindow');
+    }
+
     const handleInputChange = ({ target }) => {
         props.mandarPadre(target)
     }
@@ -407,8 +525,13 @@ export default function Docs(props) {
             <div className="flex flex-col bg-gray-900 mx-auto lg:mx-28 rounded-b-lg shadow-2xl">
                 <div className="grid grid-cols-1 md:grid-cols-4 p-5">
                     <div className="flex bg-gray-800 hover:bg-gray-700 rounded-3xl h-9 w-11/12 place-self-center items-center shadow-lg cursor-pointer">
-                        <button type="button" className="mx-1 text-center w-full text-sm font-semibold focus:outline-none text-gray-200" onClick={() => imprimirInitial()}>
-                            Imprimir Initial Agreement
+                        <button type="button" className="mx-1 text-center w-full text-xs font-semibold focus:outline-none text-gray-200" onClick={() => imprimirInitialPayments()}>
+                            Imprimir Initial Agreement of Payments
+                        </button>
+                    </div>
+                    <div className="flex bg-gray-800 hover:bg-gray-700 rounded-3xl h-9 w-11/12 place-self-center items-center shadow-lg cursor-pointer">
+                        <button type="button" className="mx-1 text-center w-full text-xs font-semibold focus:outline-none text-gray-200" onClick={() => imprimirInitialTags()}>
+                            Imprimir Initial Agreement of Tags
                         </button>
                     </div>
                     <div className="flex bg-gray-800 hover:bg-gray-700 rounded-3xl h-9 w-11/12 place-self-center items-center shadow-lg cursor-pointer">
@@ -421,19 +544,21 @@ export default function Docs(props) {
                             Imprimir Right of Repossession
                         </button>
                     </div>
-                    <div className="flex bg-gray-800 hover:bg-gray-700 rounded-3xl h-9 w-11/12 place-self-center items-center shadow-lg cursor-pointer">
+                    <div className="flex bg-gray-800 hover:bg-gray-700 rounded-3xl h-9 w-11/12 place-self-center items-center shadow-lg cursor-pointer mt-4">
                         <button type="button" className="mx-1 text-center w-full text-sm font-semibold focus:outline-none text-gray-200" >
                             Imprimir Credit Application
                         </button>
                     </div>
-                    <div className="block col-span-4 px-3 mt-4 pt-3">
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-3 px-4">
+                    <div className="block col-span-4 px-3">
                         <h2 className="text-gray-200 px-2 font-semibold text-lg underline">Observaciones</h2>
                         <textarea rows={7} name="observaciones" value={observaciones} className="block bg-gray-900 text-lg text-gray-200 ml-4 px-2 py-3 mt-1 w-11/12 resize-none border-b-2 border-gray-800 focus:border-gray-700 placeholder-gray-500 focus:placeholder-gray-400 focus:outline-none" placeholder="Ej. 10412 GUILFORD RD" onChange={handleInputChange} />
                     </div>
                 </div>
                 <div className="flex flex-row justify-end place-items-end space-x-4 py-4 px-7">
                     <div className="flex bg-gray-800 hover:bg-gray-700 rounded-3xl h-9 w-2/12 items-center shadow-lg cursor-pointer">
-                        <button type="button" className="mx-1 text-center w-full text-sm font-semibold focus:outline-none text-gray-200" onClick={() => props.previoStep(1)}>
+                        <button type="button" className="mx-1 text-center w-full text-sm font-semibold focus:outline-none text-gray-200" onClick={() => props.previoStep(2)}>
                             Anterior
                         </button>
                     </div>
