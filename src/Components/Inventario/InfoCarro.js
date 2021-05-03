@@ -391,7 +391,7 @@ function InfoCarro(props) {
 
                     </div>
                     {/*Container Movil*/}
-                    <div className="md:hidden bg-red-900 rounded-md w-5/6 h-80">
+                    <div className="md:hidden bg-gray-900 rounded-md w-5/6 h-80">
                         <button className="col-span-2 top-0 right-0 p-1 ml-auto bg-transparent border-0 text-black float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
                             onClick={() => handleEstadoModal(false)}>
                             <span className="mb-4 mr-2 text-white h-8 w-8 text-3xl block outline-none focus:outline-none transform translate-x-3">
@@ -414,12 +414,118 @@ function InfoCarro(props) {
                             }
                         </Carousel>
                         {/*Fin Imagenes Movil*/}
+                        {/*Informacion Movil*/}
+                        <div className="h-70 grid grid-cols-2 transform -translate-y-9">
+                            <div className=" col-span-2 grid justify-center mb-4">
+                                <div className="flex justify-center w-64">
+                                    <div>
+                                        <h3 className="text-3xl capitalize font-semibold text-gray-100">
+                                            {props.carro.marca}
+                                        </h3>
+                                        <p className="text-xs text-gray-300 ml-1 mt-2">
+                                            VIN: {props.carro.id}
+                                        </p>
+                                    </div>
+                                    <h3 className="text-3xl font-semibold text-gray-100 ml-1">
+                                        -
+                                    </h3>
+                                    <div className="ml-4">
+                                        <h3 className="text-3xl capitalize font-semibold text-gray-100">
+                                            {props.carro.modelo}
+                                        </h3>
+                                        <p className="text-xs text-gray-300 ml-1 mt-2">
+                                            Codigo: {props.carro.codigo}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="grid justify-center ml-2">
+                                <h2 className="text-gray-100 px-2 font-semibold text-md underline">
+                                    General
+                                </h2>
+                                <div className="ml-2">
+                                    <p className="text-gray-300 px-2 text-xs py-2 grid">
+                                        Color: {props.carro.color}
+                                    </p>
+                                    <p className="text-gray-300 px-2 text-xs py-2">
+                                        Millaje: {props.carro.millaje}
+                                    </p>
+                                    <p className="text-gray-300 px-2 text-xs py-2">
+                                        Año: {props.carro.ano}
+                                    </p>
+                                    <p className="text-gray-300 px-2 text-xs py-2 capitalize">
+                                        Proveedor: {props.carro.proveedor}
+                                    </p>
+                                </div>
+                            </div>
+                            <div className="grid justify-center ml-2">
+                                <h6 className="text-gray-100 px-2 font-semibold text-md underline">
+                                    Estado
+                            </h6>
+                                <div className="ml-2">
+                                    <div className="flex ">
+                                        <p className="text-gray-300 px-2  text-xs py-2">
+                                            Inspeccionado
+                                        </p>
+                                        <Checked valor={props.carro.inspeccionado} />
+                                    </div>
+                                    <div className="flex">
+                                        <p className="text-gray-300 px-2  text-xs py-2">
+                                            Titulo en Mano
+                                    </p>
+                                        <Checked valor={props.carro.titulo} />
+                                    </div>
+                                    <div className="flex">
+                                        <p className="text-gray-300 px-2  text-xs py-2">
+                                            Link Holder
+                                    </p>
+                                        <Checked valor={props.carro.linkHolder} />
+                                    </div>
+                                    <p className="text-gray-300 px-2 text-xs py-2">
+                                        Titulo: {tipoTitulo}
+                                    </p>
+                                </div>
+                            </div>
++
+                            <div className="col-span-2 mb-5 ml-2">
+                                <h6 className="text-gray-100 px-2 font-semibold text-md underline">
+                                    Precio
+                                </h6>
+                                <div className="ml-2">
+                                    <div className="flex">
+                                        <p className="text-gray-300 px-1 text-xs py-2">
+                                            Compra:
+                                        </p>
+                                        <p className="text-gray-300  text-xs py-2">
+                                            {props.carro.valorCompra}
+                                        </p>
+                                        <p className="text-gray-300 px-1 text-xs py-2 col-span-2 ml-3">
+                                            Invertido:
+                                        </p>
+                                        <p className="text-gray-300 text-xs py-2">
+                                            {props.carro.valorInvertido}
+                                        </p>
+                                        <p className="text-gray-300 px-1 text-xs py-2 col-span-2 ml-3">
+                                            Final:
+                                        </p>
+                                        <p className="text-gray-300  text-xs py-2">
+                                            {props.carro.precioFinal}
+                                        </p>
+                                    </div>
+                                    <div className="flex">
+                                        <p className="text-gray-300 px-1 text-xs py-2">
+                                            Down Payment: {props.carro.downPayment}
+                                        </p>
+                                        <p className="text-gray-300 px-1  text-xs py-2 col-span-2 ml-8">
+                                            Total Cost: {props.carro.valorInvertido + props.carro.valorCompra}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {/*Fin Informacion Movil*/}
                     </div>
-                    {/*Informacion Movil*/}
-                    <div>
 
-                    </div>
-                    {/*Fin Informacion Movil*/}
                     {/*Fin Cointainer Movil*/}
                 </div>
                 <div className="opacity-50 fixed inset-0 z-10 bg-black" ></div>
