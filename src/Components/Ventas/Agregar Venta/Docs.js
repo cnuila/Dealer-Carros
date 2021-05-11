@@ -747,9 +747,11 @@ export default function Docs(props) {
         doc.setLineWidth(0.5)
         doc.line(7, 10, 203, 10)
 
-        doc.line(7, 10, 7, 259)
+        doc.line(7, 10, 7, 240)
 
-        doc.line(203, 10, 203, 259)
+        doc.line(203, 10, 203, 240)
+
+        doc.line(7, 240, 203, 240)
 
         //references
 
@@ -759,36 +761,94 @@ export default function Docs(props) {
 
         doc.text("References", width / 2, 15, "center")
 
-        doc.text(9, 24, "Name of a relative not residing with you:")
-        doc.line(85, 27, 85, 18)
-        doc.line(7, 27, 203, 27)
+        y = 18
 
-        doc.line(40, 27, 40, 54)
+        for (let i = 0; i < 5; i++) {
+            doc.text(9, y + 6, "Name of a relative not residing with you:")
+            doc.line(85, y, 85, y + 9)
+            doc.line(7, y + 9, 203, y + 9)
 
-        doc.text(9, 33, "Address:")
-        doc.line(7, 36, 203, 36)
+            y += 9
 
-        doc.line(150, 27, 150, 36)
-        doc.text(152, 33, "Phone:")
-        doc.line(171, 27, 171, 36)
+            doc.line(40, y, 40, y + 27)
 
-        doc.text(9, 42, "City:")
-        doc.line(7, 45, 203, 45)
+            doc.text(9, y + 6, "Address:")
+            doc.line(7, y + 9, 203, y + 9)
 
-        doc.line(72, 36, 72, 45)
-        doc.text(74, 42, "State:")
-        doc.line(85, 36, 85, 45)
+            doc.line(150, y, 150, y + 9)
+            doc.text(152, y + 6, "Phone:")
+            doc.line(171, y, 171, y + 9)
 
-        doc.line(150, 36, 150, 45)
-        doc.text(152, 42, "Zip:")
-        doc.line(171, 36, 171, 45)
+            y += 9
 
-        doc.text(9, 51, "Relationship:")
-        doc.line(7, 54, 203, 54)
+            doc.text(9, y + 6, "City:")
+            doc.line(7, y + 9, 203, y + 9)
 
-        doc.line(120, 45, 120, 54)
-        doc.text(122, 51, "Email:")
-        doc.line(135, 45, 135, 54)
+            doc.line(72, y, 72, y + 9)
+            doc.text(74, y + 6, "State:")
+            doc.line(85, y, 85, y + 9)
+
+            doc.line(150, y, 150, y + 9)
+            doc.text(152, y + 6, "Zip:")
+            doc.line(171, y, 171, y + 9)
+
+            y += 9
+
+            doc.text(9, y + 6, "Relationship:")
+            doc.line(7, y + 9, 203, y + 9)
+
+            doc.line(120, y, 120, y + 9)
+            doc.text(122, y + 6, "Email:")
+            doc.line(135, y, 135, y + 9)
+
+            y += 9
+        }
+        let texto = "Please read and sign below: By your signature below, you certify that you have completed this application to obtain credit, and that all information provided by you for this application is\r"
+            + "true, correct and complete. You understand and agree that this application and related credit information will be forwarded to FBAS. You authorize the Seller and FBAS* (collectively “We”,\r"
+            + "“Us” and “Our”) to make inquiries and obtain information about you as We deem appropriate for the purpose of evaluating this application, and for any update, renewal, or extension of the\r"
+            + "credit received, including obtaining credit reports, contacting your credit references and/or your employer, and contacting any person or department about your driving record. You also\r"
+            + "authorize Us to provide credit information about this transaction to others for the purpose of initiating, monitoring, and other purposes related to your account. You authorize Us to give a\r"
+            + "copy of this application to anyone who has agreed to pay debts incurred on the basis of this application. If you provided your email address on this application, you agree that any\r"
+            + "communications and correspondence to you from any of the parties to this transaction may be effected by email."
+
+        doc.setFont("times", "normal")
+        doc.setFontSize(7)
+        doc.text(9, 202, texto)
+
+        texto = "take these actions using the telephone number(s) that you provide Us in this credit application, that you provide to FBAS* in the future, or it obtains from another source, even if\r"
+            + "the number is for a mobile telephone and/or our using the number results in charges to you.  I authorize FBAS to verify the information provided on this form."
+
+        doc.text(9, 230, texto)
+
+        //firmas
+
+        doc.setLineWidth(0.5)
+        doc.line(10, 270, 60, 270)
+
+        doc.setFontSize(8)
+        doc.setFont("times", "bold")
+        doc.text("Signature of applicant", 35, 275, "center")
+
+        doc.setLineWidth(0.5)
+        doc.line(70, 270, 100, 270)
+
+        doc.setFontSize(8)
+        doc.setFont("times", "bold")
+        doc.text("Date", 85, 275, "center")
+
+        doc.setLineWidth(0.5)
+        doc.line(110, 270, 160, 270)
+
+        doc.setFontSize(8)
+        doc.setFont("times", "bold")
+        doc.text("Signature of co-applicant", 135, 275, "center")
+
+        doc.setLineWidth(0.5)
+        doc.line(170, 270, 200, 270)
+
+        doc.setFontSize(8)
+        doc.setFont("times", "bold")
+        doc.text("Date", 185, 275, "center")
 
         doc.output('dataurlnewwindow');
     }
@@ -827,7 +887,7 @@ export default function Docs(props) {
                     </div>
                     <div className="flex bg-gray-800 hover:bg-gray-700 rounded-3xl h-9 w-11/12 place-self-center items-center shadow-lg cursor-pointer mt-4">
                         <button type="button" className="mx-1 text-center w-full text-sm font-semibold focus:outline-none text-gray-200" onClick={() => imprimirAditionalInformation()}>
-                            Imprimir Credit Application
+                            Imprimir Aditional Information
                         </button>
                     </div>
                 </div>
