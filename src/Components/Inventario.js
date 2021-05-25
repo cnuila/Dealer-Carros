@@ -154,7 +154,7 @@ class Principal extends React.Component {
     let cargandoCarros = carros.filter(carro => carro.estado === estadoActual)
     if (cargandoCarros.length === 0) {
       cargandoCarros = (
-        <div className="col-span-4 h-screen">
+        <div className="col-span-4 h-64">
           <div>
             <img alt="averiado" className="transform scale-75 sm:scale-50 opacity-75" src={CarroAveriado}></img>
             <div className="transform -translate-y-4 sm:-translate-y-16 text-center tracking-tight font-medium text-gray-700 opacity-75">Lo sentimos, no encontramos lo que buscabas</div>
@@ -198,7 +198,7 @@ class Principal extends React.Component {
           </>
           {/*Fin de filtros*/}
           {/*Carros*/}
-          <div className={`bg-gray-100 min-h-screen mt-4 sm:mt-8 transform transition duration-500 ease-in-out -translate-y-${translateCarros}`}>
+          <div className={`bg-gray-100 h-auto mt-4 sm:mt-8 transform transition duration-500 ease-in-out -translate-y-${translateCarros}`}>
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6 place-items-center mb-10 mx-6 sm:mx-8 pt-5 border-t-2 border-gray-400">
               {carrosMostrar}
             </div>

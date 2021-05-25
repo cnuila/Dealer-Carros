@@ -10,6 +10,7 @@ import LogIn from "./Components/LogIn";
 import Home from "./Components/Home"
 import NuevoPago from "./Components/Pagos/NuevoPago";
 import Pagos from "./Components/Pagos/Pagos";
+import Clientes from "./Components/Clientes/Clientes"
 
 const App = () => {
   return (
@@ -24,6 +25,7 @@ const App = () => {
           <PrivateRoute path="/nuevo-pago/:codigo" component={NuevoPago} />
           <PrivateRoute exact path="/agregar-carro" component={Agregar} />
           <PrivateRoute exact path="/pagos" component={Pagos} />
+          <PrivateRoute exacat path="/clientes" component={Clientes} />
         </Switch>
       </Router>
     </AuthProvider>
