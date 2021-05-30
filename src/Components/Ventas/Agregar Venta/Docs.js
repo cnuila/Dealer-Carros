@@ -2,10 +2,12 @@ import React from 'react'
 import jsPDF from "jspdf"
 import moment from 'moment'
 import SantosLogo from "../../../Imágenes/SantosMotorsLogo.jpg"
+import Checkbox from "../../Utilidades/Checkbox"
 
 export default function Docs(props) {
 
-    const { millaje, costumer, address, phoneNumber, auto, year, vin, email, nuevoPrecio, nuevoDown, saldo, payments, fee, frecuencia, taxes, stickers, title, inspection, fee2, tagTotal, endDate, observaciones, dealDescriptionPayments, dealDescriptionTags, codigo, clean } = props.datosDoc
+    const { millaje, costumer, address, phoneNumber, auto, year, vin, email, nuevoPrecio, nuevoDown, saldo, payments, fee, frecuencia, taxes, stickers, title, inspection, fee2, tagTotal, endDate, observaciones, dealDescriptionPayments, dealDescriptionTags, codigo, clean, cobroComision, sticker1ano, sticker2ano, placaTemporal } = props.datosDoc
+    const { loading } = props
 
     const imprimirFinancial = () => {
         let doc = new jsPDF();
@@ -859,6 +861,7 @@ export default function Docs(props) {
 
     const handleOnSubmit = (e) => {
         e.preventDefault()
+        props.guardarVenta()
     }
 
     return (
@@ -891,10 +894,25 @@ export default function Docs(props) {
                         </button>
                     </div>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-3 px-4">
-                    <div className="block col-span-4 px-3">
+                <div className="grid grid-cols-1 md:grid-cols-2 px-4">
+                    <div className="block px-3">
                         <h2 className="text-gray-200 px-2 font-semibold text-lg underline">Observaciones</h2>
-                        <textarea rows={7} name="observaciones" value={observaciones} className="block bg-gray-900 text-lg text-gray-200 ml-4 px-2 py-3 mt-1 w-11/12 resize-none border-b-2 border-gray-800 focus:border-gray-700 placeholder-gray-500 focus:placeholder-gray-400 focus:outline-none" placeholder="Ej. 10412 GUILFORD RD" onChange={handleInputChange} />
+                        <textarea rows={7} name="observaciones" value={observaciones} className="block bg-gray-900 text-lg text-gray-200 ml-4 px-2 py-3 mt-1 w-11/12 resize-none border-b-2 border-gray-800 focus:border-gray-700 placeholder-gray-500 focus:placeholder-gray-400 focus:outline-none" placeholder="Ej. Extras" onChange={handleInputChange} />
+                    </div>
+                    <div>
+                        <div className="block px-2">
+                            <h2 className="text-gray-200 px-2 font-semibold text-lg underline">Comisión cobrada por</h2>
+                            <input type="text" value={cobroComision} className="block bg-gray-900 text-gray-200 ml-4 px-2 py-2 w-11/12 border-b-2 border-gray-800 focus:border-gray-700 placeholder-gray-500 focus:placeholder-gray-400 focus:outline-none" name="cobroComision" placeholder="Ej. Juan Perez" onChange={handleInputChange} />
+                        </div>
+                        <div className="ml-4 mt-6 text-gray-200 font-semibold text-lg underline">
+                            <Checkbox nombre={"placaTemporal"} handleInputChange={handleInputChange} checked={placaTemporal} texto={"Placa Temporal"} />
+                        </div>
+                        <div className="ml-4 mt-4 text-gray-200 font-semibold text-lg underline">
+                            <Checkbox nombre={"sticker1ano"} handleInputChange={handleInputChange} checked={sticker1ano} texto={"Sticker 1 Año"} />
+                        </div>
+                        <div className="ml-4 mt-4 text-gray-200 font-semibold text-lg underline">
+                            <Checkbox nombre={"sticker2ano"} handleInputChange={handleInputChange} checked={sticker2ano} texto={"Sticker 2 Año"} />
+                        </div>
                     </div>
                 </div>
                 <div className="flex flex-row justify-end place-items-end space-x-4 py-4 px-7">
@@ -903,11 +921,21 @@ export default function Docs(props) {
                             Anterior
                         </button>
                     </div>
-                    <div className="flex bg-gray-800 hover:bg-gray-700 rounded-3xl h-9 w-2/12 items-center shadow-lg cursor-pointer">
-                        <button type="submit" className="mx-1 text-center w-full text-sm font-semibold focus:outline-none text-gray-200">
-                            Vender
-                        </button>
-                    </div>
+                    {loading
+                        ? <div className="flex bg-green-600 hover:bg-green-700 cursor-not-allowed rounded-3xl h-9 w-2/12 items-center place-content-center shadow-lg">
+                            <div className="ml-4 pt-px mr-2 text-center text-sm font-semibold focus:outline-none text-gray-200">
+                                Guardando
+                            </div>
+                            <svg className="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle className="stroke-current opacity-25" strokeWidth="4" cx="12" cy="12" r="10" />
+                                <path className="fill-current opacity-75" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                            </svg>
+                        </div>
+                        : <div className="flex bg-gray-800 hover:bg-gray-700 rounded-3xl h-9 w-2/12 items-center shadow-lg cursor-pointer">
+                            <button type="submit" className="mx-1 text-center w-full text-sm font-semibold focus:outline-none text-gray-200">
+                                Vender
+                            </button>
+                        </div>}
                 </div>
             </div>
         </form>
