@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { db, storage } from '../../firebase'
 import Navbar from '../Navbar'
 import { Link } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 export default function Ventas() {
 
@@ -16,6 +17,63 @@ export default function Ventas() {
             setVentas(listaVentas)
         })
     }, [])
+
+    const clickPagarVenta = () => {
+        Swal.fire({
+            title: "Que tipo de pago se va a realizar?",
+            showDenyButton: true,
+            showCancelButton: true,
+            confirmButtonText: `Normal`,
+            denyButtonText: `No Aplicado`,
+        }).then((result) => {
+
+            if (result.isConfirmed) {
+                Swal.fire({
+                    title: 'Pago Normal',
+                    text: 'Digite el monto a pagar',
+                    input: 'number',
+                    inputValue: '0',
+                    confirmButtonText: `Realizar Pago`,
+                    showDenyButton: true,
+                    denyButtonText: `Aplicar Descuento`,
+                    denyButtonColor: "#FFB300",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Swal.fire({
+                            title: 'Pago realizado!',
+                            text: 'El pago se realizo correctamente.',
+                            icon: 'success',
+                            confirmButtonText: `Imprimir Factura`,
+                        })
+                    } else if (result.isDenied) {
+                        Swal.fire({
+                            title: 'Aplicando Descuento',
+                            text: 'Digite el monto a descontar',
+                            input: 'number',
+                            inputValue: '0',
+                            confirmButtonText: `Aplicar Descuento`,
+                        }).then(() => {
+                            Swal.fire({
+                                title: 'Pago realizado!',
+                                text: 'El Pago se realizo correctamente.',
+                                icon: 'success',
+                                confirmButtonText: `Imprimir Factura`,
+                            })
+                        })
+                    }
+                })
+            } else if (result.isDenied) {
+
+                Swal.fire({
+                    title: 'Pago No Aplicado',
+                    text: 'Digite el monto a pagar',
+                    input: 'number',
+                    inputValue: '0',
+                    confirmButtonText: `Realizar Pago`,
+                })
+            }
+        })
+    }
 
     return (
         <div className="bg-gray-100 h-screen" >
@@ -43,16 +101,11 @@ export default function Ventas() {
                     <h2 className="hidden md:block text-base text-lg   ml-1 font-semibold pl-3 w-full text-gray-800 text-left">Toyota Tacoma 2004</h2>
                     <h2 className="hidden md:block text-base text-lg   ml-1 font-semibold pl-3 w-full text-gray-800 text-left">Carlos Antonio Nuila Salgado</h2>
                     <h2 className="text-sm   md:text-lg md:text-right md:pr-4   ml-1 font-semibold md:font-normal pl-3 w-full text-gray-800 md:w-64">07/Dec/2020</h2>
-                    <Link to={{
-                        pathname: `/nuevo-pago/${1}`,
-                        state: {
-
-                        }
-                    }}>
-                        <button className="bg-green-500 hover:bg-green-800 rounded-xl w-24 h-full text-white text-xs font-semibold focus:outline-none">
+                    <div>
+                        <button className="bg-green-500 hover:bg-green-800 rounded-xl w-24 h-full text-white text-xs font-semibold focus:outline-none" onClick={() => clickPagarVenta()}>
                             Realizar Pago
                         </button>
-                    </Link>
+                    </div>
                 </div>
                 <div className="md:flex md:flex-row border-l-8 border-yellow-500 p-2 cursor-default my-4 mx-8 rounded-md md:rounded-lg bg-white shadow-lg hover:bg-gray-200 cursor-pointer">
                     <h2 className="text-xs   md:text-lg   ml-1 pl-3 w-full text-gray-800 md:w-80">SM-6969</h2>
