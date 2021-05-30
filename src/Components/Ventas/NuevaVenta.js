@@ -4,6 +4,7 @@ import IAPayments from './Agregar Venta/InitialAgreementPayments'
 import IATags from './Agregar Venta/InitialAgreementTags'
 import Docs from './Agregar Venta/Docs'
 import Pasos from "../Utilidades/Pasos"
+import { db, storage } from '../../firebase'
 
 export default function NuevaVenta(props) {
 
@@ -75,12 +76,12 @@ export default function NuevaVenta(props) {
         tagTotal: props.location.state.carro.precioFinal * 0.06 + 180.00 + 120.00 * 2 + 100.00,
         endDate: "MM/DD/YYYY",
         observaciones: "",
-        dealDescriptionPayments:"Garantia: motor y transmision unicamente 1 mes o mil millas a partir de la venta. Down payment y/o apartado no es reeembolsable.",
-        dealDescriptionTags:`Placas no incluidas en el trato. Deberan ser canceladas dentro de 4 semanas $${props.location.state.carro.precioFinal * 0.06 + 180.00 + 120.00 * 2 + 100.00}, sus sticker de 2 anos seran entregadas 10 dias despues de que hayan sido canceladas. De no cancelarse en el termino establecido cargos aplicaran`,
-        cobroComision:"",
-        sticker1ano:false,
-        sticker2ano:false,
-        placaTemporal:false,
+        dealDescriptionPayments: "Garantia: motor y transmision unicamente 1 mes o mil millas a partir de la venta. Down payment y/o apartado no es reeembolsable.",
+        dealDescriptionTags: `Placas no incluidas en el trato. Deberan ser canceladas dentro de 4 semanas $${props.location.state.carro.precioFinal * 0.06 + 180.00 + 120.00 * 2 + 100.00}, sus sticker de 2 anos seran entregadas 10 dias despues de que hayan sido canceladas. De no cancelarse en el termino establecido cargos aplicaran`,
+        cobroComision: "",
+        sticker1ano: false,
+        sticker2ano: false,
+        placaTemporal: false,
     }
 
     const [info, setInfo] = useState({ ...estadoInicial })
@@ -147,7 +148,7 @@ export default function NuevaVenta(props) {
         let nuevoPrecio = info.nuevoPrecio
         let valor = value
 
-        if(type === "checkbox"){
+        if (type === "checkbox") {
             valor = checked
         }
 
@@ -159,7 +160,7 @@ export default function NuevaVenta(props) {
             nuevoDown = valor * 0.2
             down = valor * 0.2
         }
-        if (name === "fee"){
+        if (name === "fee") {
             fee = parseInt(valor)
         }
         if (name === "nuevoDown") {
@@ -170,7 +171,7 @@ export default function NuevaVenta(props) {
             payments = parseInt(valor)
         }
         if (name === "frecuency") {
-            if (valor === "30"){
+            if (valor === "30") {
                 frecuencia14 = false
             } else {
                 frecuencia14 = true
@@ -244,8 +245,37 @@ export default function NuevaVenta(props) {
     const guardarVenta = () => {
         setLoading(true)
         const { socialNumber, email, costumer, address, phoneNumber } = info
-        const { nuevoPrecio, nuevoDown, payments, fee, dealDescriptionPayments, dealDescriptionTags, observaciones, cobroComision, placaTemporal, sticker1ano, sticker2ano } = info
-        console.log("hola")
+        const { nuevoPrecio, nuevoDown, payments, fee, dealDescriptionPayments, dealDescriptionTags, observaciones, cobroComision, placaTemporal, sticker1ano, sticker2ano, vin, codigo } = info
+
+        let infoVenta = { precio: nuevoPrecio, nuevoDown: nuevoDown, payments, fee, dealDescriptionPayments, dealDescriptionTags, carro: vin, cliente: socialNumber, fechaVenta: moment(new Date()).format("MM/DD/YYYY") }
+        const infoCliente = { email, costumer: costumer.toLocaleLowerCase(), address: address.toLowerCase(), phoneNumber }
+        if (observaciones !== "") {
+            infoVenta = { ...infoVenta, observaciones }
+        }
+        if (cobroComision !== "") {
+            infoVenta = { ...infoVenta, cobroComision }
+        }
+        if (placaTemporal) {
+            infoVenta = { ...infoVenta, placaTemporal }
+        }
+        if (sticker1ano) {
+            infoVenta = { ...infoVenta, sticker1ano }
+        }
+        if (sticker2ano) {
+            infoVenta = { ...infoVenta, sticker2ano }
+        }
+
+        //agregar cliente
+        db.collection("clientes").doc(socialNumber).set(infoCliente).then(() => {
+            //guardar foto licencia
+            //agregar venta
+            db.collection("ventas").doc(codigo).set(infoVenta).then(() => {
+                setLoading(false)
+                //cambiar estado y datos del carro
+            })
+        }).catch(() => {
+            console.log("Ocurrió un error")
+        })
     }
 
     const { pasos } = info
@@ -257,7 +287,7 @@ export default function NuevaVenta(props) {
     if (pasos[0].selected) {
         const { costumer, address, phoneNumber, auto, year, socialNumber, vin, email, precio, nuevoPrecio, down, nuevoDown, saldo, payments, fee, frecuencia14, taxes, stickers, title, inspection, fee2, tagTotal, endDate, codigo, clean, millaje, dealDescriptionPayments } = info
         let datosInitial = { costumer, address, phoneNumber, auto, year, socialNumber, vin, email, precio, nuevoPrecio, nuevoDown, down, saldo, payments, fee, frecuencia14, taxes, stickers, title, inspection, fee2, tagTotal, endDate, codigo, clean, millaje, dealDescriptionPayments }
-        pasoAmostrar = <IAPayments datosInitial={datosInitial} mandarPadre={traerDatos} siguienteStep={siguienteStep}/>
+        pasoAmostrar = <IAPayments datosInitial={datosInitial} mandarPadre={traerDatos} siguienteStep={siguienteStep} />
     }
     if (pasos[1].selected) {
         const { costumer, address, phoneNumber, auto, year, vin, taxes, stickers, title, inspection, fee2, tagTotal, dealDescriptionTags } = info
@@ -267,7 +297,7 @@ export default function NuevaVenta(props) {
     if (pasos[2].selected) {
         const { millaje, costumer, address, phoneNumber, auto, year, socialNumber, vin, email, nuevoPrecio, nuevoDown, saldo, payments, fee, frecuencia14, taxes, stickers, title, inspection, fee2, tagTotal, endDate, observaciones, dealDescriptionPayments, dealDescriptionTags, codigo, clean, cobroComision, sticker1ano, sticker2ano } = info
         let frecuencia = "30 days"
-        if (frecuencia14){
+        if (frecuencia14) {
             frecuencia = "14 days"
         }
         let datosDoc = { millaje, costumer, address, phoneNumber, auto, year, socialNumber, vin, email, nuevoPrecio, nuevoDown, saldo, payments, fee, frecuencia, taxes, stickers, title, inspection, fee2, tagTotal, endDate, observaciones, dealDescriptionPayments, dealDescriptionTags, codigo, clean, cobroComision, sticker1ano, sticker2ano }
