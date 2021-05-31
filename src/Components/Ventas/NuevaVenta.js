@@ -5,10 +5,11 @@ import IATags from './Agregar Venta/InitialAgreementTags'
 import Docs from './Agregar Venta/Docs'
 import Pasos from "../Utilidades/Pasos"
 import { db, storage } from '../../firebase'
+import Swal from 'sweetalert2'
 
 export default function NuevaVenta(props) {
 
-    /*const estadoInicial = {
+    const estadoInicial = {
         pasos: [{ texto: "Initial Agreement of Payments", selected: true, terminado: false },
         { texto: "Initial Agreement of Tags", selected: false, terminado: false },
         { texto: "Docs y Observaciones", selected: false, terminado: false }],
@@ -19,6 +20,8 @@ export default function NuevaVenta(props) {
         auto: props.location.state.carro.marca + " " + props.location.state.carro.modelo,
         year: props.location.state.carro.ano,
         vin: props.location.state.carro.id,
+        codigo: props.location.state.carro.codigo,
+        clean: props.location.state.carro.clean,
         email: "",
         precio: props.location.state.carro.precioFinal,
         nuevoPrecio: props.location.state.carro.precioFinal,
@@ -36,45 +39,6 @@ export default function NuevaVenta(props) {
         fee2: 100.00,
         tagTotal: props.location.state.carro.precioFinal * 0.06 + 180.00 + 120.00 * 2 + 100.00,
         endDate: "MM/DD/YYYY",
-        observaciones:"",
-        dealDescriptionPayments:"Garantia: motor y transmision unicamente 1 mes o mil millas a partir de la venta. Down payment y/o apartado no es reeembolsable.",
-        dealDescriptionTags:`Placas no incluidas en el trato. Deberan ser canceladas dentro de 4 semanas $${props.location.state.carro.precioFinal * 0.06 + 180.00 + 120.00 * 2 + 100.00}, sus sticker de 2 anos seran entregadas 10 dias despues de que hayan sido canceladas. De no cancelarse en el termino establecido cargos aplicaran`,
-        cobroComision:"",
-        sticker1ano:false,
-        sticker2ano:false,
-        placaTemporal:false,
-    }*/
-
-    const estadoInicial = {
-        pasos: [{ texto: "Initial Agreement of Payments", selected: false, terminado: true },
-        { texto: "Initial Agreement of Tags", selected: true, terminado: false },
-        { texto: "Docs y Observaciones", selected: false, terminado: false }],
-        millaje: props.location.state.carro.millaje,
-        costumer: "DANIEL ENRIQUE HERNANDEZ HERNANDEZ",
-        address: "2014 POWHATAN RD HYATTSVILLE MD 20782",
-        phoneNumber: "(301) 404-8347",
-        auto: props.location.state.carro.marca + " " + props.location.state.carro.modelo,
-        year: props.location.state.carro.ano,
-        vin: props.location.state.carro.id,
-        codigo: props.location.state.carro.codigo,
-        clean: props.location.state.carro.clean,
-        email: "cnuila14@icloud.com",
-        precio: props.location.state.carro.precioFinal,
-        nuevoPrecio: 17000,
-        down: props.location.state.carro.downPayment,
-        nuevoDown: 2000,
-        saldo: 17500 - 2000,
-        payments: 250.00,
-        fee: 75.00,
-        frecuencia14: true,
-        socialNumber: "0801200023837",
-        taxes: props.location.state.carro.precioFinal * 0.06,
-        stickers: 180.00,
-        title: 120.00,
-        inspection: 120.00,
-        fee2: 100.00,
-        tagTotal: props.location.state.carro.precioFinal * 0.06 + 180.00 + 120.00 * 2 + 100.00,
-        endDate: "MM/DD/YYYY",
         observaciones: "",
         dealDescriptionPayments: "Garantia: motor y transmision unicamente 1 mes o mil millas a partir de la venta. Down payment y/o apartado no es reeembolsable.",
         dealDescriptionTags: `Placas no incluidas en el trato. Deberan ser canceladas dentro de 4 semanas $${props.location.state.carro.precioFinal * 0.06 + 180.00 + 120.00 * 2 + 100.00}, sus sticker de 2 anos seran entregadas 10 dias despues de que hayan sido canceladas. De no cancelarse en el termino establecido cargos aplicaran`,
@@ -82,6 +46,7 @@ export default function NuevaVenta(props) {
         sticker1ano: false,
         sticker2ano: false,
         placaTemporal: false,
+        imagenLicencia: [],
     }
 
     const [info, setInfo] = useState({ ...estadoInicial })
@@ -244,7 +209,7 @@ export default function NuevaVenta(props) {
 
     const guardarVenta = () => {
         setLoading(true)
-        const { socialNumber, email, costumer, address, phoneNumber } = info
+        const { socialNumber, email, costumer, address, phoneNumber, imagenLicencia } = info
         const { nuevoPrecio, nuevoDown, payments, fee, dealDescriptionPayments, dealDescriptionTags, observaciones, cobroComision, placaTemporal, sticker1ano, sticker2ano, vin, codigo } = info
 
         let infoVenta = { precio: nuevoPrecio, nuevoDown: nuevoDown, payments, fee, dealDescriptionPayments, dealDescriptionTags, carro: vin, cliente: socialNumber, fechaVenta: moment(new Date()).format("MM/DD/YYYY") }
@@ -266,15 +231,36 @@ export default function NuevaVenta(props) {
         }
 
         //agregar cliente
-        db.collection("clientes").doc(socialNumber).set(infoCliente).then(() => {
+        db.collection("clientes").doc(socialNumber).set(infoCliente).then(async () => {
             //guardar foto licencia
+            let storageRef = storage.ref();
+            try {
+                let carroRef = storageRef.child(`clientes/${socialNumber}_Licencia`);
+                await carroRef.put(imagenLicencia[0])
+            } catch (error) {
+                console.log(error)
+            }
             //agregar venta
             db.collection("ventas").doc(codigo).set(infoVenta).then(() => {
                 setLoading(false)
-                //cambiar estado y datos del carro
+                //cambiar estado del carro
+                db.collection("carros").doc(vin).update({ estado: "Vendido" }).then(() => {
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Se guardó el cliente y la venta',
+                        showConfirmButton: true,
+                    }).then(() => {
+                        props.history.push("/ventas");
+                    })
+                })
             })
         }).catch(() => {
-            console.log("Ocurrió un error")
+            Swal.fire(
+                '¡Ops!',
+                'Ocurrió un error, vuelva a intentarlo',
+                'warning'
+            )
         })
     }
 
@@ -295,12 +281,12 @@ export default function NuevaVenta(props) {
         pasoAmostrar = <IATags datosInitialTags={datosInitialTags} mandarPadre={traerDatos} previoStep={previoStep} siguienteStep={siguienteStep} />
     }
     if (pasos[2].selected) {
-        const { millaje, costumer, address, phoneNumber, auto, year, socialNumber, vin, email, nuevoPrecio, nuevoDown, saldo, payments, fee, frecuencia14, taxes, stickers, title, inspection, fee2, tagTotal, endDate, observaciones, dealDescriptionPayments, dealDescriptionTags, codigo, clean, cobroComision, sticker1ano, sticker2ano } = info
+        const { millaje, costumer, address, phoneNumber, auto, year, socialNumber, vin, email, nuevoPrecio, nuevoDown, saldo, payments, fee, frecuencia14, taxes, stickers, title, inspection, fee2, tagTotal, endDate, observaciones, dealDescriptionPayments, dealDescriptionTags, codigo, clean, cobroComision, sticker1ano, sticker2ano, imagenLicencia } = info
         let frecuencia = "30 days"
         if (frecuencia14) {
             frecuencia = "14 days"
         }
-        let datosDoc = { millaje, costumer, address, phoneNumber, auto, year, socialNumber, vin, email, nuevoPrecio, nuevoDown, saldo, payments, fee, frecuencia, taxes, stickers, title, inspection, fee2, tagTotal, endDate, observaciones, dealDescriptionPayments, dealDescriptionTags, codigo, clean, cobroComision, sticker1ano, sticker2ano }
+        let datosDoc = { millaje, costumer, address, phoneNumber, auto, year, socialNumber, vin, email, nuevoPrecio, nuevoDown, saldo, payments, fee, frecuencia, taxes, stickers, title, inspection, fee2, tagTotal, endDate, observaciones, dealDescriptionPayments, dealDescriptionTags, codigo, clean, cobroComision, sticker1ano, sticker2ano, imagenLicencia }
         pasoAmostrar = <Docs datosDoc={datosDoc} previoStep={previoStep} calcularFechaFinal={calcularFechaFinal} coma={coma} mandarPadre={traerDatos} calcularPagos={calcularPagos} guardarVenta={guardarVenta} loading={loading} />
     }
 

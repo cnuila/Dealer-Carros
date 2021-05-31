@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import ImagenPrincipal from './ImagenPrincipal'
+import Imagen from '../../Utilidades/Imagen'
 import OtrasImagenes from './OtrasImagenes'
 import Swal from 'sweetalert2'
 
@@ -69,7 +69,7 @@ export default class ImagenesCarro extends Component {
                 <div className="grid grid-cols-1 md:grid-cols-4 h-full md:h-72 bg-gray-900 max-w-3xl mx-2 lg:mx-auto rounded-b-lg shadow-2xl">
                     <div className="flex flex-col m-4 md:col-span-2 rounded-md bg-gray-800">
                         <h1 className="p-6 text-center text-lg font-semibold cursor-default text-gray-200">Fotos Vehículo</h1>
-                        <ImagenPrincipal mandarFotos={this.traerFotos} imagenes={imagenes} />
+                        <Imagen mandarFotos={this.traerFotos} imagenes={imagenes} texto={"Agregar Foto Principal"}/>
                         <OtrasImagenes mandarFotos={this.traerFotos} imagenes={imagenes} />
                     </div>
                     <div className="flex flex-col md:col-span-2">

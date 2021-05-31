@@ -3,10 +3,12 @@ import jsPDF from "jspdf"
 import moment from 'moment'
 import SantosLogo from "../../../Imágenes/SantosMotorsLogo.jpg"
 import Checkbox from "../../Utilidades/Checkbox"
+import Imagen from "../../Utilidades/Imagen"
+import Swal from 'sweetalert2'
 
 export default function Docs(props) {
 
-    const { millaje, costumer, address, phoneNumber, auto, year, vin, email, nuevoPrecio, nuevoDown, saldo, payments, fee, frecuencia, taxes, stickers, title, inspection, fee2, tagTotal, endDate, observaciones, dealDescriptionPayments, dealDescriptionTags, codigo, clean, cobroComision, sticker1ano, sticker2ano, placaTemporal } = props.datosDoc
+    const { millaje, costumer, address, phoneNumber, auto, year, vin, email, nuevoPrecio, nuevoDown, saldo, payments, fee, frecuencia, taxes, stickers, title, inspection, fee2, tagTotal, endDate, observaciones, dealDescriptionPayments, dealDescriptionTags, codigo, clean, cobroComision, sticker1ano, sticker2ano, placaTemporal, imagenLicencia } = props.datosDoc
     const { loading } = props
 
     const imprimirFinancial = () => {
@@ -859,9 +861,22 @@ export default function Docs(props) {
         props.mandarPadre(target)
     }
 
+    const traerFoto = (foto) => {
+        const objetoFoto = { name: "imagenLicencia", value: [...foto] }
+        props.mandarPadre(objetoFoto)
+    }
+
     const handleOnSubmit = (e) => {
         e.preventDefault()
-        props.guardarVenta()
+        if (imagenLicencia[0] === null || imagenLicencia[0] === undefined){
+            Swal.fire(
+                '¡Ops!',
+                'Debes subir la foto de la licencia del cliente',
+                'warning'
+            )
+        } else {
+            props.guardarVenta()
+        }        
     }
 
     return (
@@ -895,23 +910,31 @@ export default function Docs(props) {
                     </div>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 px-4">
-                    <div className="block px-3">
-                        <h2 className="text-gray-200 px-2 font-semibold text-lg underline">Observaciones</h2>
-                        <textarea rows={7} name="observaciones" value={observaciones} className="block bg-gray-900 text-lg text-gray-200 ml-4 px-2 py-3 mt-1 w-11/12 resize-none border-b-2 border-gray-800 focus:border-gray-700 placeholder-gray-500 focus:placeholder-gray-400 focus:outline-none" placeholder="Ej. Extras" onChange={handleInputChange} />
+                    <div>
+                        <div className="block px-3">
+                            <h2 className="text-gray-200 px-2 font-semibold text-lg underline">Observaciones</h2>
+                            <textarea rows={3} name="observaciones" value={observaciones} className="block bg-gray-900 text-lg text-gray-200 ml-4 px-2 py-3 mt-1 w-11/12 resize-none border-b-2 border-gray-800 focus:border-gray-700 placeholder-gray-500 focus:placeholder-gray-400 focus:outline-none" placeholder="Ej. Extras" onChange={handleInputChange} />
+                        </div>
+                        <div className="block px-2 mt-4">
+                            <h2 className="text-gray-200 px-2 font-semibold text-lg underline">Comisión cobrada por</h2>
+                            <input type="text" value={cobroComision} className="block bg-gray-900 text-gray-200 ml-4 px-2 py-3 w-11/12 border-b-2 border-gray-800 focus:border-gray-700 placeholder-gray-500 focus:placeholder-gray-400 focus:outline-none" name="cobroComision" placeholder="Ej. Juan Perez" onChange={handleInputChange} />
+                        </div>
+                        <div className="ml-4 mt-6 px-2 text-gray-200 font-semibold text-lg underline">
+                            <Checkbox nombre={"placaTemporal"} handleInputChange={handleInputChange} checked={placaTemporal} texto={"Placa Temporal"} />
+                        </div>
+                        <div className="ml-4 mt-4 px-2 text-gray-200 font-semibold text-lg underline">
+                            <Checkbox nombre={"sticker1ano"} handleInputChange={handleInputChange} checked={sticker1ano} texto={"Sticker 1 Año"} />
+                        </div>
+                        <div className="ml-4 mt-4 px-2 text-gray-200 font-semibold text-lg underline">
+                            <Checkbox nombre={"sticker2ano"} handleInputChange={handleInputChange} checked={sticker2ano} texto={"Sticker 2 Año"} />
+                        </div>
                     </div>
                     <div>
                         <div className="block px-2">
-                            <h2 className="text-gray-200 px-2 font-semibold text-lg underline">Comisión cobrada por</h2>
-                            <input type="text" value={cobroComision} className="block bg-gray-900 text-gray-200 ml-4 px-2 py-2 w-11/12 border-b-2 border-gray-800 focus:border-gray-700 placeholder-gray-500 focus:placeholder-gray-400 focus:outline-none" name="cobroComision" placeholder="Ej. Juan Perez" onChange={handleInputChange} />
+                            <h2 className="text-gray-200 px-2 font-semibold text-lg underline">Licencia Cliente</h2>
                         </div>
-                        <div className="ml-4 mt-6 text-gray-200 font-semibold text-lg underline">
-                            <Checkbox nombre={"placaTemporal"} handleInputChange={handleInputChange} checked={placaTemporal} texto={"Placa Temporal"} />
-                        </div>
-                        <div className="ml-4 mt-4 text-gray-200 font-semibold text-lg underline">
-                            <Checkbox nombre={"sticker1ano"} handleInputChange={handleInputChange} checked={sticker1ano} texto={"Sticker 1 Año"} />
-                        </div>
-                        <div className="ml-4 mt-4 text-gray-200 font-semibold text-lg underline">
-                            <Checkbox nombre={"sticker2ano"} handleInputChange={handleInputChange} checked={sticker2ano} texto={"Sticker 2 Año"} />
+                        <div className="grid mt-10 mx-4 place-items-center">
+                            <Imagen imagenes={imagenLicencia} texto={"Agregar Foto de Licencia"} mandarFotos={traerFoto} />
                         </div>
                     </div>
                 </div>

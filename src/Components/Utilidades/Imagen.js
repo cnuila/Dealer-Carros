@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function ImagenPrincipal(props) {
 
-    const { imagenes } = props
+    const { imagenes, texto } = props
     let existeFoto = (imagenes[0] !== null && imagenes[0] !== undefined)
     let fotoMostrar = null
     if (existeFoto) {
@@ -34,7 +34,7 @@ export default function ImagenPrincipal(props) {
                 </svg>
             </div>
             <img
-                className="z-0 h-full w-full rounded-lg object-cover shadow-md"
+                className="z-0 h-64 w-full rounded-lg object-cover shadow-md"
                 alt="Foto Carro"
                 src={fotoMostrar}
             />
@@ -48,7 +48,7 @@ export default function ImagenPrincipal(props) {
                     <path d="M18.1 54.5H0v51.4c0 3.1 2.5 5.6 5.6 5.6h112c3.5 0 6.4-2.9 6.4-6.4V35.6c0-3.4-2.7-6.1-6.1-6.1H89.1c-3 0-5.5-2.2-5.899-5.1l-1-6.6c-.5-2.9-3-5.3-5.9-5.3H47.5c-3 0-5.5 2.3-5.9 5.3l-1 6.6c-.4 2.9-3 5.1-5.9 5.1H6c-3.3 0-6 2.7-6 6v5h18.1c3.8 0 6.9 3.1 6.9 6.9v.1c0 3.9-3.1 7-6.9 7zM108 40.7c3.9 0 7 3.1 7 7s-3.1 7-7 7-7-3.1-7-7c0-3.8 3.1-7 7-7zm-45.7 2.5c16.601 0 30 13.4 30 30s-13.399 30-30 30c-16.6 0-30-13.4-30-30s13.5-30 30-30z" />
                     <circle cx="62" cy="73.2" r="15" />
                 </svg>
-                <h1 className="font-semibold text-center text-gray-800">Agregar Foto Principal</h1>
+                <h1 className="font-semibold text-center text-gray-800">{texto}</h1>
             </div>
         </div>
     );
