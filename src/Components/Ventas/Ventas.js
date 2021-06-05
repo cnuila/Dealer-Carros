@@ -3,6 +3,7 @@ import { db, storage } from '../../firebase'
 import Navbar from '../Navbar'
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import moment from 'moment'
 
 export default function Ventas() {
 
@@ -11,12 +12,54 @@ export default function Ventas() {
     useEffect(() => {
         db.collection("ventas").onSnapshot((querySnapshot) => {
             const listaVentas = []
-            querySnapshot.forEach((doc) => {
-                listaVentas.push({ ...doc.data(), id: doc.id })
+            var clienteVenta
+            var carroVenta
+            querySnapshot.forEach(async (doc) => {
+                await db.collection("clientes").doc(doc.data().cliente).get().then((doc) => {
+                    clienteVenta = doc.data()
+                })
+                await db.collection("carros").doc(doc.data().carro).get().then((doc) => {
+                    carroVenta = doc.data()
+                })
+                listaVentas.push({ ...doc.data(), id: doc.id, clienteVenta: clienteVenta, carroVenta: carroVenta })
             });
-            setVentas(listaVentas)
+            console.log(listaVentas)
+            setTimeout(() => {
+                setVentas(listaVentas)
+            }, 600)
         })
     }, [])
+
+    const crearPago = (tipo, idVenta, cantidad, descuento) => {
+        const fecha = moment(new Date()).format("MM/DD/YYYY")
+        let infoPago = { tipo, cantidad, fecha, idVenta }
+        if (descuento > 0) {
+            infoPago = { ...infoPago, descuento }
+        }
+        db.collection("pagos").doc().set(infoPago).then(() => {
+            //update de la venta
+            const cantidadPorPagar = 0
+            db.collection("ventas").doc(idVenta).get().then((doc) => {
+                cantidadPorPagar = doc.data().fee
+            })
+            console.log(cantidadPorPagar)
+            //db.collection("ventas").doc(idVenta).update({ faltaPorPagar: cantidadPorPagar - cantidad - descuento, ultimoPago: fecha }).then(() => {
+            //    Swal.fire({
+            //        icon: 'success',
+            //        title: 'Pago realizado',
+            //        showConfirmButton: true,
+            //    })
+            //})
+
+        }).catch(() => {
+            Swal.fire({
+                title: '¡Ops!',
+                text: 'Ocurrió un error, vuelva a intentarlo',
+                icon: 'warning'
+            })
+        })
+
+    }
 
     const clickPagarVenta = () => {
         Swal.fire({
@@ -37,7 +80,7 @@ export default function Ventas() {
                     showDenyButton: true,
                     denyButtonText: `Aplicar Descuento`,
                     denyButtonColor: "#FFB300",
-                }).then((result) => {
+                }).then((result,value) => {
                     if (result.isConfirmed) {
                         Swal.fire({
                             title: 'Pago realizado!',
@@ -45,6 +88,7 @@ export default function Ventas() {
                             icon: 'success',
                             confirmButtonText: `Imprimir Factura`,
                         })
+                        console.log("value: ", result.value)
                     } else if (result.isDenied) {
                         Swal.fire({
                             title: 'Aplicando Descuento',
@@ -52,13 +96,14 @@ export default function Ventas() {
                             input: 'number',
                             inputValue: '0',
                             confirmButtonText: `Aplicar Descuento`,
-                        }).then(() => {
+                        }).then((value2) => {
                             Swal.fire({
                                 title: 'Pago realizado!',
                                 text: 'El Pago se realizo correctamente.',
                                 icon: 'success',
                                 confirmButtonText: `Imprimir Factura`,
                             })
+                            console.log("value2: ",   value2)
                         })
                     }
                 })
@@ -79,68 +124,30 @@ export default function Ventas() {
         <div className="bg-gray-100 h-screen" >
             <Navbar componente="ventas"></Navbar>
             <div className="py-6" >
+
                 <div className="flex flex-row w-full">
                     <h1 className="font-bold text-center w-full text-3xl text-gray-800">Ventas</h1>
                 </div>
+
                 {ventas.map((venta, index) => {
                     return (
                         <div key={index}>
                             <div className="md:flex md:flex-row border-l-8 border-gray-800 p-2 cursor-default my-4 mx-8 rounded-md md:rounded-lg bg-white shadow-lg hover:bg-gray-200 cursor-pointer">
-                                <h2 className="text-xs   md:text-lg   ml-1 pl-3 w-full text-gray-800 md:w-80">{venta.codigo}</h2>
-                                <h2 className="md:hidden text-base md:text-lg   ml-1 font-bold md:font-medium pl-3 w-full text-gray-800">{venta.carro.marca} {venta.carro.modelo} - {venta.cliente.nombre}</h2>
-                                <h2 className="hidden md:block text-base text-lg   ml-1 font-semibold pl-3 w-full text-gray-800 text-left">{venta.carro.marca} {venta.carro.modelo} {venta.carro.ano}</h2>
-                                <h2 className="hidden md:block text-base text-lg   ml-1 font-semibold pl-3 w-full text-gray-800 text-left">{venta.cliente.nombre}</h2>
-                                <h2 className="text-sm   md:text-lg md:text-right md:pr-4   ml-1 font-semibold md:font-normal pl-3 w-full text-gray-800 md:w-64">{venta.fecha}</h2>
+                                <h2 className="text-xs   md:text-lg   ml-1 pl-3 w-full text-gray-800 md:w-80">{venta.id}</h2>
+                                <h2 className="md:hidden text-base md:text-lg   ml-1 font-bold md:font-medium pl-3 w-full text-gray-800 capitalize">{venta.carroVenta.marca} {venta.carroVenta.modelo} - {venta.clienteVenta.costumer}</h2>
+                                <h2 className="hidden md:block text-base text-lg   ml-1 font-semibold pl-3 w-full text-gray-800 text-left capitalize">{venta.carroVenta.marca} {venta.carroVenta.modelo} {venta.carroVenta.ano}</h2>
+                                <h2 className="hidden md:block text-base text-lg   ml-1 font-semibold pl-3 w-full text-gray-800 text-left capitalize">{venta.clienteVenta.costumer}</h2>
+                                <h2 className="text-sm   md:text-lg md:text-right md:pr-4   ml-1 font-semibold md:font-normal pl-3 w-full text-gray-800 md:w-64">{venta.fechaVenta}</h2>
+                                <div>
+                                    <button className="bg-green-500 hover:bg-green-800 rounded-xl w-24 h-full text-white text-xs font-semibold focus:outline-none" onClick={() => clickPagarVenta()}>
+                                        Realizar Pago
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     )
                 })}
-                <div className="md:flex md:flex-row border-l-8 border-red-700 p-2 cursor-default my-4 mx-8 rounded-md md:rounded-lg bg-white shadow-lg hover:bg-gray-200 cursor-pointer">
-                    <h2 className="text-xs   md:text-lg   ml-1 pl-3 w-full text-gray-800 md:w-80">SM-1303</h2>
-                    <h2 className="md:hidden text-base md:text-lg   ml-1 font-bold md:font-medium pl-3 w-full text-gray-800">Toyota Tacoma - Carlos Nuila</h2>
-                    <h2 className="hidden md:block text-base text-lg   ml-1 font-semibold pl-3 w-full text-gray-800 text-left">Toyota Tacoma 2004</h2>
-                    <h2 className="hidden md:block text-base text-lg   ml-1 font-semibold pl-3 w-full text-gray-800 text-left">Carlos Antonio Nuila Salgado</h2>
-                    <h2 className="text-sm   md:text-lg md:text-right md:pr-4   ml-1 font-semibold md:font-normal pl-3 w-full text-gray-800 md:w-64">07/Dec/2020</h2>
-                    <div>
-                        <button className="bg-green-500 hover:bg-green-800 rounded-xl w-24 h-full text-white text-xs font-semibold focus:outline-none" onClick={() => clickPagarVenta()}>
-                            Realizar Pago
-                        </button>
-                    </div>
-                </div>
-                <div className="md:flex md:flex-row border-l-8 border-yellow-500 p-2 cursor-default my-4 mx-8 rounded-md md:rounded-lg bg-white shadow-lg hover:bg-gray-200 cursor-pointer">
-                    <h2 className="text-xs   md:text-lg   ml-1 pl-3 w-full text-gray-800 md:w-80">SM-6969</h2>
-                    <h2 className="md:hidden text-base md:text-lg   ml-1 font-bold md:font-medium pl-3 w-full text-gray-800">Dodge Charger - Daniel Agurcia</h2>
-                    <h2 className="hidden md:block text-base text-lg   ml-1 font-semibold pl-3 w-full text-gray-800 text-left">Dodge Charger 2016</h2>
-                    <h2 className="hidden md:block text-base text-lg   ml-1 font-semibold pl-3 w-full text-gray-800 text-left">Daniel Enrique Agurcia Hernandez</h2>
-                    <h2 className="text-sm   md:text-lg md:text-right md:pr-4   ml-1 font-semibold md:font-normal pl-3 w-full text-gray-800 md:w-64">17/Aug/2021</h2>
-                    <Link to={{
-                        pathname: `/nuevo-pago/${1}`,
-                        state: {
 
-                        }
-                    }}>
-                        <button className="bg-green-500 hover:bg-green-800 rounded-xl w-24 h-full text-white text-xs font-semibold focus:outline-none">
-                            Realizar Pago
-                        </button>
-                    </Link>
-                </div>
-                <div className="md:flex md:flex-row border-l-8 border-gray-800 p-2 cursor-default my-4 mx-8 rounded-md md:rounded-lg bg-white shadow-lg hover:bg-gray-200 cursor-pointer">
-                    <h2 className="text-xs md:text-lg ml-1 pl-3 w-full text-gray-800 md:w-80">SM-2407</h2>
-                    <h2 className="md:hidden text-base md:text-lg ml-1 font-bold md:font-medium pl-3 w-full text-gray-800">Tesla Model X - Valentina Hernandez</h2>
-                    <h2 className="hidden md:block text-base text-lg ml-1 font-semibold pl-3 w-full text-gray-800 text-left">Tesla Model X 2018</h2>
-                    <h2 className="hidden md:block text-base text-lg ml-1 font-semibold pl-3 w-full text-gray-800 text-left">Valentina Emperatriz Hernandez Carbajal</h2>
-                    <h2 className="text-sm md:text-lg md:text-right md:pr-4 ml-1 font-semibold md:font-normal pl-3 w-full text-gray-800 md:w-64">07/Apr/2021</h2>
-                    <Link to={{
-                        pathname: `/nuevo-pago/${1}`,
-                        state: {
-
-                        }
-                    }}>
-                        <button className="bg-green-500 hover:bg-green-800 rounded-xl w-24 h-full text-white text-xs font-semibold focus:outline-none">
-                            Realizar Pago
-                        </button>
-                    </Link>
-                </div>
             </div>
         </div>
     )
