@@ -28,6 +28,7 @@ export default function NuevaVenta(props) {
         down: props.location.state.carro.downPayment,
         nuevoDown: props.location.state.carro.downPayment,
         saldo: props.location.state.carro.precioFinal - props.location.state.carro.downPayment,
+        nuevoSaldo: props.location.state.carro.precioFinal - props.location.state.carro.downPayment,
         payments: 250.00,
         fee: 75.00,
         frecuencia14: true,
@@ -47,6 +48,7 @@ export default function NuevaVenta(props) {
         sticker2ano: false,
         placaTemporal: false,
         imagenLicencia: [],
+        oldBalance: 0,
     }
 
     const [info, setInfo] = useState({ ...estadoInicial })
@@ -58,8 +60,8 @@ export default function NuevaVenta(props) {
     }
 
     const calcularPagos = () => {
-        const { saldo, payments, fee } = info
-        let saldoActual = saldo
+        const { nuevoSaldo, payments, fee } = info
+        let saldoActual = nuevoSaldo
         let subTotal = saldoActual + fee
         let fechaPago = moment(new Date()).add(14, "days")
         let pago = payments
@@ -102,7 +104,7 @@ export default function NuevaVenta(props) {
     }
 
     const traerDatos = ({ name, value, type, checked }) => {
-        let nuevoSaldo = info.saldo
+        let nuevoSaldo = info.nuevoSaldo
         let taxes = info.taxes
         let tagTotal = info.tagTotal
         let nuevoDown = info.nuevoDown
@@ -111,6 +113,7 @@ export default function NuevaVenta(props) {
         let payments = info.payments
         let down = info.down
         let nuevoPrecio = info.nuevoPrecio
+        let nuevoOldBalance = info.oldBalance
         let valor = value
 
         if (type === "checkbox") {
@@ -119,11 +122,20 @@ export default function NuevaVenta(props) {
 
         if (name === "nuevoPrecio") {
             nuevoPrecio = parseInt(valor)
-            nuevoSaldo = valor - info.nuevoDown
             taxes = valor * 0.06
             tagTotal = taxes + 180.00 + 120.00 * 2 + 100.00
             nuevoDown = valor * 0.2
+            nuevoSaldo = valor - nuevoDown
             down = valor * 0.2
+        }
+        if (name === "oldBalance") {
+            if (valor !== "") {
+                nuevoOldBalance = parseInt(valor)
+                nuevoSaldo = info.saldo - nuevoOldBalance
+            } else {
+                nuevoSaldo = info.saldo
+                nuevoOldBalance = ""
+            }
         }
         if (name === "fee") {
             fee = parseInt(valor)
@@ -145,7 +157,8 @@ export default function NuevaVenta(props) {
         setInfo({
             ...info,
             [name]: valor,
-            saldo: nuevoSaldo,
+            oldBalance: nuevoOldBalance,
+            nuevoSaldo,
             taxes,
             tagTotal,
             nuevoDown,
@@ -210,9 +223,9 @@ export default function NuevaVenta(props) {
     const guardarVenta = () => {
         setLoading(true)
         const { socialNumber, email, costumer, address, phoneNumber, imagenLicencia } = info
-        const { nuevoPrecio, nuevoDown, payments, fee, dealDescriptionPayments, dealDescriptionTags, observaciones, cobroComision, placaTemporal, sticker1ano, sticker2ano, vin, codigo } = info
+        const { nuevoPrecio, nuevoDown, payments, fee, dealDescriptionPayments, dealDescriptionTags, observaciones, cobroComision, placaTemporal, sticker1ano, sticker2ano, vin, codigo, nuevoSaldo } = info
 
-        let infoVenta = { precio: nuevoPrecio, nuevoDown: nuevoDown, payments, fee, dealDescriptionPayments, dealDescriptionTags, carro: vin, cliente: socialNumber, fechaVenta: moment(new Date()).format("MM/DD/YYYY") }
+        let infoVenta = { precio: nuevoPrecio, downPayment: nuevoDown, payments, fee, dealDescriptionPayments, dealDescriptionTags, carro: vin, cliente: socialNumber, fechaVenta: moment(new Date()).format("MM/DD/YYYY"), ultimaFechaPago:moment(new Date()).format("MM/DD/YYYY"), saldo:nuevoSaldo }
         const infoCliente = { email, costumer: costumer.toLocaleLowerCase(), address: address.toLowerCase(), phoneNumber }
         if (observaciones !== "") {
             infoVenta = { ...infoVenta, observaciones }
@@ -271,8 +284,8 @@ export default function NuevaVenta(props) {
 
     let pasoAmostrar = (<></>)
     if (pasos[0].selected) {
-        const { costumer, address, phoneNumber, auto, year, socialNumber, vin, email, precio, nuevoPrecio, down, nuevoDown, saldo, payments, fee, frecuencia14, taxes, stickers, title, inspection, fee2, tagTotal, endDate, codigo, clean, millaje, dealDescriptionPayments } = info
-        let datosInitial = { costumer, address, phoneNumber, auto, year, socialNumber, vin, email, precio, nuevoPrecio, nuevoDown, down, saldo, payments, fee, frecuencia14, taxes, stickers, title, inspection, fee2, tagTotal, endDate, codigo, clean, millaje, dealDescriptionPayments }
+        const { costumer, address, phoneNumber, auto, year, socialNumber, vin, email, precio, nuevoPrecio, down, nuevoDown, nuevoSaldo, saldo, payments, fee, frecuencia14, taxes, stickers, title, inspection, fee2, tagTotal, endDate, codigo, clean, millaje, dealDescriptionPayments, oldBalance } = info
+        let datosInitial = { costumer, address, phoneNumber, auto, year, socialNumber, vin, email, precio, nuevoPrecio, nuevoDown, down, nuevoSaldo, saldo, payments, fee, frecuencia14, taxes, stickers, title, inspection, fee2, tagTotal, endDate, codigo, clean, millaje, dealDescriptionPayments, oldBalance }
         pasoAmostrar = <IAPayments datosInitial={datosInitial} mandarPadre={traerDatos} siguienteStep={siguienteStep} />
     }
     if (pasos[1].selected) {
@@ -281,12 +294,12 @@ export default function NuevaVenta(props) {
         pasoAmostrar = <IATags datosInitialTags={datosInitialTags} mandarPadre={traerDatos} previoStep={previoStep} siguienteStep={siguienteStep} />
     }
     if (pasos[2].selected) {
-        const { millaje, costumer, address, phoneNumber, auto, year, socialNumber, vin, email, nuevoPrecio, nuevoDown, saldo, payments, fee, frecuencia14, taxes, stickers, title, inspection, fee2, tagTotal, endDate, observaciones, dealDescriptionPayments, dealDescriptionTags, codigo, clean, cobroComision, sticker1ano, sticker2ano, imagenLicencia } = info
+        const { millaje, costumer, address, phoneNumber, auto, year, socialNumber, vin, email, nuevoPrecio, nuevoDown, nuevoSaldo, payments, fee, frecuencia14, taxes, stickers, title, inspection, fee2, tagTotal, endDate, observaciones, dealDescriptionPayments, dealDescriptionTags, codigo, clean, cobroComision, sticker1ano, sticker2ano, imagenLicencia } = info
         let frecuencia = "30 days"
         if (frecuencia14) {
             frecuencia = "14 days"
         }
-        let datosDoc = { millaje, costumer, address, phoneNumber, auto, year, socialNumber, vin, email, nuevoPrecio, nuevoDown, saldo, payments, fee, frecuencia, taxes, stickers, title, inspection, fee2, tagTotal, endDate, observaciones, dealDescriptionPayments, dealDescriptionTags, codigo, clean, cobroComision, sticker1ano, sticker2ano, imagenLicencia }
+        let datosDoc = { millaje, costumer, address, phoneNumber, auto, year, socialNumber, vin, email, nuevoPrecio, nuevoDown, nuevoSaldo, payments, fee, frecuencia, taxes, stickers, title, inspection, fee2, tagTotal, endDate, observaciones, dealDescriptionPayments, dealDescriptionTags, codigo, clean, cobroComision, sticker1ano, sticker2ano, imagenLicencia }
         pasoAmostrar = <Docs datosDoc={datosDoc} previoStep={previoStep} calcularFechaFinal={calcularFechaFinal} coma={coma} mandarPadre={traerDatos} calcularPagos={calcularPagos} guardarVenta={guardarVenta} loading={loading} />
     }
 
