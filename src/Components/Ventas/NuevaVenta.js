@@ -256,11 +256,11 @@ export default function NuevaVenta(props) {
                 })
             })
         }).catch(() => {
-            Swal.fire(
-                '¡Ops!',
-                'Ocurrió un error, vuelva a intentarlo',
-                'warning'
-            )
+            Swal.fire({
+                title: '¡Ops!',
+                text: 'Ocurrió un error, vuelva a intentarlo',
+                icon: 'warning'
+            })
         })
     }
 
