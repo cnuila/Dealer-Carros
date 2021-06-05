@@ -12,8 +12,8 @@ export default function Ventas() {
     useEffect(() => {
         db.collection("ventas").onSnapshot((querySnapshot) => {
             const listaVentas = []
-            var clienteVenta
-            var carroVenta
+            let clienteVenta
+            let carroVenta
             querySnapshot.forEach(async (doc) => {
                 await db.collection("clientes").doc(doc.data().cliente).get().then((doc) => {
                     clienteVenta = doc.data()
@@ -21,7 +21,7 @@ export default function Ventas() {
                 await db.collection("carros").doc(doc.data().carro).get().then((doc) => {
                     carroVenta = doc.data()
                 })
-                listaVentas.push({ ...doc.data(), id: doc.id, clienteVenta: clienteVenta, carroVenta: carroVenta })
+                listaVentas.push({ ...doc.data(), id: doc.id, clienteVenta, carroVenta })
             });
             console.log(listaVentas)
             setTimeout(() => {
@@ -36,85 +36,86 @@ export default function Ventas() {
         if (descuento > 0) {
             infoPago = { ...infoPago, descuento }
         }
+        console.log(infoPago)
         db.collection("pagos").doc().set(infoPago).then(() => {
             //update de la venta
-            const cantidadPorPagar = 0
+            let saldo
             db.collection("ventas").doc(idVenta).get().then((doc) => {
-                cantidadPorPagar = doc.data().fee
+                saldo = doc.data().saldo
             })
-            console.log(cantidadPorPagar)
-            //db.collection("ventas").doc(idVenta).update({ faltaPorPagar: cantidadPorPagar - cantidad - descuento, ultimoPago: fecha }).then(() => {
-            //    Swal.fire({
-            //        icon: 'success',
-            //        title: 'Pago realizado',
-            //        showConfirmButton: true,
-            //    })
-            //})
+            db.collection("ventas").doc(idVenta).update({ saldo: saldo - cantidad - descuento, ultimaFechaPago: fecha }).then(() => {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Pago realizado',
+                    showConfirmButton: true,
+                })
+            })
 
-        }).catch(() => {
+        }).catch((error) => {
             Swal.fire({
                 title: '¡Ops!',
-                text: 'Ocurrió un error, vuelva a intentarlo',
+                text: error,
                 icon: 'warning'
             })
         })
 
     }
 
-    const clickPagarVenta = () => {
+    const clickPagarVenta = (idVenta) => {
         Swal.fire({
             title: "Que tipo de pago se va a realizar?",
             showDenyButton: true,
             showCancelButton: true,
             confirmButtonText: `Normal`,
             denyButtonText: `No Aplicado`,
-        }).then((result) => {
-
+        }).then(async (result) => {
             if (result.isConfirmed) {
-                Swal.fire({
+                const { value: formValues } = await Swal.fire({
                     title: 'Pago Normal',
                     text: 'Digite el monto a pagar',
-                    input: 'number',
-                    inputValue: '0',
+                    html:
+                        '<h1> <b> Cantidad a Pagar </b> </h1>' +
+                        '<input min="0" type="number" id="cantidad" size="10" value="0" class="swal2-input">' +
+                        '<h2> <b> Descuento </b> </h2>' +
+                        '<input min="0" type="number" id="descuento" size="10" value="0" class="swal2-input">',
+                    focusConfirm: false,
                     confirmButtonText: `Realizar Pago`,
-                    showDenyButton: true,
-                    denyButtonText: `Aplicar Descuento`,
-                    denyButtonColor: "#FFB300",
-                }).then((result,value) => {
-                    if (result.isConfirmed) {
-                        Swal.fire({
-                            title: 'Pago realizado!',
-                            text: 'El pago se realizo correctamente.',
-                            icon: 'success',
-                            confirmButtonText: `Imprimir Factura`,
-                        })
-                        console.log("value: ", result.value)
-                    } else if (result.isDenied) {
-                        Swal.fire({
-                            title: 'Aplicando Descuento',
-                            text: 'Digite el monto a descontar',
-                            input: 'number',
-                            inputValue: '0',
-                            confirmButtonText: `Aplicar Descuento`,
-                        }).then((value2) => {
-                            Swal.fire({
-                                title: 'Pago realizado!',
-                                text: 'El Pago se realizo correctamente.',
-                                icon: 'success',
-                                confirmButtonText: `Imprimir Factura`,
-                            })
-                            console.log("value2: ",   value2)
-                        })
-                    }
+                    showCancelButton: true,
+                    denyButtonText: `Cancelar`,
+                    preConfirm: () => {
+                        return [
+                            document.getElementById('cantidad').value,
+                            document.getElementById('descuento').value
+                        ]
+                    },
                 })
-            } else if (result.isDenied) {
+                if (formValues) {
+                    const cantidad = parseInt(formValues[0])
+                    const descuento = parseInt(formValues[1])
+                    if (cantidad === 0) {
 
+                        Swal.fire({
+                            title: 'venta en 0',
+                            text: 'No se puede crear una venta en 0',
+                            icon: 'warning',
+                        })
+                    } else {
+                        console.log("entra")
+                        crearPago("normal", idVenta, cantidad, descuento)
+                    }
+                }
+            } else if (result.isDenied) {
                 Swal.fire({
                     title: 'Pago No Aplicado',
                     text: 'Digite el monto a pagar',
                     input: 'number',
                     inputValue: '0',
                     confirmButtonText: `Realizar Pago`,
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        const cantidad = result.value
+                        crearPago("noAplicado", idVenta, cantidad, 0)
+                    }
                 })
             }
         })
@@ -139,7 +140,7 @@ export default function Ventas() {
                                 <h2 className="hidden md:block text-base text-lg   ml-1 font-semibold pl-3 w-full text-gray-800 text-left capitalize">{venta.clienteVenta.costumer}</h2>
                                 <h2 className="text-sm   md:text-lg md:text-right md:pr-4   ml-1 font-semibold md:font-normal pl-3 w-full text-gray-800 md:w-64">{venta.fechaVenta}</h2>
                                 <div>
-                                    <button className="bg-green-500 hover:bg-green-800 rounded-xl w-24 h-full text-white text-xs font-semibold focus:outline-none" onClick={() => clickPagarVenta()}>
+                                    <button className="bg-green-500 hover:bg-green-800 rounded-xl w-24 h-full text-white text-xs font-semibold focus:outline-none" onClick={() => clickPagarVenta(venta.id)}>
                                         Realizar Pago
                                     </button>
                                 </div>
