@@ -5,7 +5,7 @@ import Swal from 'sweetalert2'
 
 export default function InitialAgreementPayments(props) {
 
-    const { costumer, address, phoneNumber, auto, year, socialNumber, vin, email, precio, nuevoPrecio, nuevoDown, down, saldo, payments, fee, frecuencia14, endDate, codigo, clean, millaje, dealDescriptionPayments } = props.datosInitial
+    const { costumer, address, phoneNumber, auto, year, socialNumber, vin, email, precio, nuevoPrecio, nuevoDown, down, nuevoSaldo, saldo, payments, fee, frecuencia14, endDate, codigo, clean, millaje, dealDescriptionPayments, oldBalance } = props.datosInitial
 
     const handleInputChange = ({ target }) => {
         props.mandarPadre(target)
@@ -97,7 +97,7 @@ export default function InitialAgreementPayments(props) {
                         </div>
                         <div className="block px-3 pt-3">
                             <h2 className="text-gray-200 px-2 font-semibold text-lg underline">Saldo</h2>
-                            <h3 className="text-gray-200 ml-4 px-2 py-2 w-11/12 capitalize border-b-2 border-gray-800 focus:border-gray-700 ">{saldo}</h3>
+                            <h3 className="text-gray-200 ml-4 px-2 py-2 w-11/12 capitalize border-b-2 border-gray-800 focus:border-gray-700 ">{nuevoSaldo}</h3>
                         </div>
                         <div className="block px-3 pt-3">
                             <h2 className="text-gray-200 px-2 font-semibold text-lg underline">Payments</h2>
@@ -129,6 +129,10 @@ export default function InitialAgreementPayments(props) {
                             <textarea rows={7} name="dealDescriptionPayments" value={dealDescriptionPayments} className="block bg-gray-900 text-gray-200 ml-4 px-2 py-3 mt-1 w-11/12 resize-none border-b-2 border-gray-800 focus:border-gray-700 placeholder-gray-500 focus:placeholder-gray-400 focus:outline-none" placeholder="Ej. Garantía" onChange={handleInputChange} required />
                         </div>
                         <div className="block px-3 pt-3">
+                            <h2 className="text-gray-200 px-2 font-semibold text-lg underline">Old Balance</h2>
+                            <input type="number" min={0} max={saldo} value={oldBalance} className="block bg-gray-900 text-gray-200 ml-4 px-2 py-2 w-11/12 border-b-2 border-gray-800 focus:border-gray-700 placeholder-gray-500 focus:placeholder-gray-400 focus:outline-none" name="oldBalance" required onChange={handleInputChange} />
+                        </div>
+                        <div className="block px-3 pt-3">
                             <h2 className="text-gray-200 px-2 font-semibold text-lg underline">Title</h2>
                             <h3 className="text-gray-200 ml-4 px-2 py-2 w-11/12 capitalize border-b-2 border-gray-800 focus:border-gray-700 ">{tipoTitulo}</h3>
                         </div>
@@ -143,7 +147,7 @@ export default function InitialAgreementPayments(props) {
                         <div className="block px-3 pt-3">
                             <h2 className="text-gray-200 px-2 font-semibold text-lg underline">Email</h2>
                             <input type="email" value={email} className="block bg-gray-900 text-gray-200 ml-4 px-2 py-2 w-11/12 border-b-2 border-gray-800 focus:border-gray-700 placeholder-gray-500 focus:placeholder-gray-400 focus:outline-none" name="email" placeholder="Ej. sm@group.com" required onChange={handleInputChange} />
-                        </div>
+                        </div>                        
                     </div>
                 </div>
                 <div className="flex flex-row justify-end place-items-end space-x-4 py-4 px-7">

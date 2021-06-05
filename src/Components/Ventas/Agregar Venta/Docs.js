@@ -8,7 +8,7 @@ import Swal from 'sweetalert2'
 
 export default function Docs(props) {
 
-    const { millaje, costumer, address, phoneNumber, auto, year, vin, email, nuevoPrecio, nuevoDown, saldo, payments, fee, frecuencia, taxes, stickers, title, inspection, fee2, tagTotal, endDate, observaciones, dealDescriptionPayments, dealDescriptionTags, codigo, clean, cobroComision, sticker1ano, sticker2ano, placaTemporal, imagenLicencia } = props.datosDoc
+    const { millaje, costumer, address, phoneNumber, auto, year, vin, email, nuevoPrecio, nuevoDown, nuevoSaldo, payments, fee, frecuencia, taxes, stickers, title, inspection, fee2, tagTotal, endDate, observaciones, dealDescriptionPayments, dealDescriptionTags, codigo, clean, cobroComision, sticker1ano, sticker2ano, placaTemporal, imagenLicencia } = props.datosDoc
     const { loading } = props
 
     const imprimirFinancial = () => {
@@ -43,7 +43,7 @@ export default function Docs(props) {
         doc.setFontSize(12)
         doc.setFont("Times", "Roman")
         let text = "FOR VALUE RECEIVED, the undersigned jointly and severally promise to pay, order of Santos Motor\r"
-            + "the sum of                                                   $" + props.coma(saldo) + ".00 (  Thousend  Houndred )\r"
+            + "the sum of                                                   $" + props.coma(nuevoSaldo) + ".00 (  Thousend  Houndred )\r"
             + "such amount shall be paid as follows:        $" + props.coma(payments - fee) + ".00 each 14 days with an additional Fee of\r"
             + "$" + props.coma(fee) + ".00  every two weeks and must be paid in full on " + endDate
 
@@ -279,7 +279,7 @@ export default function Docs(props) {
             }
             if (i === 2) {
                 campo = "Saldo"
-                text = "$" + props.coma(saldo) + ".00"
+                text = "$" + props.coma(nuevoSaldo) + ".00"
             }
             if (i === 3) {
                 campo = "Payments"
