@@ -10,12 +10,17 @@ function Pagos() {
     const [pagos, setPagos] = useState([])
 
     useEffect(() => {
+        traerPagos()
+    }, [])
+
+    const traerPagos = () => {
         db.collection("pagos").onSnapshot((querySnapshot) => {
             const listaPagos = []
-            let venta
-            let clientePago
-            let carroPago
+
             querySnapshot.forEach(async (doc) => {
+                let venta
+                let clientePago
+                let carroPago
                 await db.collection("ventas").doc(doc.data().idVenta).get().then((doc) => {
                     venta = doc.data()
                 })
@@ -31,11 +36,11 @@ function Pagos() {
                 setPagos(listaPagos)
             }, 1000)
         })
-    }, [])
+    }
 
     const clickPagarPagoNoAplicado = async (pago) => {
         const { value: formValues } = await Swal.fire({
-            title: 'Pago Normal',
+            title: 'Pago No Aplicado',
             text: 'Digite el monto a pagar',
             html:
                 '<h1> <b> Cantidad a Pagar </b> </h1>' +
@@ -54,7 +59,7 @@ function Pagos() {
             },
         })
         if (formValues) {
-            const cantidad = parseInt(formValues[0])
+            let cantidad = parseInt(formValues[0])
             const descuento = parseInt(formValues[1])
             if (cantidad === 0) {
                 Swal.fire({
@@ -65,14 +70,18 @@ function Pagos() {
             } else {
                 const fecha = moment(new Date()).format("MM/DD/YYYY")
                 let saldo
+                cantidad += pago.cantidad
+
                 db.collection("ventas").doc(pago.idVenta).get().then((doc) => {
                     saldo = doc.data().saldo
                 })
-                db.collection("ventas").doc(pago.idVenta).update({ saldo: saldo - cantidad - descuento, ultimaFechaPago: fecha, tipo: "normal" }).then(() => {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Pago realizado',
-                        showConfirmButton: true,
+                db.collection("pagos").doc(pago.id).update({ tipo: "normal" }).then(() => {
+                    db.collection("ventas").doc(pago.idVenta).update({ saldo: saldo - cantidad - descuento, ultimaFechaPago: fecha }).then(() => {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Pago realizado',
+                            showConfirmButton: true,
+                        })
                     })
                 }).catch((error) => {
                     Swal.fire({
@@ -82,8 +91,10 @@ function Pagos() {
                     })
                 })
             }
+            traerPagos()
         }
     }
+
     return (
         <div className="bg-gray-100 h-screen" >
             <Navbar componente="pagos"></Navbar>
@@ -102,7 +113,7 @@ function Pagos() {
                                 <h2 className="text-xs   md:text-lg   ml-1 pl-3 w-full text-gray-800 md:w-80">{pago.idVenta}</h2>
                                 <h2 className="md:hidden text-base md:text-lg   ml-1 font-bold md:font-medium pl-3 w-full text-gray-800">{pago.cantidad}$</h2>
                                 <h2 className="hidden md:block text-base text-lg   ml-1 font-semibold pl-3 w-full text-gray-800 text-left">{pago.carroPago.marca} {pago.carroPago.modelo} {pago.carroPago.ano}</h2>
-                                <h2 className="hidden md:block text-base text-lg   ml-1 font-semibold pl-3 w-full text-gray-800 text-left">{pago.clientePago.customer}</h2>
+                                <h2 className="hidden md:block text-base text-lg   ml-1 font-semibold pl-3 w-full text-gray-800 text-left">{pago.clientePago.costumer}</h2>
                                 <h2 className="text-sm   md:text-lg md:text-right md:pr-4   ml-1 font-semibold md:font-normal pl-3 w-full text-gray-800 md:w-64">{pago.fecha}</h2>
                                 <h2 className="hidden text-sm md:block  md:text-lg md:text-right md:pr-4   ml-1 font-semibold md:font-normal pl-3 w-full text-gray-800 md:w-64">{pago.cantidad}$</h2>
                                 {pago.tipo === "noAplicado" ? (<>

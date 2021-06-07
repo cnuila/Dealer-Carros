@@ -12,15 +12,16 @@ export default function Ventas() {
     useEffect(() => {
         db.collection("ventas").onSnapshot((querySnapshot) => {
             const listaVentas = []
-            let clienteVenta
+            
+            querySnapshot.forEach(async (doc) => {let clienteVenta
             let carroVenta
-            querySnapshot.forEach(async (doc) => {
                 await db.collection("clientes").doc(doc.data().cliente).get().then((doc) => {
                     clienteVenta = doc.data()
                 })
                 await db.collection("carros").doc(doc.data().carro).get().then((doc) => {
                     carroVenta = doc.data()
                 })
+                console.log(listaVentas)
                 listaVentas.push({ ...doc.data(), id: doc.id, clienteVenta, carroVenta })
             });
             console.log(listaVentas)
